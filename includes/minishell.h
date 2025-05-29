@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 10:48:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/05/29 11:50:22 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/05/29 11:36:07 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
 
 
 #endif
