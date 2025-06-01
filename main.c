@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/05/29 11:55:29 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/05/29 11:55:25 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "includes/builtins.h"
+#include "includes/enviroment.h"
+#include "includes/minishell.h"
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+void	ms_exit(char **ms_envc)
+{
+	ms_free_envc(ms_envc);
+	rl_clear_history();
+	printf("exit\n");
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	int		exit_status;
+	char	*input;
+
+	char	**ms_envc;
 
 
+	ms_envc = ms_env_gen(envp);
+	set_man_environ(&ms_envc);
 
-#endif
+	return (ms_exit(ms_envc), exit_status);
+}
