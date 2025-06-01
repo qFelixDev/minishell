@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.h                                       :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 10:49:15 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/01 14:27:06 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/06/01 17:33:14 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/06/01 17:46:15 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIROMENT_H
-# define ENVIROMENT_H
+#include "../includes/minishell.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
-#include <stdlib.h>
-#include "../libft_extend/libft.h"
+void	ms_print_env(void)
+{
+	t_dict_env	*node;
+	t_list		*env;
 
-char    **ms_env_gen(char **envp);
-void	ms_free_envc(char **envc);
-
-#endif
+	env = ms_minishell_get();
+	while (env)
+	{
+		
+	}
+	
+}
