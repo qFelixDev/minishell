@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 10:31:52 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/03 19:36:21 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/03 20:19:49 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,60 @@ char const *token_names[MS_TOKEN_MAX + 1] = {
 	"MS_TOKEN_STRING_SEMI",
 	"MS_TOKEN_STRING_TRANSPARENT"
 };
+
+bool	ms_contains_index(t_ms_token *token, int8_t index)
+{
+	while (token != NULL)
+	{
+		if (token -> index == index)
+			break ;
+		token = token -> next;
+	}
+	return (token != NULL);
+}
+
+int8_t	next_operator(t_ms_token *token)
+{
+	while (token != NULL)
+	{
+		token = token -> next;
+		if (token -> index == MS_TOKEN_AND
+			|| token -> index == MS_TOKEN_OR
+			|| token -> index == MS_TOKEN_PIPE)
+			return (token -> index);
+	}
+	return (MS_TOKEN_MAX);
+}
+
+bool	ms_insert_token(t_ms_token *predecessor, int8_t index)
+{
+	t_ms_token *const	token = malloc(sizeof(t_ms_token));
+
+	if (token == NULL)
+		return (false);
+	token -> next = predecessor -> next;
+	token -> index = index;
+	predecessor -> next = token;
+	return (true);
+}
+
+bool	ms_expand_precedence(t_ms_token *token, int8_t index)
+{
+	bool	in_brackets;
+
+	in_brackets = false;
+	while (token -> index != MS_TOKEN_CLOSE)
+	{
+		while (token -> index )
+		if (!in_brackets && next_operator(token) > index
+			&& !ms_insert_token(token, MS_TOKEN_OPEN))
+			return (false);
+		if (in_brackets && token -> next -> index == index
+			&& !ms_insert_token(token, MS_TOKEN_CLOSE))
+			return (false);
+	}
+	return (true);
+}
 
 int main() {
 	char buffer[1000];
