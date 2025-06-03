@@ -1,17 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 10:48:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/05/29 11:55:35 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/06/01 17:33:14 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/06/01 17:46:15 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../includes/minishell.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
+void	ms_print_env(void)
+{
+	t_dict_env	*node;
+	t_list		*env;
 
-#endif
+	env = ms_minishell_get();
+	while (env)
+	{
+		
+	}
+	
+}

@@ -6,13 +6,14 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 12:58:45 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/05/29 13:48:28 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:56:46 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/enviroment.h"
+#include "../includes/minishell.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 //size_t	ft_strlen(const char *str)
 //{
@@ -43,43 +44,159 @@
 //	return (str);
 //}
 
-void	ms_free_envc(char **envc)
-{
-	int	x;
+//void	ms_free_envc(char **envc)
+//{
+//	int	x;
+//
+//	x = 0;
+//	if (!envc)
+//		return ;
+//	while (envc[x] != NULL)
+//	{
+//		free(envc[x]);
+//		++x;
+//	}
+//	free(envc);
+//}
+//
+//char    **ms_env_gen(char **env)
+//{
+//    int x;
+//    char    **envc;
+//
+//    x = 0;
+//    while (env[x])
+//        x++;
+//    envc = malloc(x + 1 * sizeof(char *));
+//    if (!envc)
+//        return (NULL);
+//    envc[x] = NULL;
+//    x = 0;
+//    while (env[x])
+//    {
+//        envc[x] = ft_strdup(env[x]);
+//        if (!envc[x])
+//            return (ms_free_envc(envc), NULL);
+//        ++x;
+//    }
+//    return (envc);    
+//}
 
-	x = 0;
-	if (!envc)
-		return ;
-	while (envc[x] != NULL)
-	{
-		free(envc[x]);
-		++x;
-	}
-	free(envc);
-}
-
-char    **ms_env_gen(char **env)
+void    ms_split_key_value(const char *str, char *key, char *value)
 {
     int x;
-    char    **envc;
+    int y;
 
     x = 0;
-    while (env[x])
-        x++;
-    envc = malloc(x + 1 * sizeof(char *));
-    if (!envc)
-        return (NULL);
-    envc[x] = NULL;
+    y = 0;
+    while (str[x] != "=")
+    {
+        key[x] = str[x];
+        ++x;
+    }
+    key[x] = "\0";
+    x +=1;
+    while (str[x])
+    {
+        value[y] = str[x];
+        ++x;
+        ++y; 
+    }
+    value[y] = "\0";
+}
+
+t_minishell *ms_minishell_get(void)
+{
+    static  t_minishell minishell;
+
+    return (&minishell);
+}
+
+bool	ms_add_env_node(const char *key, const char *value)
+{
+	t_dict_env	*env_node;
+	t_list		*new_node;
+
+	env_node = malloc(sizeof(t_dict_env));
+	new_node = ft_lstnew(env_node);
+	env_node->key = ft_strdup(key);
+	if (value)
+		env_node->value = ft_strdup(value);
+	else
+		env_node->value = NULL;
+	return (ft_lstadd_back(&ms_minishell_get()->env, new_node), true);
+}
+
+bool ms_add_env_dict(const char *str)
+{
+    char    key[250];
+    char    value[250];
+
+    ms_split_key_value(*str, key, value);
+    return (ms_add_env_node(key, value));
+}
+
+t_dict_env  *ms_get_env_node(const char *key)
+{
+    t_list  *gen_node;
+
+    gen_node = ms_minishell_get()->env;
+    while (gen_node)
+    {
+        if (ft_strncmp(((t_dict_env *)gen_node->content)->key, key, ft_strlen(key)) == 0)
+        {
+            return ((t_dict_env *)gen_node->content);
+        }
+        gen_node = gen_node->next;
+    }
+    return (NULL);
+}
+
+void    ms_open_shells(void)
+{
+    t_dict_env  *node;
+    char        *str;
+    int         numb_shells;
+
+    node = ms_get_env_node("SHLVL");
+    if (!node)
+    {
+        ms_add_env_dict("SHLVL=1");
+        return ;
+    }
+    numb_shells = ft_atoi(node->value);
+    numb_shells += 1;
+    str = ft_itoa(numb_shells);
+    free(node->value);
+    node->value = str;
+}
+
+bool    ms_set_env_value(const char key, const char value)
+{
+    t_dict_env  *node;
+    if (!key)
+        return (false);
+    node = ms_
+}
+
+bool    ms_generate_env(char **env)
+{
+    int x;
+    char    c;
+
     x = 0;
     while (env[x])
     {
-        envc[x] = ft_strdup(env[x]);
-        if (!envc[x])
-            return (ms_free_envc(envc), NULL);
+        if (!ms_add_env_dict(env[x]))
+            return (false);
         ++x;
     }
-    return (envc);    
+    ms_open_shells();
+    ms_set_env_val("OLDPWD", NULL);
 }
+
+
+
 
 //void ms_print_env(char **envc)
 //{
