@@ -1,4 +1,16 @@
-enum {
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/03 10:31:52 by ghodges           #+#    #+#             */
+/*   Updated: 2025/06/03 10:57:02 by ghodges          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/*enum {
 	MS_OR,
 	MS_AND,
 	MS_PIPE
@@ -48,8 +60,9 @@ char	*skip_quotes(char *string, char quote)
 	string++;
 	while (*string != quote && *string != '\0')
 		string++;
-	string += (*string == quote);
-	return (string);
+	if (*string == '\0')
+		return (NULL);
+	return (string + 1);
 }
 
 char	*get_next_seperator(char *string, char *seperator)
@@ -69,54 +82,50 @@ char	*get_next_seperator(char *string, char *seperator)
 	return (NULL);
 }
 
-size_t	get_expanded_length(char *string)
+char	*create_token(t_ms_token *token, char *string)
 {
-	size_t	length;
-	size_t	index;
+	char const *const	tokens[9] =
+		{"&&", "||", "|", "<<", ">>", "<", ">", "'", "\"", ""};
+	size_t				length;
 
-	length = 2;
-	while (*string != '\0')
+	token -> index = -1;
+	while (++token -> index < 9)
 	{
-		if (strncmp(string, "&&", 2) == 0)
-			length += 2;
-		else if (strncmp(string, "|", 2) == 0)
-			length += 2;
-		length++;
+		if (strncmp(string, tokens[token -> index],
+			strlen(tokens[token -> index])) == 0)
+			break ;
 	}
-	return (length);
-}
+	string += strlen(tokens[token -> index]);
+	if (token -> index < 7)
+		return (string);
+	length = 0;
+	while (string[length] )
+}*/
 
-size_t	get_expanded_length(char *string)
+char	*create_token(t_ms_token *token, char *string)
 {
-	size_t	length;
+	char const *const	tokens[12]
+		= {"&&", "||", "|", "<<", ">>", "<", ">", "(", ")", "'", "\"", ""};
+	size_t				length;
 
-	length = 2;
-	while (*string != '\0')
-	{
-		length += (strncmp(string, "&&", 2) == 0) * 2;
-		length += (*string == '|') * 2;
-		string++;
-	}
-	return (length);
-}
-
-char	*ms_expand(char *command_string)
-{
-	char	*expanded_string;
-	size_t	length;
-	size_t	index;
-
-	length = 2;
-	index = 0;
-	while (command_string[index] != '\0')
-	{
-		length += (command_string[index] == '&');
-		length += (command_string[index] == '|') * 2;
-		length++;
-		index++;
-	}
-	expanded_string = malloc(length + 1);
-	if (expanded_string == NULL)
-		return (NULL);
-	ms_expand_recursive(command_string, expanded_string);
+	token -> index = -1;
+	while (++token -> index < 11)
+		if (ft_strncmp(string, tokens[token -> index],
+				ft_strlen(tokens[token -> index])) == 0)
+			break ;
+	string += ft_strlen(tokens[token -> index]);
+	if (token -> index < 9)
+		return (string);
+	length = 0;
+	if (token -> index < 11)
+		while (string[length] != *tokens[token->index] && string[length] != 0)
+			length++;
+	else
+		while (ft_strchr("|<>()'\"", string[length]) == NULL
+			&& ft_strncmp(string[length], "&&", 2) != 0)
+			length++;
+	token -> string = malloc(length + 1, 1);
+	if (token -> string 
+	ft_strlcpy(token -> string, )
+	return (string + length + ft_strlen(tokens[token -> index]));
 }
