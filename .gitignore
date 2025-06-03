@@ -1,3 +1,6 @@
 a.out
 */a.out
 _*
+*.dSYM
+*.o
+*.a
