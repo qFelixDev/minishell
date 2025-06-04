@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 10:31:52 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 09:55:34 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/04 12:11:38 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_ms_token {
 	struct s_ms_token	*next;
 	int					index;
 	char				*string;
+	bool				concatenated;
 }	t_ms_token;
 
 void	ms_free_tokens(t_ms_token *token)
@@ -65,7 +66,7 @@ char	*populate_token_content(
 	if (token -> index == MS_TOKEN_STRING_TRANSPARENT)
 	{
 		while (!ms_isspace(string[length])
-			&& ft_strncmp(string + length, "&&", 2)
+			&& ft_strncmp(string + length, "&&", 2) != 0
 			&& ft_strchr("|<>()'\"", string[length]) == NULL)
 			length++;
 	}
@@ -149,6 +150,7 @@ t_ms_token	*ms_tokenize(char *string)
 #define BRANCHES_STRING_TRANSPARENT	0b111111101111
 
 t_ms_token	*ms_check_syntax(t_ms_token *token)
+
 {
 	uint16_t const	token_branches[MS_TOKEN_MAX] = {
 		BRANCHES_AND, BRANCHES_OR, BRANCHES_PIPE, BRANCHES_DELIM,
