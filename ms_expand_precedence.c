@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 14:31:48 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 15:17:15 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:42:42 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t index)
 		{
 			if (!ms_insert_token(token, MS_TOKEN_OPEN))
 				return (NULL);
-			in_bracket = true;
+			in_bracket = !in_bracket;
 			token = token -> next;
 		}
 		if ((token -> next -> index == MS_TOKEN_CLOSE
@@ -34,17 +34,16 @@ t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t index)
 		{
 			if (!ms_insert_token(token, MS_TOKEN_CLOSE))
 				return (NULL);
-			in_bracket = false;
+			in_bracket = !in_bracket;
 			token = token -> next;
 		}
 		token = token -> next;
-		if (token -> index == MS_TOKEN_OPEN)
-		{
-			token = ms_expand_precedence(token, index);
-			if (token == NULL)
-				return (NULL);
-			token = token -> next;
-		}
+		if (token -> index != MS_TOKEN_OPEN)
+			continue ;
+		token = ms_expand_precedence(token, index);
+		if (token == NULL)
+			return (NULL);
+		token = token -> next;
 	}
 	return (token);
 }

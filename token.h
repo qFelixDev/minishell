@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:12:20 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 15:00:08 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:34:15 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ typedef struct s_ms_token
 	char				*content;
 	bool				concatenate_content;
 }	t_ms_token;
+
+typedef struct s_ms_command
+{
+	char	**argv;
+	char	*redirect_delim;
+	char	*redirect_append;
+	char	*redirect_input;
+	char	*redirect_output;
+}	t_ms_command;
+
+typedef struct s_ms_sequence
+{
+	void	**objects;
+	uint8_t	*sequence;
+	size_t	object_count;
+}	t_ms_sequence;
 
 int8_t	ms_next_operator(t_ms_token *token);
 void	ms_free_tokens(t_ms_token *token);
