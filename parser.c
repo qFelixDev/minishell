@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 10:31:52 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 12:11:38 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:55:49 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,26 @@ void print_tokens(t_ms_token* token) {
 		token = token -> next;
 	}
 	printf("\n");
+}
+
+t_ms_sequence	*ms_parse(char *string)
+{
+	t_ms_token	*first;
+	t_ms_token	*token;
+
+	first = ms_tokenize(string);
+	if (first == NULL)
+		return (NULL);
+	token = ms_check_syntax(first);
+	if (token == NULL)
+		return (NULL);
+	if (ms_contains_token(first, MS_TOKEN_AND)
+		&& ms_expand_precedence(first, MS_TOKEN_AND) == NULL)
+		return (NULL);
+	if (ms_contains_token(first, MS_TOKEN_OR)
+		&& ms_expand_precedence(first, MS_TOKEN_OR) == NULL)
+		return (NULL);
+	return (ms_process_tokens(first));
 }
 
 int main() {
