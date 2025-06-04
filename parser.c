@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 10:31:52 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/03 20:19:49 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/04 09:55:34 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ms_free_tokens(t_ms_token *token)
 	{
 		temp = token;
 		token = token -> next;
-		if (temp -> index >= 9)
+		if (temp -> index >= MS_TOKEN_STRING_OPAQUE)
 			free(temp -> string);
 		free(temp);
 	}
@@ -103,8 +103,11 @@ char	*populate_token(t_ms_token *token, char *string)
 	string += ft_strlen(token_strings[token -> index]);
 	if (token -> index < MS_TOKEN_STRING_OPAQUE)
 		return (string);
-	return (populate_token_content(
-			token, string, *token_strings[token -> index]));
+	string = populate_token_content(
+		token, string, *token_strings[token -> index]);
+	if (string == NULL)
+		token -> index = MS_TOKEN_SPACE;
+	return (string);
 }
 
 #include<unistd.h>
@@ -173,22 +176,6 @@ t_ms_token	*ms_check_syntax(t_ms_token *token)
 	return (NULL);
 }
 
-char const *token_names[MS_TOKEN_MAX + 1] = {
-	"MS_TOKEN_SPACE",
-	"MS_TOKEN_AND",
-	"MS_TOKEN_OR",
-	"MS_TOKEN_PIPE",
-	"MS_TOKEN_DELIM",
-	"MS_TOKEN_APPEND",
-	"MS_TOKEN_INPUT",
-	"MS_TOKEN_OUTPUT",
-	"MS_TOKEN_OPEN",
-	"MS_TOKEN_CLOSE",
-	"MS_TOKEN_STRING_OPAQUE",
-	"MS_TOKEN_STRING_SEMI",
-	"MS_TOKEN_STRING_TRANSPARENT"
-};
-
 bool	ms_contains_index(t_ms_token *token, int8_t index)
 {
 	while (token != NULL)
@@ -200,17 +187,23 @@ bool	ms_contains_index(t_ms_token *token, int8_t index)
 	return (token != NULL);
 }
 
-int8_t	next_operator(t_ms_token *token)
+int8_t	next_operator_in_level(t_ms_token *token)
 {
-	while (token != NULL)
+	int	bracket_level;
+
+	bracket_level = 0;
+	token = token -> next;
+	while (token != NULL && bracket_level >= 0)
 	{
-		token = token -> next;
-		if (token -> index == MS_TOKEN_AND
-			|| token -> index == MS_TOKEN_OR
-			|| token -> index == MS_TOKEN_PIPE)
+		if (bracket_level == 0 && (token -> index == MS_TOKEN_AND
+				|| token -> index == MS_TOKEN_OR
+				|| token -> index == MS_TOKEN_PIPE))
 			return (token -> index);
+		bracket_level += (token -> index == MS_TOKEN_OPEN);
+		bracket_level -= (token -> index == MS_TOKEN_CLOSE);
+		token = token -> next;
 	}
-	return (MS_TOKEN_MAX);
+	return (MS_TOKEN_SPACE);
 }
 
 bool	ms_insert_token(t_ms_token *predecessor, int8_t index)
@@ -225,22 +218,55 @@ bool	ms_insert_token(t_ms_token *predecessor, int8_t index)
 	return (true);
 }
 
-bool	ms_expand_precedence(t_ms_token *token, int8_t index)
+t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t index)
 {
 	bool	in_brackets;
 
 	in_brackets = false;
-	while (token -> index != MS_TOKEN_CLOSE)
+	while (token != NULL && token -> index != MS_TOKEN_CLOSE)
 	{
-		while (token -> index )
-		if (!in_brackets && next_operator(token) > index
-			&& !ms_insert_token(token, MS_TOKEN_OPEN))
-			return (false);
-		if (in_brackets && token -> next -> index == index
-			&& !ms_insert_token(token, MS_TOKEN_CLOSE))
-			return (false);
+		if (!in_brackets && token -> index == index || token -> index == MS_TOKEN_OPEN
+			&& next_operator_in_level(token) > index)
+		{
+			if (!ms_insert_token(token, MS_TOKEN_OPEN))
+				return (NULL);
+			in_brackets = true;
+			token = token -> next;
+		}
+		if (in_brackets && token -> next -> index == index || token -> next -> index == MS_TOKEN_CLOSE)
+		{
+			if (!ms_insert_token(token, MS_TOKEN_CLOSE))
+				return (NULL);
+			in_brackets = false;
+			token = token -> next;
+		}
+		token = token -> next;
+		if (token -> index == MS_TOKEN_OPEN)
+		{
+			token = ms_expand_precedence(token, index);
+			if (token == NULL)
+				return (NULL);
+			if (token -> next == NULL)
+				return (token);
+			token = token -> next;
+		}
 	}
-	return (true);
+	return (token);
+}
+
+const char* token_names[MS_TOKEN_MAX + 1] = {
+	" ", "&&", "||", "|", "<<", ">>", "<", ">", "(", ")"
+};
+
+void print_tokens(t_ms_token* token) {
+	while(token != NULL) {
+		if (token -> index < MS_TOKEN_STRING_OPAQUE)
+			printf("%s", token_names[token -> index + 1]);
+		else
+			printf("STR:\"%s\"", token -> string);
+		token = token -> next;
+	}
+	printf("\n");
 }
 
 int main() {
@@ -255,7 +281,11 @@ int main() {
 			continue;
 		}
 		{
-			t_ms_token* token = first;
+			t_ms_token* token = malloc(sizeof(t_ms_token));
+			token -> next = first;
+			token -> index = MS_TOKEN_OPEN;
+			first = token;
+			token = first;
 			while(token -> next != NULL)
 				token = token -> next;
 			token -> next = malloc(sizeof(t_ms_token));
@@ -269,14 +299,9 @@ int main() {
 			continue;
 		}
 		ft_bzero(buffer, 1000);
-		t_ms_token* token = first;
-		while(token != NULL) {
-			if(token -> index < MS_TOKEN_STRING_OPAQUE)
-				printf("%s\n", token_names[token -> index + 1]);
-			else
-				printf("%s: %s\n", token_names[token -> index + 1], token -> string);
-			token = token -> next;
-		}
+		print_tokens(first);
+		ms_expand_precedence(first -> next, MS_TOKEN_AND);
+		print_tokens(first);
 		ms_free_tokens(first);
 		write(1, "> ", 2);
 	}
