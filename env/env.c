@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:52:36 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/04 15:28:49 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:47:49 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,19 @@ int ms_add_env_dict(const char *str)
     return (ms_add_env_node(key, value));
 }
 
+static int	ms_cd(char *path)
+{
+	char	cwd[PATH_MAX];
+
+	getcwd(cwd, sizeof(cwd));
+	if (chdir(path) != 0)
+		return (perror("Path Error"), 1);
+	ms_set_env_value("OLDPWD", cwd);
+	getcwd(cwd, sizeof(cwd));
+	ms_set_env_value("PWD", cwd);
+	return (0);
+}
+
 int	ms_generate_env(char **env)
 {
     int 	x;
@@ -110,6 +123,8 @@ int	main(int ac, char **av, char **env)
 {
 	if (!ms_generate_env(env))
 		return (1);
+	ms_print_env();
+	ms_cd("../includes");
 	ms_print_env();
 	return (0);
 }
