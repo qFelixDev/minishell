@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 10:46:13 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/04 16:03:44 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/06/04 16:07:04 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/06/04 16:24:38 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ms_clear(void)
+int ms_pwd(void)
 {
-    printf("\033[H\033[J");
-    return 0;
+    char cwd[PATH_MAX];
+	
+	getcwd(cwd, PATH_MAX);
+    if (!cwd)
+        return(perror("pwd"), 1);
+    printf("%s\n", cwd);
+    free(cwd);
+    return (0);
 }
