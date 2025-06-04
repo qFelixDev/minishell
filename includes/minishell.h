@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/01 17:44:59 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:36:34 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ typedef struct s_minishell
 //*************************************************************/
 void        ms_split_key_value(const char *str, char *key, char *value);
 t_minishell *ms_minishell_get(void);
-bool	    ms_add_env_node(const char *key, const char *value);
-bool        ms_add_env_dict(const char *str);
+int		    ms_add_env_node(const char *key, const char *value);
+int	        ms_add_env_dict(const char *str);
 t_dict_env  *ms_get_env_node(const char *key);
 void        ms_open_shells(void);
-bool        ms_set_env_value(const char key, const char value);
-bool        ms_generate_env(char **env);
+bool        ms_set_env_value(const char *key, const char *value);
+int	        ms_generate_env(char **env);
 
 #endif

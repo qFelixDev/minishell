@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:33:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/01 17:46:15 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:25:26 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,14 @@ void	ms_print_env(void)
 	env = ms_minishell_get();
 	while (env)
 	{
-		
+		node = env->content;
+		if (env->next && !node->value)
+		{
+			env = env->next;
+			continue;
+		}
+		printf("%s", node->key);
+		printf("=%s\n", node->value);
+		env = env->next;
 	}
-	
 }

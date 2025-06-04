@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 12:58:45 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/01 16:56:46 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:24:13 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ void    ms_split_key_value(const char *str, char *key, char *value)
 
     x = 0;
     y = 0;
-    while (str[x] != "=")
+    while (str[x] != '=')
     {
         key[x] = str[x];
         ++x;
     }
-    key[x] = "\0";
+    key[x] = '\0';
     x +=1;
     while (str[x])
     {
@@ -102,7 +102,7 @@ void    ms_split_key_value(const char *str, char *key, char *value)
         ++x;
         ++y; 
     }
-    value[y] = "\0";
+    value[y] = '\0';
 }
 
 t_minishell *ms_minishell_get(void)
@@ -126,11 +126,13 @@ bool	ms_add_env_node(const char *key, const char *value)
 		env_node->value = NULL;
 	return (ft_lstadd_back(&ms_minishell_get()->env, new_node), true);
 }
-
+//**************************************************** */
+// Wir bekommen einen kompletten Path des Enviroments mit Schlüssel und Value und plitten diesen auf
+//
 bool ms_add_env_dict(const char *str)
 {
-    char    key[250];
-    char    value[250];
+    char    *key;
+    char    *value;
 
     ms_split_key_value(*str, key, value);
     return (ms_add_env_node(key, value));
@@ -176,13 +178,30 @@ bool    ms_set_env_value(const char key, const char value)
     t_dict_env  *node;
     if (!key)
         return (false);
-    node = ms_
+    node = ms_get_env_node(&key);
+    if (!value)
+    {
+        if (node && node->value)
+            return (true);
+        return (ms_add_env_node(&key, NULL));
+    }
+    if (node)
+    {
+        free(node->value);
+        node->value = ft_strdup(&value);
+        return (true);
+    }
+    return (ms_add_env_node(&key, &value));
 }
 
-bool    ms_generate_env(char **env)
+
+//**************************************************** */
+// Wir generieren eine Liste die da Grundelgende Enviroment der Shell Copiert und Rebuildet
+//
+bool    ms_generate_env(char **env, t_list *env_dict)
 {
     int x;
-    char    c;
+    char    *cwd;
 
     x = 0;
     while (env[x])
@@ -193,34 +212,39 @@ bool    ms_generate_env(char **env)
     }
     ms_open_shells();
     ms_set_env_val("OLDPWD", NULL);
+    if (getcwd(cwd, 250))
+        ms_set_env_val("PWD", cwd);
+    return (true);
 }
 
 
 
 
-//void ms_print_env(char **envc)
-//{
-//    int i = 0;
-//    while (envc[i])
-//    {
-//        printf("Kopiertes Environment:\n");
-//        printf("env[%d]: %s\n", i, envc[i]);
-//        i++;
-//    }
-//}
-//
-//int main(int argc, char **argv, char **env)
-//{ 
-//    char **copy = ms_env_gen(env);
-//    if (!copy)
-//    {
-//        fprintf(stderr, "Kopieren des Environments fehlgeschlagen.\n");
-//        return 1;
-//    }
-//
-//    printf("Kopiertes Environment:\n");
-//    ms_print_env(copy);
-//
-//    ms_free_envc(copy);
-//    return 0;
-//}
+void ms_print_env(char **envc)
+{
+    int i = 0;
+    while (envc[i])
+    {
+        printf("Kopiertes Environment:\n");
+        printf("env[%d]: %s\n", i, envc[i]);
+        i++;
+    }
+}
+
+int main(int argc, char **argv, char **env)
+{ 
+    t_minishell *minishell;
+
+    ms_env_gen(env, minishell->env);
+    if (!copy)
+    {
+        fprintf(stderr, "Kopieren des Environments fehlgeschlagen.\n");
+        return 1;
+    }
+
+    printf("Kopiertes Environment:\n");
+    ms_print_env(copy);
+
+    ms_free_envc(copy);
+    return 0;
+}

@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/builtins.h"
-#include "includes/enviroment.h"
 #include "includes/minishell.h"
 
 void	ms_exit(char **ms_envc)
@@ -26,10 +24,10 @@ int	main(int argc, char **argv, char **envp)
 	int		exit_status;
 	char	*input;
 
-	char	**ms_envc;
+	char	*ms_envc;
 
 
-	ms_envc = ms_env_gen(envp);
+	ms_envc = ms_generate_env(envp);
 	set_man_environ(&ms_envc);
 
 	return (ms_exit(ms_envc), exit_status);
