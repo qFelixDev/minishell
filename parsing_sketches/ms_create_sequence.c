@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:52:06 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 18:13:49 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/05 11:10:39 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,56 @@ size_t	count_objects(t_ms_token *token)
 	return (object_count);
 }
 
-t_ms_command	*ms_create_command(t_ms_token *token)
+t_ms_command	*ms_create_command(t_ms_token *first)
 {
-	
+	t_ms_token			*token;
+	size_t				redirect_counts[4];
+	size_t				redirect_indices[4];
+	t_ms_command *const	command = malloc(sizeof(t_ms_command));
+
+	token = first;
+	while (token -> index >= MS_TOKEN_STRING_OPAQUE
+		|| (token->index >= MS_TOKEN_DELIM && token->index <= MS_TOKEN_OUTPUT))
+	{
+		redirect_counts[0] += (token -> index == MS_TOKEN_DELIM);
+		redirect_counts[1] += (token -> index == MS_TOKEN_APPEND);
+		redirect_counts[2] += (token -> index == MS_TOKEN_INPUT);
+		redirect_counts[3] += (token -> index == MS_TOKEN_OUTPUT);
+		token = token -> next;
+	}
+	command->delimiter_redirects = malloc(sizeof(char*) * redirect_counts[0]);
+	command->append_redirects = malloc(sizeof(char*) * redirect_counts[1]);
+	command->input_redirects = malloc(sizeof(char*) * redirect_counts[2]);
+	command->output_redirects = malloc(sizeof(char*) * redirect_counts[3]);
+}
+
+t_ms_command	*ms_create_command(t_ms_token *first)
+{
+	t_ms_token			*token;
+	int					argc;
+	int					arg_index;
+	size_t				length;
+	t_ms_command *const	command = malloc(sizeof(t_ms_command));
+
+	if (command == NULL)
+		return (NULL);
+	argc = 1;
+	while (token -> index >= MS_TOKEN_STRING_OPAQUE)
+	{
+		argc += !token -> concatenate_content;
+		token = token -> next;
+	}
+	command -> argv = ft_calloc(sizeof(char*) * (argc + 1), 1);
+	if (command -> argv == NULL)
+		return (free(command), NULL);
+	arg_index = 0;
+	while (arg_index < argc)
+	{
+		token = 
+		if (command -> argv[arg_index++] == NULL)
+			return (ms_free_command(command), NULL);
+	}
+	return (command);
 }
 
 void	ms_free_command(t_ms_command *command)
@@ -46,10 +93,10 @@ void	ms_free_command(t_ms_command *command)
 	while (*argument != NULL)
 		free(*(argument++));
 	free(command -> argv);
-	free(command -> redirect_delim);
-	free(command -> redirect_append);
-	free(command -> redirect_input);
-	free(command -> redirect_output);
+	//free(command -> redirect_delim);
+	//free(command -> redirect_append);
+	//free(command -> redirect_input);
+	//free(command -> redirect_output);
 	free(command);
 }
 

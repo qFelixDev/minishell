@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:12:20 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 18:11:07 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/05 09:59:02 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@ enum
 	MS_TOKEN_STRING_TRANSPARENT,
 	MS_TOKEN_MAX
 };
+
+enum
+{
+	MS_TOKEN_NONE = -1,
+	MS_TOKEN_AND,
+	MS_TOKEN_OR,
+	MS_TOKEN_PIPE,
+	MS_TOKEN_BRACKET_OPEN,
+	MS_TOKEN_BRACKET_CLOSE,
+	MS_TOKEN_HEREDOC,
+	MS_TOKEN_APPEND,
+	MS_TOKEN_INPUT,
+	MS_TOKEN_OUTPUT,
+	MS_TOKEN_WILDCARD,
+	MS_TOKEN_STRING,
+	MS_TOKEN_VARIABLE
+}
 
 typedef struct s_ms_token
 {
