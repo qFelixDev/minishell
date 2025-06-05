@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:49:38 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 15:20:14 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/04 18:07:17 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <stdbool.h>
 #include "libft_extend/libft.h"
 #include "token.h"
-
-t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t index);
 
 bool	ms_isspace(char character)
 {
@@ -100,7 +98,7 @@ t_ms_token	*ms_tokenize(char *string)
 	return (first);
 }
 
-char const *const	token_names[MS_TOKEN_STRING_OPAQUE] = {
+/*char const *const	token_names[MS_TOKEN_STRING_OPAQUE] = {
 	"&&", "||", "|", "<<", ">>", "<", ">", "(", ")"
 };
 
@@ -113,20 +111,26 @@ void print_tokens(t_ms_token* token) {
 		token = token -> next;
 	}
 	printf("\n");
-}
+}*/
 
-int main() {
+/*int main() {
 	char buffer[1000];
 	ft_bzero(buffer, 1000);
 	write(1, "> ", 2);
 	while(read(0, buffer, 1000) > 0) {
 		t_ms_token* first = ms_tokenize(buffer);
+		ft_bzero(buffer, 1000);
 		if(first == NULL) {
 			puts("Tokenization failed");
 			write(1, "> ", 2);
 			continue;
 		}
-		ft_bzero(buffer, 1000);
+		if (ms_check_syntax(first) != NULL) {
+			puts("Invalid Syntax");
+			write(1, "> ", 2);
+			ms_free_tokens(first);
+			continue ;
+		}
 		print_tokens(first);
 		ms_expand_precedence(first, MS_TOKEN_AND);
 		print_tokens(first);
@@ -135,4 +139,4 @@ int main() {
 		ms_free_tokens(first);
 		write(1, "> ", 2);
 	}
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 14:47:32 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 15:00:39 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/04 18:04:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,15 @@ bool	ms_insert_token(t_ms_token *predecessor, int8_t index)
 	token -> index = index;
 	predecessor -> next = token;
 	return (true);
+}
+
+bool	ms_contains_index(t_ms_token *token, int8_t index)
+{
+	while (token != NULL)
+	{
+		if (token -> index == index)
+			return (true);
+		token = token -> next;
+	}
+	return (false);
 }

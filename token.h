@@ -6,12 +6,14 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:12:20 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/04 16:34:15 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/04 18:11:07 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stddef.h>
+#include "libft_extend/libft.h"
 
 enum
 {
@@ -50,10 +52,11 @@ typedef struct s_ms_command
 typedef struct s_ms_sequence
 {
 	void	**objects;
-	uint8_t	*sequence;
+	uint8_t	*is_sequence;
 	size_t	object_count;
 }	t_ms_sequence;
 
 int8_t	ms_next_operator(t_ms_token *token);
 void	ms_free_tokens(t_ms_token *token);
 bool	ms_insert_token(t_ms_token *predecessor, int8_t index);
+bool	ms_contains_index(t_ms_token *token, int8_t index);
