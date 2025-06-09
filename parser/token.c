@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:04:46 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/09 12:06:34 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/09 13:08:53 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ enum
 	MS_TOKEN_APPEND,
 	MS_TOKEN_INPUT,
 	MS_TOKEN_OUTPUT,
-	MS_TOKEN_VARIABLE,
 	MS_TOKEN_WILDCARD,
+	MS_TOKEN_VARIABLE,
 	MS_TOKEN_UNRESOLVED_STRING,
-	MS_TOKEN_STRING
+	MS_TOKEN_STRING,
+	MS_TOKEN_SHADOW_STRING
 }
 
 size_t	ms_count_index(t_ms_token *token, int8_t index)
