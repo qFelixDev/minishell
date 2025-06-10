@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:04:46 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 12:53:00 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:26:27 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,20 @@ void	ms_free_tokens(t_ms_token *token, bool detach_only)
 		if (!detach_only || temp -> index < MS_TOKEN_DELIM)
 			free(temp);
 	}
+}
+
+int8_t	ms_next_operator(t_ms_token *token)
+{
+	int	bracket_level;
+
+	bracket_level = 0;
+	while (token != NULL && bracket_level >= 0)
+	{
+		if (bracket_level == 0 && token -> index <= MS_TOKEN_PIPE)
+			return (token -> index);
+		bracket_level += (token -> index == MS_TOKEN_OPEN);
+		bracket_level -= (token -> index == MS_TOKEN_CLOSE);
+		token = token -> next;
+	}
+	return (MS_TOKEN_NONE);
 }

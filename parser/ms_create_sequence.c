@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 09:48:24 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 12:54:17 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:23:21 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_ms_sequence	*ms_create_sequence(t_ms_token *token)
 
 	if (sequence == NULL)
 		return (NULL);
+	sequence -> operator = ms_next_operator(token);
 	object_index = 0;
 	while (object_index < sequence -> object_count)
 	{

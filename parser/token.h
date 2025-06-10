@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:50:26 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 12:52:50 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:27:22 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,4 @@ enum
 size_t		ms_count_index(t_ms_token *token, int8_t index);
 const char	*ms_get_identity(int8_t index);
 void		ms_free_tokens(t_ms_token *token, bool detach_only);
+int8_t		ms_next_operator(t_ms_token *token);
