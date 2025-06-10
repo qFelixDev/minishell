@@ -6,26 +6,23 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/09 13:20:05 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/09 13:51:54 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*populate_token_content(t_ms_token *token, char *string)
+char	*populate_token_content(
+	t_ms_token *token, char *string, char terminator)
 {
 	size_t	length;
 
 	length = 0;
-	if (token -> index == MS_TOKEN_VARIABLE
-		|| token -> index == MS_TOKEN_SHADOW_STRING)
+	if (terminator == '\0')
 		while (!ms_isspace(string[length])
 			&& ft_strncmp(string + length, "&&", 2) != 0
-			&& ft_strchr("|<>()*$\"'", string[length]) == NULL)
+			&& ft_strchr("|()<>*$\"'", string[length]) == NULL)
 			length++;
-	else if (token -> index == MS_TOKEN_UNRESOLVED_STRING)
-		while (string[length] != '"' && string[length] != '\0')
-			length++;
-	else if (token -> index == MS_TOKEN_STRING)
-		while (string[length] != '\'' && string[length] != '\0')
+	else
+		while (string[length] != terminator && string[length] != '\0')
 			length++;
 	if (string[length] != '\0')
 		token -> content = malloc(length + 1);
@@ -51,10 +48,12 @@ char	*populate_token(t_ms_token *token, char *string)
 	if (token -> index < MS_TOKEN_VARIABLE)
 		return (string);
 	token -> content = NULL;
-	string = populate_token_content(token, string);
+	string = populate_token_content(token, string,
+		*token_strings[token -> index]);
 	if (string == NULL)
 		return (NULL);
-	string += ft_strlen(token_strings[token -> index]);
+	if (token -> index != MS_TOKEN_VARIABLE)
+		string += ft_strlen(token_strings[token -> index]);
 	token -> concatenate_content = ms_isspace(*string);
 	if (token -> index == MS_TOKEN_SHADOW_STRING)
 		token -> index = MS_TOKEN_STRING;
