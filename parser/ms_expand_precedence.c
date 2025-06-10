@@ -6,9 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:08:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 10:41:41 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/10 12:54:02 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 static t_ms_token	*add_bracket(
 	t_ms_token *token, int8_t index, bool *in_bracket_pt)

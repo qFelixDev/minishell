@@ -6,9 +6,12 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/09 13:51:54 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/10 12:53:32 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft_extend/libft.h"
+#include "token.h"
 
 char	*populate_token_content(
 	t_ms_token *token, char *string, char terminator)

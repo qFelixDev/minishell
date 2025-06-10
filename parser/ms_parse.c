@@ -6,9 +6,12 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:54:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 09:53:44 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/10 12:55:14 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft_extend/libft.h"
+#include "token.h"
 
 t_ms_sequence	*ms_parse(char *string)
 {
@@ -31,6 +34,6 @@ t_ms_sequence	*ms_parse(char *string)
 	if (!ms_resolve_strings(first))
 		return (printf("Resolution failed\n"), ms_free_tokens(first), NULL);
 	sequence = ms_create_sequence(first);
-	ms_detach_tokens(first);
+	ms_free_tokens(first, true);
 	return (sequence);
 }

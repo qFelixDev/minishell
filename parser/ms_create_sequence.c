@@ -6,9 +6,12 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 09:48:24 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/09 11:55:25 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/10 12:54:17 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft_extend/libft.h"
+#include "token.h"
 
 void	ms_free_sequence(t_ms_sequence *sequence)
 {
