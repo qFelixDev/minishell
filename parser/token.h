@@ -52,7 +52,7 @@ typedef struct s_ms_sequence
 
 typedef struct s_ms_command
 {
-	char	**argv;
+	char	**argv; // [0] = echo, [1] = "string", [2] = "noch ein string", [3] = "reriebsc"
 	char	***redirects;
 
 	char	**input_redirect;

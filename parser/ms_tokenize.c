@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/14 10:27:37 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:50:11 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*populate_token_content(
 	size_t	length;
 
 	length = 0;
-	if (terminator == '\0')
+	if (terminator == '\0' || terminator == '$')
 		while (!ms_isspace(string[length])
 			&& ft_strncmp(string + length, "&&", 2) != 0
 			&& ft_strchr("|()<>*$\"'", string[length]) == NULL)

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 09:48:24 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/14 10:36:11 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/14 14:16:50 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ static t_ms_token	*next_object(t_ms_token *token)
 		bracket_level += (token -> index == MS_TOKEN_OPEN);
 		bracket_level -= (token -> index == MS_TOKEN_CLOSE);
 	}
-	return (token);
+	token = token -> next;
+	return (token -> next);
 }
 
 t_ms_sequence	*ms_create_sequence(t_ms_token *token)

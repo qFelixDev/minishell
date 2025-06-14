@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 12:24:58 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/11 09:21:26 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:57:26 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ bool	ms_resolve_strings(t_ms_token *token)
 			string = token -> content;
 			while (*string != '\0')
 			{
+				if (token -> index != MS_TOKEN_UNRESOLVED_STRING)
+					token -> concatenate_content = true;
 				token = add_string_token(token, string);
 				if (token == NULL)
 					return (false);
 				string += (token -> index == MS_TOKEN_VARIABLE)
-					&& ft_strlen(token -> content);
+					+ ft_strlen(token -> content);
 			}
 		}
 		token = token -> next;

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:08:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/14 12:03:16 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:43:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,4 @@ t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t index)
 	}
 	return (token);
 }
+
