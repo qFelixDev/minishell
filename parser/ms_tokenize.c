@@ -6,11 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 12:53:32 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/14 10:27:37 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_extend/libft.h"
+#include "../libft_extend/libft.h"
 #include "token.h"
 
 char	*populate_token_content(
@@ -65,24 +65,27 @@ char	*populate_token(t_ms_token *token, char *string)
 
 t_ms_token	*ms_tokenize(char *string)
 {
-	t_ms_token *const	first = malloc(sizeof(t_ms_token));
+	t_ms_token *const	first = ms_insert_token(NULL, MS_TOKEN_OPEN);
 	t_ms_token			*token;
 
 	if (first == NULL)
 		return (NULL);
-	first -> index = MS_TOKEN_OPEN;
 	token = first;
-	while (true)
+	while (ms_isspace(*string))
+		string++;
+	while (*string != '\0')
 	{
 		token -> next = malloc(sizeof(t_ms_token));
 		token = token -> next;
 		if (token == NULL)
-			return (ms_free_tokens(first), NULL);
+			return (ms_free_tokens(first, false), NULL);
 		string = populate_token(token, string);
 		if (string == NULL)
-			return (ms_free_tokens(first), NULL);
+			return (ms_free_tokens(first, false), NULL);
+		while (ms_isspace(*string))
+			string++;
 	}
 	if (ms_insert_token(token, MS_TOKEN_CLOSE) == NULL)
-		return (ms_free_tokens(first), NULL);
+		return (ms_free_tokens(first, false), NULL);
 	return (first);
 }

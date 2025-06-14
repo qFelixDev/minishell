@@ -6,9 +6,13 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:50:26 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 15:27:22 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/14 12:40:47 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stddef.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 enum
 {
@@ -26,10 +30,41 @@ enum
 	MS_TOKEN_VARIABLE,
 	MS_TOKEN_UNRESOLVED_STRING,
 	MS_TOKEN_STRING,
-	MS_TOKEN_SHADOW_STRING
-}
+	MS_TOKEN_SHADOW_STRING,
+	MS_TOKEN_MAX
+};
+
+typedef struct s_ms_token
+{
+	struct s_ms_token	*next;
+	int8_t				index;
+	char				*content;
+	bool				concatenate_content;
+}	t_ms_token;
+
+typedef struct s_ms_sequence
+{
+	size_t	object_count;
+	int8_t	operator;
+	void	**objects;
+	uint8_t	*is_sequence;
+}	t_ms_sequence;
+
+typedef struct s_ms_command
+{
+	char	**argv;
+	char	***redirects;
+
+	char	**input_redirect;
+	char	**output_redirect;
+	char	**delim_redirect;
+	char	**append_redirect;
+}	t_ms_command;
 
 size_t		ms_count_index(t_ms_token *token, int8_t index);
 const char	*ms_get_identity(int8_t index);
 void		ms_free_tokens(t_ms_token *token, bool detach_only);
+void		ms_print_tokens(t_ms_token *token);
 int8_t		ms_next_operator(t_ms_token *token);
+t_ms_token	*ms_insert_token(t_ms_token *token, int8_t index);
+bool		ms_isspace(char character);

@@ -6,30 +6,31 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:08:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 12:54:02 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/14 12:03:16 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../libft_extend/libft.h"
+#include "token.h"
 
 static t_ms_token	*add_bracket(
-	t_ms_token *token, int8_t index, bool *in_bracket_pt)
+	t_ms_token *token, int8_t index, bool *is_expanding_pt)
 {
-	if ((token -> index == MS_TOKEN_CLOSE || token -> index == index)
-		&& !*in_bracket_pt && ms_next_operator(token -> next) > index)
+	if ((token -> index == MS_TOKEN_OPEN || token -> index == index)
+		&& !*is_expanding_pt && ms_next_operator(token -> next) > index)
 	{
 		token = ms_insert_token(token, MS_TOKEN_OPEN);
 		if (token == NULL)
 			return (NULL);
-		*in_bracket_pt = true;
+		*is_expanding_pt = true;
 	}
 	if ((token -> next -> index == MS_TOKEN_CLOSE
-		|| token -> next -> index == index) && *in_bracket_pt)
+		|| token -> next -> index == index) && *is_expanding_pt)
 	{
 		token = ms_insert_token(token, MS_TOKEN_CLOSE);
 		if (token == NULL)
-			return (NULL)
-		*in_bracket_pt = false;
+			return (NULL);
+		*is_expanding_pt = false;
 	}
 	return (token);
 }

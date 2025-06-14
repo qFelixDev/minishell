@@ -6,10 +6,12 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:04:46 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 15:26:27 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/14 12:28:23 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "token.h"
 
 size_t	ms_count_index(t_ms_token *token, int8_t index)
@@ -35,7 +37,19 @@ const char	*ms_get_identity(int8_t index)
 	static char	*token_identities[MS_TOKEN_MAX] = {"&&", "||", "|", "(",
 		")", "<<", ">>", "<", ">", "*", "$STR", "\"STR\"", "\'STR\'", "~STR~"};
 
+	if (index == MS_TOKEN_NONE)
+		index = MS_TOKEN_AND;
 	return (token_identities[index]);
+}
+
+void	ms_print_tokens(t_ms_token *token)
+{
+	while (token != NULL)
+	{
+		printf("%s ", ms_get_identity(token -> index));
+		token = token -> next;
+	}
+	printf("\n");
 }
 
 void	ms_free_tokens(t_ms_token *token, bool detach_only)
@@ -46,7 +60,8 @@ void	ms_free_tokens(t_ms_token *token, bool detach_only)
 	{
 		temp = token;
 		token = token -> next;
-		if (detach_only && token -> index >= MS_TOKEN_VARIABLE)
+		if (detach_only &&
+			(token == NULL || token -> index < MS_TOKEN_DELIM))
 			temp -> next = NULL;
 		if (!detach_only && temp -> index >= MS_TOKEN_VARIABLE)
 			free(temp -> content);

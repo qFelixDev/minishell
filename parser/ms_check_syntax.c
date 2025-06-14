@@ -6,9 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:55:30 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/10 13:44:28 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/11 10:27:04 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "token.h"
 
 #define BRANCHES_AND				0b00010111111111
 #define BRANCHES_OR					0b00010111111111
@@ -37,17 +39,17 @@ t_ms_token	*ms_check_syntax(t_ms_token *token)
 	int				bracket_level;
 
 	bracket_level = 0;
-	while (token -> next != NULL)
+	while (token != NULL)
 	{
 		next_token = token -> next;
 		if (next_token != NULL && !(token_branches[token -> index]
-				& (0x800 >> next_token -> index)))
+				& (0x2000 >> next_token -> index)))
 			return (token);
 		bracket_level += (token -> index == MS_TOKEN_OPEN);
 		bracket_level -= (token -> index == MS_TOKEN_CLOSE);
 		token = next_token;
 	}
-	if (bracket_level != 0)
-		return (token);
+	//if (bracket_level != 0)
+	//	return (token);
 	return (NULL);
 }
