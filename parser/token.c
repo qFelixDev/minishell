@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:04:46 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 12:26:56 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 14:04:08 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ size_t	ms_count_index(t_ms_token *token, int8_t index)
 const char	*ms_get_identity(int8_t index)
 {
 	static char	*token_identities[MS_TOKEN_MAX] = {"&&", "||", "|", "(",
-		")", "<<", ">>", "<", ">", "*", "$STR", "\"STR\"", "\'STR\'", "~STR~"};
+		")", "<<", ">>", "<", ">", "$STR", "\"STR\"", "\'STR\'", "~STR~"};
 
 	if (index == MS_TOKEN_NONE)
 		index = MS_TOKEN_AND;
@@ -44,7 +44,6 @@ const char	*ms_get_identity(int8_t index)
 
 void	ms_print_tokens(t_ms_token *token)
 {
-	//puts("print");
 	while (token != NULL)
 	{
 		printf("%s ", ms_get_identity(token -> index));
@@ -62,17 +61,11 @@ void	ms_free_tokens(t_ms_token *token, bool detach_only)
 		temp = token;
 		token = token -> next;
 		if (detach_only && token != NULL && token -> index < MS_TOKEN_DELIM)
-		//{
-		//	printf("detach: %s\n", ms_get_identity(temp -> index));
 			temp -> next = NULL;
-		//}
 		if (!detach_only && temp -> index >= MS_TOKEN_VARIABLE)
 			free(temp -> content);
 		if (!detach_only || temp -> index < MS_TOKEN_DELIM)
-		//{
-		//	printf("free: %s\n", ms_get_identity(temp -> index));
 			free(temp);
-		//}
 	}
 }
 
