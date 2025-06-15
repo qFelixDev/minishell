@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:52:29 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 12:28:54 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 12:47:31 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_ms_command	*ms_get_command(t_ms_token *token)
 	command = ft_calloc(1, sizeof(t_ms_command));
 	if (command == NULL)
 		return (NULL);
-	command -> argv = ft_calloc(argument_count + 1, sizeof(char*));
+	command -> argv = ft_calloc(argument_count + 1, sizeof(char *));
 	if (command -> argv == NULL)
 		return (free(command), NULL);
 	argument_index = 0;
