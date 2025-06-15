@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 12:24:58 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/14 15:57:26 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 13:42:00 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ t_ms_token	*add_string_token(t_ms_token *token, char *string)
 	while (string[length] != '$' && string[length] != '\0'
 		&& (index != MS_TOKEN_VARIABLE || !ms_isspace(string[length])))
 		length++;
-	token = ms_insert_token(token, index);
+	if (token -> index != MS_TOKEN_UNRESOLVED_STRING)
+		token = ms_insert_token(token, index);
+	else
+		token -> index = index;
 	if (token == NULL)
 		return (NULL);
 	token -> content = malloc(length + 1);
@@ -42,23 +45,25 @@ bool	ms_resolve_strings(t_ms_token *token)
 {
 	char	*string;
 	int8_t	index;
-	size_t	length;
+	int		string_index;
 
 	while (token != NULL)
 	{
 		if (token -> index == MS_TOKEN_UNRESOLVED_STRING)
 		{
 			string = token -> content;
-			while (*string != '\0')
+			string_index = 0;
+			while (string[string_index] != '\0')
 			{
 				if (token -> index != MS_TOKEN_UNRESOLVED_STRING)
 					token -> concatenate_content = true;
-				token = add_string_token(token, string);
+				token = add_string_token(token, string + string_index);
 				if (token == NULL)
-					return (false);
-				string += (token -> index == MS_TOKEN_VARIABLE)
+					return (free(string), false);
+				string_index += (token -> index == MS_TOKEN_VARIABLE)
 					+ ft_strlen(token -> content);
 			}
+			free(string);
 		}
 		token = token -> next;
 	}
