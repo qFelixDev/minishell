@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:33:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/04 15:25:26 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:16:19 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ms_print_env(void)
 		if (env->next && !node->value)
 		{
 			env = env->next;
-			continue;
+			continue ;
 		}
 		printf("%s", node->key);
 		printf("=%s\n", node->value);

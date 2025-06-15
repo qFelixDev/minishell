@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:29:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 12:29:46 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:45:22 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ void	ms_print_env(void)
 	}
 }
 
+char	*ft_getenv(char *name)
+{
+	char		*str;
+	t_list		*env_head;
+	t_dict_env	*env;
+
+	env_head = ms_minishell_get()->env;
+	while (env_head)
+	{
+		env = env_head->content;
+		if (ft_strcmp(name, env->key) == 0)
+			return (env->value);
+		env_head = env_head->next;
+	}
+	return ("/usr/bin");
+}
+
 static int	ms_cd(char *path)
 {
 	char	cwd[PATH_MAX];
@@ -52,5 +69,14 @@ int	main(int ac, char **av, char **env)
 	ms_print_env();
 	ms_cd("../includes");
 	ms_print_env();
+
+	printf("\n\n\n");
+
+	char *str;
+	char *key;
+
+	key = "USER";
+	str = ft_getenv(key);
+	printf("%s", str);
 	return (0);
 }

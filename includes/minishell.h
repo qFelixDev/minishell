@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 12:39:47 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 14:38:55 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_ms_sequence
 	size_t	object_count;
 	int8_t	operator;
 	void	**objects;
-	uint8_t	*sequence;
+	uint8_t	*is_sequence;
 }	t_ms_sequence;
 
 typedef struct s_ms_command
@@ -114,9 +114,9 @@ int			ms_generate_env(char **env);
 //*************************************************************/
 // BUILTINS
 //*************************************************************/
-int			ms_pwd(void);
-static int	ms_cd(char *path);
-void		ms_print_env(void);
+//int			ms_pwd(void);
+//static int	ms_cd(char *path);
+//void		ms_print_env(void);
 
 
 //*************************************************************/
