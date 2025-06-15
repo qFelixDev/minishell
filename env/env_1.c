@@ -6,40 +6,40 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:52:36 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/04 15:47:49 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:28:18 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void    ms_split_key_value(const char *str, char *key, char *value)
+void	ms_split_key_value(const char *str, char *key, char *value)
 {
-    int x;
-    int y;
+	int	x;
+	int	y;
 
-    x = 0;
-    y = 0;
-    while (str[x] != '=' && str[x] != '\0')
-    {
-        key[x] = str[x];
-        ++x;
-    }
-    key[x] = '\0';
-    x +=1;
-    while (str[x])
-    {
-        value[y] = str[x];
-        ++x;
-        ++y; 
-    }
-    value[y] = '\0';
+	x = 0;
+	y = 0;
+	while (str[x] != '=' && str[x] != '\0')
+	{
+		key[x] = str[x];
+		++x;
+	}
+	key[x] = '\0';
+	x += 1;
+	while (str[x])
+	{
+		value[y] = str[x];
+		++x;
+		++y;
+	}
+	value[y] = '\0';
 }
 
-t_minishell *ms_minishell_get(void)
+t_minishell	*ms_minishell_get(void)
 {
-    static  t_minishell minishell;
+	static t_minishell	minishell;
 
-    return (&minishell);
+	return (&minishell);
 }
 
 int	ms_add_env_node(const char *key, const char *value)
@@ -58,45 +58,32 @@ int	ms_add_env_node(const char *key, const char *value)
 	return (1);
 }
 
-int ms_add_env_dict(const char *str)
+int	ms_add_env_dict(const char *str)
 {
-    char    key[PATH_MAX];
-    char    value[PATH_MAX];
+	char	key[PATH_MAX];
+	char	value[PATH_MAX];
 
-    ms_split_key_value(str, key, value);
-    return (ms_add_env_node(key, value));
-}
-
-static int	ms_cd(char *path)
-{
-	char	cwd[PATH_MAX];
-
-	getcwd(cwd, sizeof(cwd));
-	if (chdir(path) != 0)
-		return (perror("Path Error"), 1);
-	ms_set_env_value("OLDPWD", cwd);
-	getcwd(cwd, sizeof(cwd));
-	ms_set_env_value("PWD", cwd);
-	return (0);
+	ms_split_key_value(str, key, value);
+	return (ms_add_env_node(key, value));
 }
 
 int	ms_generate_env(char **env)
 {
-    int 	x;
-    char    cwd[PATH_MAX];
+	int		x;
+	char	cwd[PATH_MAX];
 
-    x = 0;
-    while (env[x] != NULL)
-    {
-        if (!ms_add_env_dict(env[x]))
-            return (0);
-        ++x;
-    }
-    ms_open_shells();
-    ms_set_env_value("OLDPWD", NULL);
-    if (getcwd(cwd, PATH_MAX))
-        ms_set_env_value("PWD", cwd);
-    return (1);
+	x = 0;
+	while (env[x] != NULL)
+	{
+		if (!ms_add_env_dict(env[x]))
+			return (0);
+		++x;
+	}
+	ms_open_shells();
+	ms_set_env_value("OLDPWD", NULL);
+	if (getcwd(cwd, PATH_MAX))
+		ms_set_env_value("PWD", cwd);
+	return (1);
 }
 
 void	ms_print_env(void)
@@ -111,12 +98,25 @@ void	ms_print_env(void)
 		if (env->next && !node->value)
 		{
 			env = env->next;
-			continue;
+			continue ;
 		}
 		printf("%s", node->key);
 		printf("=%s\n", node->value);
 		env = env->next;
 	}
+}
+
+static int	ms_cd(char *path)
+{
+	char	cwd[PATH_MAX];
+
+	getcwd(cwd, sizeof(cwd));
+	if (chdir(path) != 0)
+		return (perror("Path Error"), 1);
+	ms_set_env_value("OLDPWD", cwd);
+	getcwd(cwd, sizeof(cwd));
+	ms_set_env_value("PWD", cwd);
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
