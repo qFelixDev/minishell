@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 09:48:24 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 10:56:10 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 12:56:42 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static t_ms_sequence	*allocate_sequence(t_ms_token *token)
 		return (NULL);
 	sequence -> object_count = 1;
 	bracket_level = 0;
-	token = token -> next;
 	while (bracket_level >= 0)
 	{
 		if (bracket_level == 0 && token -> index <= MS_TOKEN_PIPE)
@@ -105,7 +104,6 @@ t_ms_sequence	*ms_create_sequence(t_ms_token *token)
 		}
 		else
 			sequence -> objects[object_index] = token;
-		printf("%zu %zu\n", object_index, sequence -> object_count);
 		token = next_object(token);
 		object_index++;
 	}
