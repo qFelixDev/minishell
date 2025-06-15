@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/04 14:36:34 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:32:24 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,108 @@
 #include "../libft_extend/libft.h"
 #include <unistd.h>
 #include <stdbool.h>
-
+#include <stdint.h>
 
 //*************************************************************/
-// Structs 
+// ENUM
 //*************************************************************/
 
+enum
+{
+	MS_TOKEN_AND,
+	MS_TOKEN_OR,
+	MS_TOKEN_PIPE,
+	MS_TOKEN_DELIM,
+	MS_TOKEN_APPEND,
+	MS_TOKEN_INPUT,
+	MS_TOKEN_OUTPUT,
+	MS_TOKEN_OPEN,
+	MS_TOKEN_CLOSE,
+	MS_TOKEN_STRING_OPAQUE,
+	MS_TOKEN_STRING_TRANSLUCENT,
+	MS_TOKEN_STRING_TRANSPARENT,
+	MS_TOKEN_MAX
+};
+
+//*************************************************************/
+// STRUCTS
+//*************************************************************/
+
+///////////////SHELL STRUCT
+////////////////////////////////////////////////////////////////
+
+typedef struct s_minishell
+{
+	t_list			*env;
+}				t_minishell;
+
+///////////////ENVIROMENT DICTIONARY
+////////////////////////////////////////////////////////////////
 typedef struct s_dict_env
 {
 	char				*key;
 	char				*value;
 }						t_dict_env;
 
-typedef struct s_minishell
+////////SEQUENZ / Command (Command are in Objekts from sequents)
+////////////////////////////////////////////////////////////////
+
+typedef struct s_ms_sequence
 {
-    t_list          *env;
-}                   t_minishell;
+	void	**objects;
+	uint8_t	*sequence;
+	size_t	object_count;
+}	t_ms_sequence;
+
+typedef struct s_ms_command
+{
+	char	**argv;
+	char	*redirect_delim;
+	char	*redirect_append;
+	char	*redirect_input;
+	char	*redirect_output;
+}	t_ms_command;
+
+///////////////TOKENS
+////////////////////////////////////////////////////////////////
+
+typedef struct s_ms_token
+{
+	struct s_ms_token	*next;
+	int8_t				index;
+	char				*content;
+	bool				concatenate_content;
+}	t_ms_token;
 
 
 //*************************************************************/
-// Enviroment
+// ENVIROMENT
 //*************************************************************/
-void        ms_split_key_value(const char *str, char *key, char *value);
-t_minishell *ms_minishell_get(void);
-int		    ms_add_env_node(const char *key, const char *value);
-int	        ms_add_env_dict(const char *str);
-t_dict_env  *ms_get_env_node(const char *key);
-void        ms_open_shells(void);
-bool        ms_set_env_value(const char *key, const char *value);
-int	        ms_generate_env(char **env);
+void		ms_split_key_value(const char *str, char *key, char *value);
+t_minishell	*ms_minishell_get(void);
+int			ms_add_env_node(const char *key, const char *value);
+int			ms_add_env_dict(const char *str);
+t_dict_env	*ms_get_env_node(const char *key);
+void		ms_open_shells(void);
+bool		ms_set_env_value(const char *key, const char *value);
+int			ms_generate_env(char **env);
+
+
+//*************************************************************/
+// BUILTINS
+//*************************************************************/
+int			ms_pwd(void);
+static int	ms_cd(char *path);
+void		ms_print_env(void);
+
+
+//*************************************************************/
+// PARSING
+//*************************************************************/
+
+int8_t		ms_next_operator(t_ms_token *token);
+void		ms_free_tokens(t_ms_token *token);
+bool		ms_insert_token(t_ms_token *predecessor, int8_t index);
+
 
 #endif

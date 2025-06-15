@@ -12,8 +12,4 @@
 
 #include "../includes/minishell.h"
 
-int ms_clear(void)
-{
-    printf("\033[H\033[J");
-    return 0;
-}
+
