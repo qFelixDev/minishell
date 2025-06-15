@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_tokenize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 12:53:31 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:03:40 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*populate_token_content(
 	if (terminator == '\0' || terminator == '$')
 		while (!ms_isspace(string[length])
 			&& ft_strncmp(string + length, "&&", 2) != 0
-			&& ft_strchr("|()<>*$\"'", string[length]) == NULL)
+			&& ft_strchr("|()<>$\"'", string[length]) == NULL)
 			length++;
 	else
 		while (string[length] != terminator && string[length] != '\0')
@@ -39,7 +39,7 @@ char	*populate_token_content(
 char	*populate_token(t_ms_token *token, char *string)
 {
 	const char *const	token_strings[MS_TOKEN_MAX] = {"&&", "||", "|",
-		"(", ")", "<<", ">>", "<", ">", "*", "$", "\"", "'", ""};
+		"(", ")", "<<", ">>", "<", ">", "$", "\"", "'", ""};
 
 	token -> next = NULL;
 	token -> index = MS_TOKEN_NONE;

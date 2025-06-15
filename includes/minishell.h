@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 12:39:47 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 14:12:06 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ enum
 	MS_TOKEN_APPEND,
 	MS_TOKEN_INPUT,
 	MS_TOKEN_OUTPUT,
-	MS_TOKEN_WILDCARD,
 	MS_TOKEN_VARIABLE,
 	MS_TOKEN_UNRESOLVED_STRING,
 	MS_TOKEN_STRING,
