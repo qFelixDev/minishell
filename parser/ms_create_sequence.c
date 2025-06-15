@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 09:48:24 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/14 14:16:50 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 10:56:10 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ static t_ms_token	*next_object(t_ms_token *token)
 		bracket_level += (token -> index == MS_TOKEN_OPEN);
 		bracket_level -= (token -> index == MS_TOKEN_CLOSE);
 	}
-	token = token -> next;
+	if (token -> next != NULL)
+		token = token -> next;
 	return (token -> next);
 }
 
@@ -92,7 +93,7 @@ t_ms_sequence	*ms_create_sequence(t_ms_token *token)
 		return (NULL);
 	sequence -> operator = ms_next_operator(token);
 	object_index = 0;
-	while (object_index < sequence -> object_count)
+	while (object_index < sequence -> object_count && token != NULL)
 	{
 		if (token -> index == MS_TOKEN_OPEN)
 		{
@@ -104,6 +105,7 @@ t_ms_sequence	*ms_create_sequence(t_ms_token *token)
 		}
 		else
 			sequence -> objects[object_index] = token;
+		printf("%zu %zu\n", object_index, sequence -> object_count);
 		token = next_object(token);
 		object_index++;
 	}
@@ -128,7 +130,7 @@ void	ms_print_sequence(t_ms_sequence *sequence, int indentation)
 				sequence -> objects[object_index], indentation + 1);
 		else
 		{
-			indentation_index = -1;
+			indentation_index = -2;
 			while (++indentation_index < indentation)
 				printf("    ");
 			ms_print_tokens(sequence -> objects[object_index]);

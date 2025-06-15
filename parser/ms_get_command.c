@@ -6,40 +6,32 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:52:29 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/14 17:34:36 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 12:28:54 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "token.h"
+#include "../libft_extend/libft.h"
 
 bool	ms_expand_variables(t_ms_token *token)
 {
+	char	*value;
+
 	while (token != NULL)
 	{
 		if (token -> index == MS_TOKEN_VARIABLE)
 		{
 			value = ft_strdup(getenv(token -> content));
 			if (value == NULL)
-				return (NULL);
+				return (false);
 			free(token -> content);
 			token -> index = MS_TOKEN_STRING;
 			token -> content = value;
 		}
 		token = token -> next;
 	}
-}
-
-t_ms_command	*allocate_command(t_ms_token *token)
-{
-	argument_count = 0;
-	while (token != NULL)
-	{
-		if (token -> index >= MS_UNRESOLVED_STRING)
-			return (printf("ms_get_command only works with resolved, "
-				"non concatenated strings as of now"), NULL);
-		token = token -> next;
-		argument_count++;
-	}
+	return (true);
 }
 
 int	count_arguments(t_ms_token *token)
@@ -49,9 +41,9 @@ int	count_arguments(t_ms_token *token)
 	count = 0;
 	while (token != NULL)
 	{
-		if (token -> index >= MS_UNRESOLVED_STRING)
+		if (token -> index < MS_TOKEN_UNRESOLVED_STRING)
 			return (printf("ms_get_command only works with resolved, "
-				"non concatenated strings as of now"), -1);
+				"non concatenated strings as of now\n"), -1);
 		token = token -> next;
 		count++;
 	}
@@ -85,4 +77,25 @@ t_ms_command	*ms_get_command(t_ms_token *token)
 	while (argument_index-- > 0)
 		free(command -> argv[argument_index]);
 	return (free(command), NULL);
+}
+
+void	ms_free_command(t_ms_command *command)
+{
+	char	**argv;
+
+	argv = command -> argv;
+	while (*argv != NULL)
+		free(*(argv++));
+	free(command -> argv);
+	free(command);
+}
+
+void	ms_print_command(t_ms_command *command)
+{
+	char	**argv;
+
+	argv = command -> argv;
+	while (*argv != NULL)
+		printf("%s ", *(argv++));
+	printf("\n");
 }
