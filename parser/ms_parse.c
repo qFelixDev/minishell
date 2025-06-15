@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:54:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 12:28:43 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 12:54:34 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_ms_sequence	*ms_parse(char *string)
 	token = ms_check_syntax(first);
 	if (token != NULL)
 		return (printf("Unexpected %s after %s\n",
-			ms_get_identity(token -> next -> index),
-			ms_get_identity(token -> index)),
+				ms_get_identity(token->next->index),
+				ms_get_identity(token->index)),
 			ms_free_tokens(first, false), NULL);
 	ms_print_tokens(first);
 	if (ms_expand_precedence(first, MS_TOKEN_AND) == NULL)
@@ -53,23 +53,28 @@ t_ms_sequence	*ms_parse(char *string)
 	return (sequence);
 }
 
-bool print_commands_in_sequence(t_ms_sequence *sequence)
+bool	print_commands_in_sequence(t_ms_sequence *sequence)
 {
-	int object_index = 0;
-	while(object_index < sequence -> object_count) {
-		if(sequence -> is_sequence[object_index / 8] & (1u << (object_index % 8)))
+	int				object_index;
+	t_ms_command* 	command;
+
+	object_index = 0;
+	while (object_index < sequence->object_count)
+	{
+		if (sequence -> is_sequence[object_index / 8]
+			& (1u << (object_index % 8)))
 			print_commands_in_sequence(sequence -> objects[object_index]);
 		else
 		{
-			t_ms_command* command = ms_get_command(sequence -> objects[object_index]);
-			if(command == NULL)
-				return false;
+			t_ms_command* command = ms_get_command(sequence->objects[object_index]);
+			if (command == NULL)
+				return (false);
 			ms_print_command(command);
 			ms_free_command(command);
 		}
 		object_index++;
 	}
-	return true;
+	return (true);
 }
 
 int main() {

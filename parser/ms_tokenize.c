@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_tokenize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/14 15:50:11 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 12:53:31 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*populate_token(t_ms_token *token, char *string)
 		return (string);
 	token -> content = NULL;
 	string = populate_token_content(token, string,
-		*token_strings[token -> index]);
+			*token_strings[token->index]);
 	if (string == NULL)
 		return (NULL);
 	if (token -> index != MS_TOKEN_VARIABLE)
