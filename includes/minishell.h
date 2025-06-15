@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 14:12:06 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 15:08:53 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ t_dict_env	*ms_get_env_node(const char *key);
 void		ms_open_shells(void);
 bool		ms_set_env_value(const char *key, const char *value);
 int			ms_generate_env(char **env);
+char		*ft_getenv(char *name);
 
 
 //*************************************************************/
