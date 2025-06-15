@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 12:32:24 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:39:47 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,21 @@
 
 enum
 {
+	MS_TOKEN_NONE = -1,
 	MS_TOKEN_AND,
 	MS_TOKEN_OR,
 	MS_TOKEN_PIPE,
+	MS_TOKEN_OPEN,
+	MS_TOKEN_CLOSE,
 	MS_TOKEN_DELIM,
 	MS_TOKEN_APPEND,
 	MS_TOKEN_INPUT,
 	MS_TOKEN_OUTPUT,
-	MS_TOKEN_OPEN,
-	MS_TOKEN_CLOSE,
-	MS_TOKEN_STRING_OPAQUE,
-	MS_TOKEN_STRING_TRANSLUCENT,
-	MS_TOKEN_STRING_TRANSPARENT,
+	MS_TOKEN_WILDCARD,
+	MS_TOKEN_VARIABLE,
+	MS_TOKEN_UNRESOLVED_STRING,
+	MS_TOKEN_STRING,
+	MS_TOKEN_SHADOW_STRING,
 	MS_TOKEN_MAX
 };
 
@@ -68,9 +71,10 @@ typedef struct s_dict_env
 
 typedef struct s_ms_sequence
 {
+	size_t	object_count;
+	int8_t	operator;
 	void	**objects;
 	uint8_t	*sequence;
-	size_t	object_count;
 }	t_ms_sequence;
 
 typedef struct s_ms_command
@@ -119,9 +123,11 @@ void		ms_print_env(void);
 // PARSING
 //*************************************************************/
 
-int8_t		ms_next_operator(t_ms_token *token);
-void		ms_free_tokens(t_ms_token *token);
-bool		ms_insert_token(t_ms_token *predecessor, int8_t index);
-
+t_ms_sequence	*ms_parse(char* string);
+t_ms_command	*ms_get_command(t_ms_token *token);
+void			ms_free_sequence(t_ms_sequence *sequence);
+void			ms_free_command(t_ms_command *command);
+void			ms_print_sequence(t_ms_sequence *sequence);
+void			ms_print_command(t_ms_command *command);
 
 #endif
