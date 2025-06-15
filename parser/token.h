@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:50:26 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 14:03:57 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/15 14:59:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifndef MS_TOKENS
+# define MS_TOKENS
 enum
 {
 	MS_TOKEN_NONE = -1,
@@ -32,6 +34,7 @@ enum
 	MS_TOKEN_SHADOW_STRING,
 	MS_TOKEN_MAX
 };
+#endif
 
 typedef struct s_ms_token
 {

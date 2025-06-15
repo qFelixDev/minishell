@@ -1,1 +1,1 @@
-gcc ms_parse.c ms_check_syntax.c ms_create_sequence.c ms_expand_precedence.c ms_resolve_strings.c ms_tokenize.c ms_get_command.c token.c token2.c ../libft_extend/libft.a -fsanitize=address,undefined -g -o _parser
+gcc ms_parse.c ms_check_syntax.c ms_create_sequence.c ms_expand_precedence.c ms_resolve_strings.c ms_tokenize.c ms_simple_get_command.c token.c token2.c ../libft_extend/libft.a -fsanitize=address,undefined -g -o _parser
