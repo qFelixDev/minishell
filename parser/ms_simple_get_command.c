@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:52:29 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 15:00:08 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/16 09:27:06 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static bool	expand_variables(t_ms_token *token)
 	{
 		if (token -> index == MS_TOKEN_VARIABLE)
 		{
-			value = ft_strdup(ft_getenv(token -> content));
+			value = ft_strdup(getenv(token -> content));
 			if (value == NULL)
 				return (false);
 			free(token -> content);

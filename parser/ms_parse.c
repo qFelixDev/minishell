@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:54:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 12:54:34 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:59:08 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ bool	print_commands_in_sequence(t_ms_sequence *sequence)
 		else
 		{
 			t_ms_command* command = ms_get_command(sequence->objects[object_index]);
-			if (command == NULL)
-				return (false);
-			ms_print_command(command);
-			ms_free_command(command);
+			//if (command == NULL)
+			//	return (false);
+			//ms_print_command(command);
+			//ms_free_command(command);
 		}
 		object_index++;
 	}
