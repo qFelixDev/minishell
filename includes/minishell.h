@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 15:08:53 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:20:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ enum
 	MS_TOKEN_APPEND,
 	MS_TOKEN_INPUT,
 	MS_TOKEN_OUTPUT,
+	MS_TOKEN_WILDCARD,
 	MS_TOKEN_VARIABLE,
 	MS_TOKEN_UNRESOLVED_STRING,
 	MS_TOKEN_STRING,
@@ -73,7 +74,7 @@ typedef struct s_ms_sequence
 	size_t	object_count;
 	int8_t	operator;
 	void	**objects;
-	uint8_t	*sequence;
+	uint8_t	*is_sequence;
 }	t_ms_sequence;
 
 typedef struct s_ms_command

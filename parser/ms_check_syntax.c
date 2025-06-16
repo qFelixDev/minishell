@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:55:30 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 14:05:49 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/16 09:18:10 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #define BRANCHES_APPEND				0b00000000011111
 #define BRANCHES_INPUT				0b00000000011111
 #define BRANCHES_OUTPUT				0b00000000011111
+#define BRANCHES_WILDCARD			0b11101111111111
 #define BRANCHES_VARIABLE			0b11101111111111
 #define BRANCHES_UNRESOLVED_STRING	0b11101111111111
 #define BRANCHES_STRING				0b11101111111111
@@ -31,7 +32,7 @@ t_ms_token	*ms_check_syntax(t_ms_token *token)
 	const uint16_t	token_branches[MS_TOKEN_MAX] = {
 		BRANCHES_AND, BRANCHES_OR, BRANCHES_PIPE, BRANCHES_OPEN,
 		BRANCHES_CLOSE, BRANCHES_DELIM, BRANCHES_APPEND, BRANCHES_INPUT,
-		BRANCHES_OUTPUT, BRANCHES_VARIABLE,
+		BRANCHES_OUTPUT, BRANCHES_WILDCARD, BRANCHES_VARIABLE,
 		BRANCHES_UNRESOLVED_STRING, BRANCHES_STRING, BRANCHES_SHADOW_STRING
 	};
 	t_ms_token		*next_token;

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:04:46 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 14:04:08 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/16 09:11:05 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ size_t	ms_count_index(t_ms_token *token, int8_t index)
 const char	*ms_get_identity(int8_t index)
 {
 	static char	*token_identities[MS_TOKEN_MAX] = {"&&", "||", "|", "(",
-		")", "<<", ">>", "<", ">", "$STR", "\"STR\"", "\'STR\'", "~STR~"};
+		")", "<<", ">>", "<", ">", "*", "$STR", "\"STR\"", "\'STR\'", "~STR~"};
 
 	if (index == MS_TOKEN_NONE)
 		index = MS_TOKEN_AND;
