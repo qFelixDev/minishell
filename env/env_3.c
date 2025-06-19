@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:29:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 14:45:22 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:51:30 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,52 @@ static int	ms_cd(char *path)
 	return (0);
 }
 
-int	main(int ac, char **av, char **env)
+char	**ms_gen_env(void)
 {
-	if (!ms_generate_env(env))
-		return (1);
-	ms_print_env();
-	ms_cd("../includes");
-	ms_print_env();
+	t_list	*current;
+	char	**env;
+	int		i;
+	char	*tmp;
 
-	printf("\n\n\n");
-
-	char *str;
-	char *key;
-
-	key = "USER";
-	str = ft_getenv(key);
-	printf("%s", str);
-	return (0);
+	env = malloc(sizeof(char *) * (ft_lstsize(ms_minishell_get()->env) + 1));
+	if (!env)
+		exit(127);
+	current = ms_minishell_get()->env;
+	i = 0;
+	while (current)
+	{
+		if (!((t_dict_env *)current->content)->value)
+		{
+			current = current->next;
+			continue ;
+		}
+		tmp = ft_strjoin(((t_dict_env *)current->content)->key, "=");
+		if (!tmp)
+			exit(127);
+		env[i] = ft_strjoin(tmp, ((t_dict_env *)current->content)->value);
+		free(tmp);
+		current = current->next;
+		i++;
+	}
+	env[i] = NULL;
+	return (env);
 }
+
+//int	main(int ac, char **av, char **env)
+//{
+//	if (!ms_generate_env(env))
+//		return (1);
+//	//ms_print_env();
+//	//ms_cd("../includes");
+//	//ms_print_env();
+//
+//	//printf("\n\n\n");
+//
+//	char *str;
+//	char *key;
+//
+//	key = "PATH";
+//	str = ft_getenv(key);
+//	printf("%s", str);
+//	return (0);
+//}
