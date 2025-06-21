@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/19 11:51:26 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:23:40 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ typedef struct s_ms_token
 //if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
 // if (sequence->is_sequence[i / 8] & (1u << (i % 8)))
 
-void	ft_free_cluster(char	**cluster)
-{
-	int	i;
+//void	ft_free_cluster(char	**cluster)
+//{
+//	int	i;
+//
+//	i = -1;
+//	while (cluster[++i])
+//		free(cluster[i]);
+//	free(cluster);
+//}
 
-	i = -1;
-	while (cluster[++i])
-		free(cluster[i]);
-	free(cluster);
-}
-
-char	*ft_find_path(char *cmd, char *env)
+static char	*ft_find_path(char *cmd, char *env)
 {
 	int		i;
 	char	**path_all;
@@ -79,11 +79,11 @@ char	*ft_find_path(char *cmd, char *env)
 	return (ft_free_cluster(path_all), NULL);
 }
 
-static char	*ft_find_exec_path(char **cmd_s, char *env)
+static char	*ft_find_exec_path(char **cmd_s, char **env)
 {
 	char	*path;
 
-	if (!env)
+	if (!env || !*env)
 	{
 		path = ft_strjoin("/bin/", cmd_s[0]);
 		if (access(path, X_OK) == -1)
@@ -97,14 +97,33 @@ static char	*ft_find_exec_path(char **cmd_s, char *env)
 	return (path);
 }
 
-static void	handle_child_process(t_command *command, char **env_cpy)
+static void	handle_child_process(t_ms_command *command, char **env_cpy)
 {
+	char *path;
+
+	path = ft_find_exec_path(command->argv, env_cpy);
 	command_signals();
-	if (execve(command->path, command->argv, env_cpy) == -1)
-		command_not_found(command->path);
+	if (execve(path, command->argv, env_cpy) == -1)
+		command_not_found(path);
 	destroy_minishell(EXIT_FAILURE);
 }
 
+static int	wait_for_process(pid_t pid, char **env_cpy)
+{
+	int	status;
+	int	sig_num;
+
+	waitpid(pid, &status, 0);
+	free_string_array(env_cpy);
+	main_signals();
+	if (WIFSIGNALED(status))
+	{
+		printf("\n");
+		sig_num = WTERMSIG(status);
+		return (128 + sig_num);
+	}
+	return (WEXITSTATUS(status));
+}
 
 int	ms_execution_command(t_ms_command *command)
 {
@@ -122,40 +141,66 @@ int	ms_execution_command(t_ms_command *command)
 	return (wait_for_process(pid, env_cpy));
 }
 
-void	ms_and_structure(t_ms_sequence *sequence)
-{
-	int	object_index;
+//void	ms_and_structure(t_ms_sequence *sequence)
+//{
+//	int	object_index;
+//
+//	object_index = 0;
+//	while (object_index < sequence->object_count)
+//	{
+//		if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
+//		{
+//			if (sequence->operator == MS_TOKEN_AND)
+//				ms_and_structure(sequence->objects[object_index]);
+//			else if (sequence->operator == MS_TOKEN_OR)
+//				ms_or_structure(sequence->objects[object_index]);
+//			if (sequence->operator == MS_TOKEN_PIPE)
+//				ms_pipe_structure(sequence->objects[object_index]);
+//		}
+//		else
+//		{
+//			//ms_and_prozess()
+//			ms_execution_command(ms_get_command(sequence->objects[object_index]));
+//		}
+//		object_index++;
+//	}
+//}
 
-	object_index = 0;
-	while (object_index < sequence->object_count)
-	{
-		if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
-		{
-			if (sequence->operator == MS_TOKEN_AND)
-				ms_and_structure(sequence->objects[object_index]);
-			else if (sequence->operator == MS_TOKEN_OR)
-				ms_or_structure(sequence->objects[object_index]);
-			if (sequence->operator == MS_TOKEN_PIPE)
-				ms_pipe_structure(sequence->objects[object_index]);
-		}
-		else
-		{
-			//ms_and_prozess()
-			ms_execution_command(ms_get_command(sequence->objects[object_index]));
-		}
-		object_index++;
-	}
-}
-
-void	ms_exe_start(t_ms_sequence *sequence)
-{
-	if (sequence->operator == MS_TOKEN_AND)
-		ms_and_struture(sequence);
-	else if (sequence->operator == MS_TOKEN_OR)
-		ms_or_structure();
-	if (sequence->operator == MS_TOKEN_PIPE)
-		ms_pipe_structure();
-}
+//void	ms_and_exe(t_ms_sequence *sequence)
+//{
+//	int	object_index;
+//	pid_t	pid;
+//
+//	object_index = 0;
+//	while (object_index < sequence->object_count)
+//	{
+//		if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
+//		{
+//			if (sequence->operator == MS_TOKEN_AND)
+//				ms_and_exe(sequence->objects[object_index]);
+//			else if (sequence->operator == MS_TOKEN_OR)
+//				ms_or_exe(sequence->objects[object_index]);
+//			if (sequence->operator == MS_TOKEN_PIPE)
+//				ms_pipe_exe(sequence->objects[object_index]);
+//		}
+//		else
+//		{
+//			//ms_and_prozess()
+//			ms_and_exe_v2(ms_get_command(sequence->objects[object_index]));
+//		}
+//		object_index++;
+//	}
+//}
+//
+//void	ms_exe_start(t_ms_sequence *sequence)
+//{
+//	if (sequence->operator == MS_TOKEN_AND)
+//		ms_and_struture(sequence);
+//	else if (sequence->operator == MS_TOKEN_OR)
+//		ms_or_structure();
+//	if (sequence->operator == MS_TOKEN_PIPE)
+//		ms_pipe_structure();
+//}
 
 
 //char	*ft_find_path(char *cmd, char *env)
@@ -229,34 +274,6 @@ void	ms_exe_start(t_ms_sequence *sequence)
 //	else 
 //		waitpid(pid, NULL, 0);
 //}
-
-void	ms_and_exe(t_ms_sequence *sequence)
-{
-	int	object_index;
-	pid_t	pid;
-
-	object_index = 0;
-	while (object_index < sequence->object_count)
-	{
-		if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
-		{
-			if (sequence->operator == MS_TOKEN_AND)
-				ms_and_exe(sequence->objects[object_index]);
-			else if (sequence->operator == MS_TOKEN_OR)
-				ms_or_exe(sequence->objects[object_index]);
-			if (sequence->operator == MS_TOKEN_PIPE)
-				ms_pipe_exe(sequence->objects[object_index]);
-		}
-		else
-		{
-			//ms_and_prozess()
-			ms_and_exe_v2(ms_get_command(sequence->objects[object_index]));
-		}
-		object_index++;
-	}
-}
-
-
 
 //char	*ft_getenv(char *name)
 //{

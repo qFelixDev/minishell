@@ -1,23 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe_1.c                                            :+:      :+:    :+:   */
+/*   errorhandling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/20 08:23:37 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/06/19 12:01:33 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/06/20 08:23:34 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void exe_manager(t_ms_command *command)
-{
-	char	*build_ins[6];
-	int		i;
-	int		result;
-
-	generatebuildins();
-
-}

@@ -6,11 +6,13 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:33:23 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/04 15:33:23 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/20 08:23:31 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+//cd - handeln und cd ~ handeln 
 
 static int	ms_cd(char *path)
 {
