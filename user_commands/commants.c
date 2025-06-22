@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 12:10:38 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/22 13:24:25 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	get_user_prompt_value(char **value)
 
 	prompt = create_prompt();
 	*value = readline(prompt);
+	//add_history(value);
 	gc_free_ptr(prompt);
 	if (*value == NULL)
 	{

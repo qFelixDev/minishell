@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 10:50:20 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/22 14:08:23 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	ms_exit(int state)
 	exit(state);
 }
 
+// 1) Building the Shell enviroment 
+// 2) Modus switch for different Shell forms
+// 3) Cleanup and exit the shell 
 int	main(int ac, char **argv, char **envp)
 {
 
