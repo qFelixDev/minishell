@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:29:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/19 11:51:30 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/22 10:34:17 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,17 @@ char	**ms_gen_env(void)
 	env[i] = NULL;
 	return (env);
 }
+
+void	free_env_entry(void *content)
+{
+	t_dict_env	*entry;
+
+	entry = content;
+	gc_free_ptr(entry->key);
+	gc_free_ptr(entry->value);
+	gc_free_ptr(entry);
+}
+
 
 //int	main(int ac, char **av, char **env)
 //{

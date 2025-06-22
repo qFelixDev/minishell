@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/19 11:51:28 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:09:08 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@
 # define RESET "\033[0m"
 
 # define MAX_PATH 1024
-# define NUM_BUILTINS 8
 
 # define ERROR_GET_LINE "ERROR WITH GETTING THE LINE"
 # define ERROR_SPLIT "ERROR WITH SPLIT FUNCTION"
@@ -109,6 +108,8 @@ enum
 typedef struct s_minishell
 {
 	t_list			*env;
+	int				exit_status;
+	int				ready_exit;
 }				t_minishell;
 
 ///////////////ENVIROMENT DICTIONARY
@@ -152,6 +153,30 @@ typedef struct s_ms_token
 
 
 //*************************************************************/
+// Signals 
+//*************************************************************/
+void	sighandler(int sig);
+void	main_signals(void);
+void	reset_signals(void);
+
+
+//*************************************************************/
+// UTILS
+//*************************************************************/
+char	*join_str_array(char **list, int size);
+
+//*************************************************************/
+// Garbage Collector
+//*************************************************************/
+void	gc_list_clear(t_list **list, void (*del)(void *));
+void	gc_free_ptr(void *addr);
+void	gc_free(void);
+void	gc_close_fds(void);
+void	gc_close_fd(int fd);
+int		gc_add_fd(int fd);
+
+
+//*************************************************************/
 // ENVIROMENT
 //*************************************************************/
 void		ms_split_key_value(const char *str, char *key, char *value);
@@ -164,6 +189,8 @@ bool		ms_set_env_value(const char *key, const char *value);
 int			ms_generate_env(char **env);
 char		*ft_getenv(char *name);
 char		**ms_gen_env(void);
+void		free_env_entry(void *content);
+
 
 //*************************************************************/
 // BUILTINS
