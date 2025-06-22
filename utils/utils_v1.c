@@ -34,3 +34,28 @@ char	*join_str_array(char **list, int size)
 	}
 	return (result);
 }
+
+//void	free_ast_node(void *content)
+//{
+//	t_ms_sequence	*node;
+//
+//	node = content;
+//	if (node->left)
+//		free_ast_node(node->left);
+//	if (node->right)
+//		free_ast_node(node->right);
+//	gc_free_ptr(node->value);
+//	node->value = NULL;
+//	if (node->heredoc_filename)
+//	{
+//		unlink(node->heredoc_filename);
+//		gc_free_ptr(node->heredoc_filename);
+//		node->heredoc_filename = NULL;
+//	}
+//	if (node->type == AST_COMMAND)
+//	{
+//		gc_list_clear(&node->redirects, free_redirect);
+//		node->redirects = NULL;
+//	}
+//	gc_free_ptr(node);
+//}

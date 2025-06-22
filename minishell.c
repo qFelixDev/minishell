@@ -12,6 +12,14 @@
 
 #include "includes/minishell.h"
 
+// (1) Ignoriere komplett leere Strings (nur Whitespace)
+// (2) Eingabe in die History (readline-History)
+// (3) Parsen der Eingabe → liefert Sequenzbaum (AST)
+// (4) Fehler beim Parsen → Exit-Code setzen
+// (5) Heredocs verarbeiten (z. B. "<< EOF")
+// (6) Ausführen der AST-Befehle → Tree-Traversierung
+// Aufräumen der AST-Struktur
+// Prompt-Zeile freigeben
 static void	handle_shell_input(char *line)
 {
 	t_ms_command	*command;

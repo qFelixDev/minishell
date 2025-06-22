@@ -64,3 +64,4 @@ void	gc_free(void)
 	ft_lstclear(get_gc_head(), free);
 	*get_gc_head() = NULL;
 }
+

@@ -152,6 +152,20 @@ typedef struct s_ms_token
 }	t_ms_token;
 
 //*************************************************************/
+// Commands
+//*************************************************************/
+int		get_user_prompt_value(char **value);
+char	*create_prompt(void);
+
+//*************************************************************/
+// Shell
+//*************************************************************/
+void	non_interactive_arg(char **args, int argc);
+void	interactive(void);
+void	minishell_non_interactive(void);
+
+
+//*************************************************************/
 // Signals 
 //*************************************************************/
 char	*create_prompt(void);
