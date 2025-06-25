@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/16 10:12:29 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/24 11:01:09 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*populate_token(t_ms_token *token, char *string)
 				ft_strlen(token_strings[token -> index])) == 0)
 			break ;
 	string += ft_strlen(token_strings[token -> index]);
-	token -> concatenate_content = ms_isspace(*string);
+	token -> concatenate_content
+		= (!ms_isspace(*string) && token -> index >= MS_TOKEN_WILDCARD);
 	if (token -> index < MS_TOKEN_VARIABLE)
 		return (string);
 	token -> content = NULL;
@@ -58,7 +59,7 @@ char	*populate_token(t_ms_token *token, char *string)
 		return (NULL);
 	if (token -> index != MS_TOKEN_VARIABLE)
 		string += ft_strlen(token_strings[token -> index]);
-	token -> concatenate_content = ms_isspace(*string);
+	token -> concatenate_content = !ms_isspace(*string);
 	if (token -> index == MS_TOKEN_SHADOW_STRING)
 		token -> index = MS_TOKEN_STRING;
 	return (string);

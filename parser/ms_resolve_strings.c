@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 12:24:58 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 15:57:48 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/23 11:13:42 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ t_ms_token	*add_string_token(t_ms_token *token, char *string)
 	}
 	length = 0;
 	while (string[length] != '$' && string[length] != '\0'
-		&& (index != MS_TOKEN_VARIABLE || !ms_isspace(string[length])))
+		&& (index != MS_TOKEN_VARIABLE || ft_isalnum(string[length])
+			|| string[length] == '_'))
 		length++;
 	if (token -> index != MS_TOKEN_UNRESOLVED_STRING)
 		token = ms_insert_token(token, index);
