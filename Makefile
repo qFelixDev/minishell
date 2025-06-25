@@ -6,7 +6,7 @@
 #    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/06/04 18:14:23 by reriebsc         ###   ########.fr        #
+#    Updated: 2025/06/25 12:03:42 by reriebsc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,17 +34,46 @@ LIBFT := $(PATH_LIBFT)/libft.a
 ##                   Quellen
 ##*************************************************************/
 
-SRC = 
+SRCS := main.c\
+		minishell.c\
+		utils/utils_v1.c\
+		user_commands/commants.c\
+		signals/signals_v1.c\
+		parser/token2.c\
+		parser/token.c\
+		parser/ms_tokenize.c\
+		parser/ms_simple_get_command.c\
+		parser/ms_resolve_strings.c\
+		parser/ms_parse.c\
+		parser/ms_get_command.c\
+		parser/ms_expand_precendence.c\
+		parser/ms_create_sequence.c\
+		parser/ms_check_syntax.c\
+		gc_collector/gc_part1.c\
+		gc_collector/gc_part2.c\
+		execution/exe_1.c\
+		execution/exe_2.c\
+		error/errorhandling.c\
+		env/env_1.c\
+		env/env_2.c\
+		env/env_3.c\
+		builtins/cd.c\
+		builtins/clear.c\
+		builtins/echo.c\
+		builtins/env.c\
+		builtins/pwd.c\
+		ast_tree/ast_tree.c\
+
 
 
 # Objekt-Dateien
-OBJS = $(SRCS:.c=.o)
+OBJS := $(SRCS:.c=.o)
 
 # Targets
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(OBJS) $< -o $@
 	@echo "$(GREEN)✅ Executable $@ created successfully!$(RESET)"
 
 # Objektdateien-Regel

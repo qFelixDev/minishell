@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/21 15:24:21 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/25 12:09:15 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	else if (index_buildin == 4)
 		ms_pwd();
 	else if (index_buildin == 5)
-		ms_cd();
+		ms_cd(command->argv[1]);
 	else if (index_buildin == 6)
 		ms_echo();
 	

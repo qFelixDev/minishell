@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 14:08:23 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/25 12:04:16 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ms_exit(int state)
 int	main(int ac, char **argv, char **envp)
 {
 
-	if (!ms_generate_env(envp));
+	if (!ms_generate_env(envp))
 		ms_exit(1);
 	if (ac >= 2)
 		non_interactive_arg(argv + 1, ac - 1);
@@ -36,6 +36,7 @@ int	main(int ac, char **argv, char **envp)
 		interactive();
 	else
 		minishell_non_interactive();
-	destroy_minishell(ms_minishell_get()->exit_status);
+	//destroy_minishell(ms_minishell_get()->exit_status);
+	return (0);
 }
 
