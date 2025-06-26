@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/26 17:18:36 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/26 18:59:56 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,35 @@ bool	matches_pattern(char *pattern, char *string)
 			pattern++;
 		word_terminator = ft_strchr(pattern, '\1');
 	}
+}
+
+bool	matches_pattern(char *pattern, char *string)
+{
+	char	*word_terminator;
+	size_t	word_length;
+
+	word_terminator = ft_strchr(pattern, '\1');
+	if (word_terminator == NULL)
+		return (ft_strncmp(pattern, string, ft_strlen(pattern)) == 0);
+	word_length = word_terminator - pattern;
+	while (true)
+	{
+		if (ft_strncmp(pattern, string, word_length) != 0)
+			return (false);
+		pattern += word_length;
+		string += word_length;
+		while (*pattern == '\1')
+			pattern++;
+		word_terminator = ft_strchr(pattern, '\1');
+		if (word_terminator == NULL)
+			break ;
+		word_length = word_terminator - pattern;
+		while (ft_strncmp(pattern, string, word_length) != 0 && *string != '\0')
+			string++;
+	}
+	while (ft_strncmp(pattern, string, ft_strlen(pattern)) != 0 && *string != '\0')
+		string++;
+	return (ft_strncmp(pattern, string, ft_strlen(pattern)) == 0);
 }
 
 // Pass "/" to this function if path is absolute, "" if relative and the value of $HOME if preceded by a noodle
