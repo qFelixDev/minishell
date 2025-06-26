@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/26 23:18:21 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/27 00:34:26 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,157 +83,6 @@ bool	ruin_delimiters(t_ms_token *token)
 		token = token -> next;
 	}
 	return (true);
-}
-
-size_t	apply_working_directory(t_ms_token *token, t_ms_pattern *pattern)
-{
-	char	*working_directory;
-
-	if (!(token -> index == MS_TOKEN_STRING && token -> content[0] == '/'))
-	{
-		working_directory = getcwd(NULL, 0);
-		if (pattern != NULL)
-			ft_strlcpy(pattern -> string, working_directory,
-				ft_strlen(working_directory) + 1);
-		return (ft_strlen(working_directory));
-	}
-	return (0);
-}
-
-size_t	ms_populate_pattern(t_ms_token *token, t_ms_pattern *pattern)
-{
-	size_t		length;
-
-	length = apply_working_directory(token, pattern);
-	while (token != NULL && token -> index >= MS_TOKEN_WILDCARD)
-	{
-		if (pattern != NULL && token -> index == MS_TOKEN_STRING)
-			ft_strlcpy(pattern -> string + length, token -> content,
-				ft_strlen(token -> content) + 1);
-		if (pattern != NULL && token -> index == MS_TOKEN_WILDCARD)
-			pattern -> is_wildcard[length / 8] |= (1u << (length % 8));
-		if (token -> index == MS_TOKEN_STRING)
-			length += ft_strlen(token -> content);
-		length += (token -> index == MS_TOKEN_WILDCARD);
-		if (!token -> concatenate_content)
-			break ;
-		token = token -> next;
-	}
-	return (length);
-}
-
-size_t	ms_populate_pattern(t_ms_token *token, char *pattern)
-{
-	size_t	length;
-
-	length = 0;
-	while (token != NULL && token -> index >= MS_TOKEN_WILDCARD)
-	{
-		if (pattern != NULL)
-		{
-			if (token -> index == MS_TOKEN_STRING)
-				ft_strlcpy(pattern + length, token -> content,
-					ft_strlen(token -> content));
-			else
-				pattern[length] = '\1';
-		}
-		if (token -> index == MS_TOKEN_STRING)
-			length += ft_strlen(token -> content);
-		length += (token -> index == MS_TOKEN_WILDCARD);
-		if (!token -> concatenate_content)
-			break ;
-		token = token -> next;
-	}
-	return (length);
-}
-
-bool	matches_pattern(char *pattern, char *string)
-{
-	size_t	length;
-
-	word_terminator = ft_strchr(pattern, '\1');
-	while (word_terminator != NULL);
-	{
-		while (ft_strncmp(pattern, string, word_length) != 0
-			&& *string != '\0')
-			string++;
-		pattern += word_length;
-		string += word_length;
-		while (*pattern == '\1')
-			pattern++;
-		word_terminator = ft_strchr(pattern, '\1');
-	}
-}
-
-bool	matches_pattern(char *pattern, char *string)
-{
-	char	*word_terminator;
-	size_t	word_length;
-
-	word_terminator = ft_strchr(pattern, '\1');
-	if (word_terminator == NULL)
-		return (ft_strncmp(pattern, string, ft_strlen(pattern)) == 0);
-	word_length = word_terminator - pattern;
-	while (true)
-	{
-		if (ft_strncmp(pattern, string, word_length) != 0)
-			return (false);
-		pattern += word_length;
-		string += word_length;
-		while (*pattern == '\1')
-			pattern++;
-		word_terminator = ft_strchr(pattern, '\1');
-		if (word_terminator == NULL)
-			break ;
-		word_length = word_terminator - pattern;
-		while (ft_strncmp(pattern, string, word_length) != 0 && *string != '\0')
-			string++;
-	}
-	while (ft_strncmp(pattern, string, ft_strlen(pattern)) != 0 && *string != '\0')
-		string++;
-	return (ft_strncmp(pattern, string, ft_strlen(pattern)) == 0);
-}
-
-// Pass "/" to this function if path is absolute, "" if relative and the value of $HOME if preceded by a noodle
-
-size_t	ms_enumerate_matches(char *pattern, char *path, char **matches)
-{
-	DIR *const		directory = opendir(path);
-	struct dirent	*entry;
-	struct stat		status;
-	size_t			match_count;
-	size_t			result;
-	char			*new_path;
-
-	if (directory == NULL)
-		return (SIZE_MAX);
-	entry = readdir(directory);
-	while (entry != NULL)
-	{
-		if (matches_pattern(pattern, entry -> d_name))
-		{
-			new_path = ft_strjoin(path, entry -> d_name);
-			if (new_path == NULL || lstat(new_path, &status) == -1)
-				return (closedir(directory), free(path), SIZE_MAX);
-			if (ft_strchr(pattern, '/') == NULL)
-			{
-				if (matches != NULL)
-					matches[match_count] = new_path;
-				match_count++;
-			}
-			else if (S_ISDIR(status.st_mode))
-			{
-				result = ms_populate_matches(next_pattern(pattern), matches + match_count);
-				if (result == SIZE_MAX)
-					return (closedir(directory), free(path), SIZE_MAX);
-				match_count += result;
-			}
-		}
-		entry = readdir(directory);
-	}
-	closedir(directory);
-	free(path);
-	return (match_count);
 }
 
 int	count_arguments(t_ms_token *token)
@@ -313,56 +162,47 @@ t_ms_command	*ms_allocate_command(t_ms_token *token)
 	return (command);
 }
 
+size_t	ms_concatenate_pattern(t_ms_token *token, char *pattern)
+{
+	size_t	length;
+
+	length = 0;
+	while (token != NULL && token -> index >= MS_TOKEN_WILDCARD)
+	{
+		if (token -> index == MS_TOKEN_STRING && pattern != NULL)
+			ft_strlcpy(pattern + length, token -> content,
+				ft_strlen(token -> content) + 1);
+		if (token -> index == MS_TOKEN_WILDCARD && pattern != NULL)
+			pattern[length] = '\1';
+		if (token -> index == MS_TOKEN_STRING)
+			length += ft_strlen(token -> content);
+		length += (token -> index == MS_TOKEN_WILDCARD);
+		if (!token -> concatenate_content)
+			break ;
+		token = token -> next;
+	}
+	return (length);
+}
+
 bool	check_ambiguity(t_ms_token *token)
 {
+	char	*pattern;
+
 	if (token == NULL)
 		return (true);
 	while (token -> next != NULL)
 	{
 		if (token -> index >= MS_TOKEN_APPEND
-			&& token -> index <= MS_TOKEN_OUTPUT
-			&& ms_enumerate_matches(token -> next, NULL) != 1)
-			return (false);
-		token = token -> next;
-	}
-	return (true);
-}
-
-t_ms_token	*next_pattern_token(t_ms_token *token)
-{
-	if (token -> index >= MS_TOKEN_DELIM && token -> index <= MS_TOKEN_OUTPUT)
-		token = token -> next;
-	while (token != NULL && token -> index >= MS_TOKEN_WILDCARD
-		&& token -> concatenate_content)
-		token = token -> next;
-	if (token != NULL && token -> index >= MS_TOKEN_WILDCARD)
-		token = token -> next;
-	return (token);
-}
-
-bool	populate_command(t_ms_command *command, t_ms_token *token)
-{
-	int	argument_index;
-	int	redirect_indices[4];
-
-	argument_index = 0;
-	ft_bzero(redirect_indices, 4 * sizeof(int));
-	while (token != NULL)
-	{
-		if (token -> index >= MS_TOKEN_DELIM
 			&& token -> index <= MS_TOKEN_OUTPUT)
-			if (ms_enumerate_matches(token -> next, command -> redirects
-				[token->index] + redirect_indices[token->index]++) == SIZE_MAX)
-				return (false);
-		else
 		{
-			result = ms_enumerate_matches(token,
-				command -> argv[argument_index]);
-			if (result == SIZE_MAX)
+			pattern = malloc(ms_concatenate_pattern(token -> next, NULL));
+			if (pattern == NULL)
 				return (false);
-			argument_index += result;
+			ms_concatenate_pattern(token -> next, pattern);
+			if (ms_enumerate_matches(pattern, ft_strdup("./"), NULL) != 1)
+				return (false);
 		}
-		token = next_pattern_token(token);
+		token = token -> next;
 	}
 	return (true);
 }
