@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/26 18:59:56 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/26 23:18:21 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,27 +234,6 @@ size_t	ms_enumerate_matches(char *pattern, char *path, char **matches)
 	closedir(directory);
 	free(path);
 	return (match_count);
-}
-
-size_t	ms_enumerate_matches(t_ms_token *token, char **matches)
-{
-	t_ms_pattern	pattern;
-	size_t			result;
-
-	result = ms_populate_pattern(token, NULL);
-	if (result == SIZE_MAX)
-		return (SIZE_MAX);
-	pattern.string = malloc(pattern_length + 1);
-	pattern.is_wildcard = malloc((pattern_length / 8) + 1);
-	if (pattern.string == NULL || pattern.is_wildcard == NULL)
-		return (free(pattern.string), free(pattern.is_wildcard), SIZE_MAX);
-	result = ms_populate_pattern(token, NULL);
-	if (result == SIZE_MAX)
-		return (SIZE_MAX);
-	result = ms_populate_matches(pattern, );
-	free(pattern.string);
-	free(pattern.is_wildcard);
-	return (result);
 }
 
 int	count_arguments(t_ms_token *token)
