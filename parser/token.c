@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:04:46 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/16 09:11:05 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/30 15:51:17 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ms_count_index(t_ms_token *token, int8_t index)
 	bracket_level = 0;
 	count = 0;
 	token = token -> next;
-	while (bracket_level >= 0)
+	while (bracket_level >= 0 && token != NULL)
 	{
 		count += (bracket_level == 0 && token -> index == index);
 		bracket_level += (token -> index == MS_TOKEN_OPEN);

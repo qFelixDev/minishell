@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_enumerate_matches.c                             :+:      :+:    :+:   */
+/*   ms_expand_wildcards.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:27:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/27 00:06:35 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:50:02 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <sys/stat.h>
 #include "../libft_extend/libft.h"
 #include <stdbool.h>
+#include "../includes/minishell.h"
+#include<assert.h>
 
 char	*next_wildcard(char *pattern)
 {
@@ -29,7 +31,7 @@ char	*next_wildcard(char *pattern)
 	return (pattern);
 }
 
-bool	matches_pattern(char *pattern, char *string)
+bool	matches_pattern_old(char *pattern, char *string)
 {
 	char	*word_terminator;
 	size_t	word_length;
@@ -67,6 +69,41 @@ bool	matches_pattern(char *pattern, char *string)
 	return (ft_strncmp(pattern, string, pattern_length) == 0);
 }
 
+size_t	get_word_length(char *word)
+{
+	size_t	length;
+
+	length = 0;
+	while (word[length] != '\0' && word[length] != '\1' && word[length] != '/')
+		length++;
+	return (length);
+}
+
+bool	matches_pattern(char *pattern, char *string)
+{
+	size_t	length;
+
+	length = get_word_length(pattern);
+	if (pattern[length] == '\1')
+		while (true)
+		{
+			if (ft_strncmp(pattern, string, length) != 0)
+				return (false);
+			pattern += length;
+			string += length;
+			while (*pattern == '\1')
+				pattern++;
+			length = get_word_length(pattern);
+			if (pattern[length] != '\1')
+				break ;
+			while (ft_strncmp(pattern, string, length) != 0 && *string != '\0')
+				string++;
+		}
+	while (ft_strncmp(pattern, string, length) != 0 && *string != '\0')
+		string++;
+	return (ft_strncmp(pattern, string, length) == 0);
+}
+
 // Pass "/" to this function if path is absolute, "" if relative and the value of $HOME if preceded by a noodle
 
 char	*next_pattern(char *pattern)
@@ -78,7 +115,7 @@ char	*next_pattern(char *pattern)
 	return (pattern);
 }
 
-size_t	ms_enumerate_matches(char *pattern, char *path, char **matches, size_t offset)
+size_t	enumerate_matches(char *pattern, char *path, char **matches, size_t offset)
 {
 	DIR *const		directory = opendir(path);
 	struct dirent	*entry;
@@ -113,7 +150,7 @@ size_t	ms_enumerate_matches(char *pattern, char *path, char **matches, size_t of
 			else if (S_ISDIR(status.st_mode))
 			{
 				ft_strlcat(new_path, "/", new_length + 1);
-				result = ms_enumerate_matches(next_pattern(pattern), new_path, matches, match_count);
+				result = enumerate_matches(next_pattern(pattern), new_path, matches, match_count);
 				if (result == SIZE_MAX)
 					return (closedir(directory), free(path), SIZE_MAX);
 				match_count += result;
@@ -126,18 +163,53 @@ size_t	ms_enumerate_matches(char *pattern, char *path, char **matches, size_t of
 	return (match_count);
 }
 
-/*
-int main() {
-	char* pattern = "../lib\1\1\1t\1/\1l\1/\1";
-	size_t amount = ms_enumerate_matches(pattern, ft_strdup("./"), NULL, 0);
-	char** matches = malloc(amount * sizeof(char*));
-	ms_enumerate_matches(pattern, ft_strdup("./"), matches, 0);
-	size_t index = 0;
-	while(index < amount) {
-		puts(matches[index]);
-		free(matches[index]);
-		index++;
+size_t	get_pattern(t_ms_token *token, char *pattern)
+{
+	size_t	length;
+
+	length = 0;
+	while (token != NULL && token -> index >= MS_TOKEN_WILDCARD)
+	{
+		if (token -> index == MS_TOKEN_STRING && pattern != NULL)
+			ft_strlcpy(pattern + length, token -> content,
+				ft_strlen(token -> content) + 1);
+		if (token -> index == MS_TOKEN_WILDCARD && pattern != NULL)
+			pattern[length] = '\1';
+		if (token -> index == MS_TOKEN_STRING)
+			length += ft_strlen(token -> content);
+		length += (token -> index == MS_TOKEN_WILDCARD);
+		if (!token -> concatenate_content)
+			break ;
+		token = token -> next;
 	}
-	free(matches);
+	return (length);
 }
-*/
+
+void print_pattern(char *pattern) {
+	while(*pattern != '\0') {
+		if(*pattern == '\1')
+			printf("[*]");
+		else
+			putchar(*pattern);
+		pattern++;
+	}
+	printf("\n");
+}
+
+size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
+{
+	size_t		match_count;
+	char *const	pattern = ft_calloc(1, get_pattern(token, NULL) + 1);
+
+	assert(token -> index >= MS_TOKEN_WILDCARD);
+	if (pattern == NULL)
+		return (SIZE_MAX);
+	get_pattern(token, pattern);
+	print_pattern(pattern);
+	match_count = enumerate_matches(pattern, ft_strdup("./"), NULL, 0);
+	if (match_count == SIZE_MAX || paths == NULL)
+		return (match_count);
+	match_count = enumerate_matches(pattern, ft_strdup("./"), paths, 0);
+	free(pattern);
+	return (match_count);
+}

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:50:26 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/16 09:10:02 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/30 15:44:36 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#ifndef MS_TOKENS
-# define MS_TOKENS
+#ifndef MINISHELL_H
 enum
 {
 	MS_TOKEN_NONE = -1,
@@ -35,7 +34,6 @@ enum
 	MS_TOKEN_SHADOW_STRING,
 	MS_TOKEN_MAX
 };
-#endif
 
 typedef struct s_ms_token
 {
@@ -57,12 +55,9 @@ typedef struct s_ms_command
 {
 	char	**argv; // [0] = echo, [1] = "string", [2] = "noch ein string", [3] = "reriebsc"
 	char	***redirects;
-
-	char	**input_redirect;
-	char	**output_redirect;
-	char	**delim_redirect;
-	char	**append_redirect;
 }	t_ms_command;
+
+#endif
 
 size_t			ms_count_index(t_ms_token *token, int8_t index);
 const char		*ms_get_identity(int8_t index);

@@ -6,13 +6,16 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/27 00:34:26 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:24:48 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define MS_TOKENS
 #include "../includes/minishell.h"
+#include "token.h"
 
 void	ms_print_tokens(t_ms_token *token);
+size_t	ms_expand_wildcards(t_ms_token *token, char **paths);
 
 bool	expand_variables(t_ms_token *token)
 {
@@ -71,11 +74,9 @@ bool	ruin_delimiters(t_ms_token *token)
 	{
 		if (token -> index < MS_TOKEN_WILDCARD)
 			is_ruining = false;
-		if (is_ruining) {
+		if (is_ruining)
 			if (!ruin_delimiter(token))
 				return (false);
-			//puts("ruin");
-		}
 		if (!token -> concatenate_content)
 			is_ruining = false;
 		if (token -> index == MS_TOKEN_DELIM)
@@ -87,23 +88,30 @@ bool	ruin_delimiters(t_ms_token *token)
 
 int	count_arguments(t_ms_token *token)
 {
-	size_t			result;
-	int				argument_count;
-	t_ms_pattern	*pattern;
+	size_t	result;
+	int		argument_count;
 
 	argument_count = -ms_count_index(token, MS_TOKEN_DELIM);
 	argument_count -= ms_count_index(token, MS_TOKEN_APPEND);
 	argument_count -= ms_count_index(token, MS_TOKEN_INPUT);
 	argument_count -= ms_count_index(token, MS_TOKEN_OUTPUT);
 	if (token -> index >= MS_TOKEN_WILDCARD)
-		if (!ms_enumerate_matches(token, NULL))
+	{
+		result = ms_expand_wildcards(token, NULL);
+		if (result == SIZE_MAX)
 			return (-1);
+		argument_count += result;
+	}
 	while (token -> next != NULL)
 	{
 		if (!token -> concatenate_content
 			&& token -> next -> index >= MS_TOKEN_WILDCARD)
-			if (ms_enumerate_matches(token, NULL) == SIZE_MAX)
+		{
+			result = ms_expand_wildcards(token -> next, NULL);
+			if (result == SIZE_MAX)
 				return (-1);
+			argument_count += result;
+		}
 		token = token -> next;
 	}
 	return (argument_count);
@@ -112,6 +120,7 @@ int	count_arguments(t_ms_token *token)
 void	ms_free_command(t_ms_command *command)
 {
 	int	index;
+	int	file_index;
 
 	if (command == NULL)
 		return ;
@@ -146,8 +155,11 @@ t_ms_command	*ms_allocate_command(t_ms_token *token)
 	command = ft_calloc(1, sizeof(t_ms_command));
 	if (command == NULL)
 		return (NULL);
-	command -> argv = malloc(argument_count);
+	command -> argv = ft_calloc(sizeof(char *), argument_count + 1);
 	if (command -> argv == NULL)
+		return (ms_free_command(command), NULL);
+	command -> redirects = ft_calloc(sizeof(char **), 4);
+	if (command -> redirects == NULL)
 		return (ms_free_command(command), NULL);
 	redirect_index = 0;
 	while (redirect_index < 4)
@@ -162,31 +174,10 @@ t_ms_command	*ms_allocate_command(t_ms_token *token)
 	return (command);
 }
 
-size_t	ms_concatenate_pattern(t_ms_token *token, char *pattern)
-{
-	size_t	length;
-
-	length = 0;
-	while (token != NULL && token -> index >= MS_TOKEN_WILDCARD)
-	{
-		if (token -> index == MS_TOKEN_STRING && pattern != NULL)
-			ft_strlcpy(pattern + length, token -> content,
-				ft_strlen(token -> content) + 1);
-		if (token -> index == MS_TOKEN_WILDCARD && pattern != NULL)
-			pattern[length] = '\1';
-		if (token -> index == MS_TOKEN_STRING)
-			length += ft_strlen(token -> content);
-		length += (token -> index == MS_TOKEN_WILDCARD);
-		if (!token -> concatenate_content)
-			break ;
-		token = token -> next;
-	}
-	return (length);
-}
-
 bool	check_ambiguity(t_ms_token *token)
 {
 	char	*pattern;
+	size_t	result;
 
 	if (token == NULL)
 		return (true);
@@ -195,14 +186,47 @@ bool	check_ambiguity(t_ms_token *token)
 		if (token -> index >= MS_TOKEN_APPEND
 			&& token -> index <= MS_TOKEN_OUTPUT)
 		{
-			pattern = malloc(ms_concatenate_pattern(token -> next, NULL));
-			if (pattern == NULL)
+			result = ms_expand_wildcards(token -> next, NULL);
+			if (result != 1)
+			{
+				printf("Ambiguous redirect: %zu\n", result);
 				return (false);
-			ms_concatenate_pattern(token -> next, pattern);
-			if (ms_enumerate_matches(pattern, ft_strdup("./"), NULL) != 1)
-				return (false);
+			}
 		}
 		token = token -> next;
+	}
+	return (true);
+}
+
+bool	populate_command(t_ms_command *command, t_ms_token *token)
+{
+	int		argument_index;
+	int		redirect;
+	size_t	result;
+	int		redirect_indices[4];
+
+	argument_index = 0;
+	ft_bzero(redirect_indices, sizeof(redirect_indices));
+	while (token != NULL)
+	{
+		if (token -> index >= MS_TOKEN_WILDCARD)
+		{
+			result = ms_expand_wildcards(token, command -> argv + argument_index);
+			if (result == SIZE_MAX)
+				return (false);
+			argument_index += result;
+		}
+		else
+		{
+			redirect = token -> index - MS_TOKEN_DELIM;
+			token = token -> next;
+			if (ms_expand_wildcards(token, command -> redirects[redirect] + redirect_indices[redirect]++) == SIZE_MAX)
+				return (false);
+		}
+		while (token != NULL && token -> concatenate_content)
+			token = token -> next;
+		if (token != NULL)
+			token = token -> next;
 	}
 	return (true);
 }
@@ -212,18 +236,28 @@ t_ms_command	*ms_get_command(t_ms_token *token)
 	t_ms_command	*command;
 
 	ms_print_tokens(token);
-	if (!ruin_delimiters(token))
+	if (!ruin_delimiters(token)) {
+		puts("Unable to ruin delimiters");
 		return (NULL);
+	}
 	ms_print_tokens(token);
-	if (!expand_variables(token))
+	if (!expand_variables(token)) {
+		puts("Variable expansion failed");
 		return (NULL);
+	}
 	ms_print_tokens(token);
 	if (!check_ambiguity(token))
 		return (NULL);
-	command = allocate_command(token);
-	if (command == NULL)
+	command = ms_allocate_command(token);
+	if (command == NULL) {
+		puts("Command allocation failed");
 		return (NULL);
+	}
 	if (!populate_command(command, token))
 		return (ms_free_command(command), NULL);
+	int argument_count = 0;
+	while(command -> argv[argument_count] != NULL)
+		argument_count++;
+	printf("%d\n", argument_count);
 	return (command);
 }
