@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:27:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/30 17:50:02 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:53:18 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ bool	matches_pattern(char *pattern, char *string)
 {
 	size_t	length;
 
+	if (ft_strncmp(string, "..", ft_strlen(string)) == 0 && pattern[0] != '.')
+		return (false);
 	length = get_word_length(pattern);
 	if (pattern[length] == '\1')
 		while (true)
