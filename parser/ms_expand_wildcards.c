@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:27:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/30 17:53:18 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/06/30 20:38:35 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,55 +19,6 @@
 #include <stdbool.h>
 #include "../includes/minishell.h"
 #include<assert.h>
-
-char	*next_wildcard(char *pattern)
-{
-	while (*pattern != '\1')
-	{
-		if (*pattern == '/' || *pattern == '\0')
-			return (NULL);
-		pattern++;
-	}
-	return (pattern);
-}
-
-bool	matches_pattern_old(char *pattern, char *string)
-{
-	char	*word_terminator;
-	size_t	word_length;
-	size_t	pattern_length;
-
-	word_terminator = next_wildcard(pattern);
-	if (word_terminator == NULL)
-	{
-		pattern_length = 0;
-		while (pattern[pattern_length] != '/' && pattern[pattern_length] != '\0')
-			pattern_length++;
-		return (ft_strncmp(pattern, string, pattern_length) == 0);
-	}
-	word_length = word_terminator - pattern;
-	while (true)
-	{
-		if (ft_strncmp(pattern, string, word_length) != 0)
-			return (false);
-		pattern += word_length;
-		string += word_length;
-		while (*pattern == '\1')
-			pattern++;
-		word_terminator = next_wildcard(pattern);
-		if (word_terminator == NULL)
-			break ;
-		word_length = word_terminator - pattern;
-		while (ft_strncmp(pattern, string, word_length) != 0 && *string != '\0')
-			string++;
-	}
-	pattern_length = 0;
-	while (pattern[pattern_length] != '/' && pattern[pattern_length] != '\0')
-		pattern_length++;
-	while (ft_strncmp(pattern, string, pattern_length) != 0 && *string != '\0')
-		string++;
-	return (ft_strncmp(pattern, string, pattern_length) == 0);
-}
 
 size_t	get_word_length(char *word)
 {
@@ -83,7 +34,7 @@ bool	matches_pattern(char *pattern, char *string)
 {
 	size_t	length;
 
-	if (ft_strncmp(string, "..", ft_strlen(string)) == 0 && pattern[0] != '.')
+	if (pattern[0] != '.' && string[0] == '.')
 		return (false);
 	length = get_word_length(pattern);
 	if (pattern[length] == '\1')
@@ -201,17 +152,21 @@ void print_pattern(char *pattern) {
 size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 {
 	size_t		match_count;
+	bool		is_absolute;
 	char *const	pattern = ft_calloc(1, get_pattern(token, NULL) + 1);
 
 	assert(token -> index >= MS_TOKEN_WILDCARD);
 	if (pattern == NULL)
 		return (SIZE_MAX);
 	get_pattern(token, pattern);
+	is_absolute = (pattern[0] == '/');
 	print_pattern(pattern);
-	match_count = enumerate_matches(pattern, ft_strdup("./"), NULL, 0);
+	match_count = enumerate_matches(
+		pattern + is_absolute, ft_strdup(&"./"[is_absolute]), NULL, 0);
 	if (match_count == SIZE_MAX || paths == NULL)
 		return (match_count);
-	match_count = enumerate_matches(pattern, ft_strdup("./"), paths, 0);
+	match_count = enumerate_matches(
+		pattern + is_absolute, ft_strdup(&"./"[is_absolute]), paths, 0);
 	free(pattern);
 	return (match_count);
 }
