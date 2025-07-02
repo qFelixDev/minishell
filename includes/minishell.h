@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 13:24:03 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/29 12:58:19 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,18 @@ enum
 // STRUCTS
 //*************************************************************/
 
+///////////////Pipe Struct
+////////////////////////////////////////////////////////////////
+
+typedef struct s_pipe_data
+{
+	int					pipe_fds[2];
+	pid_t				left_pid;
+	pid_t				right_pid;
+	int					right_status;
+	int					right_result;
+}						t_pipe_data;
+
 ///////////////SHELL STRUCT
 ////////////////////////////////////////////////////////////////
 
@@ -110,6 +122,8 @@ typedef struct s_minishell
 	t_list			*env;
 	int				exit_status;
 	int				ready_exit;
+	bool			or_sequenze;
+	bool			finish_or;
 }				t_minishell;
 
 ///////////////ENVIROMENT DICTIONARY
@@ -150,6 +164,15 @@ typedef struct s_ms_token
 	char				*content;
 	bool				concatenate_content;
 }	t_ms_token;
+
+//*************************************************************/
+// Pipes
+//*************************************************************/
+void		pipe_left_process(t_ms_sequence *sequence, t_pipe_data *pipe_data);
+void		pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data);
+void		pipe_fork_error(t_pipe_data *pipe_data);
+static void	close_pipe_and_wait(t_pipe_data *pipe_data);
+void		pipe_monitor(t_ms_sequence *sequence);
 
 //*************************************************************/
 // Commands
@@ -218,6 +241,7 @@ void		free_env_entry(void *content);
 int			ms_pwd(void);
 static int	ms_cd(char *path);
 void		ms_print_env(void);
+int			ft_unset(t_ms_command *command);
 
 
 //*************************************************************/

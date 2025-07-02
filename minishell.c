@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 14:22:03 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/29 12:58:31 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@
 // Prompt-Zeile freigeben
 static void	handle_shell_input(char *line)
 {
-	t_ms_command	*command;
 	t_ms_sequence	*sequence;
 
-	command = NULL;
 	if(is_empty_str(line))
 	{
 		gc_free_ptr(line);
@@ -47,7 +45,7 @@ static void	handle_shell_input(char *line)
 			ms_minishell_get()->exit_status = EXIT_FAILURE;
 		return ;
 	}
-	return (tree_monitor(sequence, command), free_ms__sequence(), gc_free_ptr(line));
+	return (tree_monitor(sequence), free_ms__sequence(), gc_free_ptr(line));
 }
 
 
