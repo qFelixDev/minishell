@@ -6,21 +6,21 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/02 09:42:15 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:58:21 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include "../libft_extend/libft.h"
-#include <unistd.h>
-#include <stdbool.h>
-#include <stdint.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include "../libft_extend/libft.h"
+# include <unistd.h>
+# include <stdbool.h>
+# include <stdint.h>
 
 
 
@@ -68,17 +68,11 @@
 # define ERROR_PWD "pwd : too many arguments"
 # define ERROR_EXPORT "inconsistant type for assignement"
 
-
-
-
-
-
-
 //*************************************************************/
 // ENUM
 //*************************************************************/
 
-enum
+typedef enum e_token_type
 {
 	MS_TOKEN_NONE = -1,
 	MS_TOKEN_AND,
@@ -95,12 +89,27 @@ enum
 	MS_TOKEN_UNRESOLVED_STRING,
 	MS_TOKEN_STRING,
 	MS_TOKEN_SHADOW_STRING,
-	MS_TOKEN_MAX
-};
+	MS_TOKEN_MAX,
+	MS_TOKEN_REDIRECT_INPUT,
+	MS_TOKEN_REDIRECT_OUTPUT,
+	MS_TOKEN_REDIRECT_APPEND,
+	MS_TOKEN_REDIRECT_INPUT_APPEND,
+}						t_token_type;
 
 //*************************************************************/
 // STRUCTS
 //*************************************************************/
+
+///////////////Redirect Struct
+////////////////////////////////////////////////////////////////
+
+typedef struct s_redirect
+{
+	int					fd_left;
+	int					fd_right;
+	char				*file;
+	t_token_type		type;
+}						t_redirect;
 
 ///////////////Pipe Struct
 ////////////////////////////////////////////////////////////////
@@ -124,6 +133,7 @@ typedef struct s_minishell
 	int				ready_exit;
 	bool			or_sequenze;
 	bool			finish_or;
+	int				heredoc_failed;
 }				t_minishell;
 
 ///////////////ENVIROMENT DICTIONARY
@@ -162,90 +172,130 @@ typedef struct s_ms_token
 	bool				concatenate_content;
 }	t_ms_token;
 
+///////////////Escape Date 
+////////////////////////////////////////////////////////////////
+
+typedef struct s_escape_data
+{
+	char				*str;
+	int					*i;
+	int					*j;
+	bool				*in_quotes;
+	char				*quote_type;
+	int					len;
+}						t_escape_data;
+
+//*************************************************************/
+// Redirections
+//*************************************************************/
+
+size_t			*get_char_count(void);
+char			*strlst_to_str(t_list *result_chars);
+bool			add_str_to_result(const char *str, size_t *i,
+					t_list **result_chars, size_t len);
+char			*filter_and_get_redirects(t_ms_command *input,
+					t_list **redirects, int *exit_code);
+bool			traverse_heredocs(t_ms_sequence *sequence);
+bool			parse_redirect(t_list **redirects, const char *str,
+					t_token_type redirect_type, size_t *i);
+bool			is_escaped(const char *str, size_t i);
+bool			skip_quotes(const char *str, size_t *i);
+char			**split_quotes(char const *str);
+size_t			count_words(char const *str);
+char			*ft_unescape_string(char *str);
+static bool		process_heredoc(t_list *redirects, t_ms_sequence *sequence);
+void			redirect_input_from_heredoc(const char *filename);
+void			convert_pointer_to_string(char *str, void *ptr);
+bool			redirection_heredoc(const char *delimiter,
+					t_ms_sequence *sequence);
+
 //*************************************************************/
 // Pipes
 //*************************************************************/
-void		pipe_left_process(t_ms_sequence *sequence, t_pipe_data *pipe_data);
-void		pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data);
-void		pipe_fork_error(t_pipe_data *pipe_data);
-static void	close_pipe_and_wait(t_pipe_data *pipe_data);
-void		pipe_monitor(t_ms_sequence *sequence);
+void			pipe_left_process(t_ms_sequence *sequence,
+					t_pipe_data *pipe_data);
+void			pipe_right_process(t_ms_sequence *sequence,
+					t_pipe_data *pipe_data);
+void			pipe_fork_error(t_pipe_data *pipe_data);
+static void		close_pipe_and_wait(t_pipe_data *pipe_data);
+void			pipe_monitor(t_ms_sequence *sequence);
 
 //*************************************************************/
 // Commands
 //*************************************************************/
-int		get_user_prompt_value(char **value);
-char	*create_prompt(void);
+int				get_user_prompt_value(char **value);
+char			*create_prompt(void);
 
 //*************************************************************/
 // Shell
 //*************************************************************/
-void	non_interactive_arg(char **args, int argc);
-void	interactive(void);
-void	minishell_non_interactive(void);
+void			non_interactive_arg(char **args, int argc);
+void			interactive(void);
+void			minishell_non_interactive(void);
 
 
 //*************************************************************/
 // Signals 
 //*************************************************************/
-char	*create_prompt(void);
-int		get_user_prompt_value(char **value);
+char			*create_prompt(void);
+int				get_user_prompt_value(char **value);
 
 
 //*************************************************************/
 // Signals 
 //*************************************************************/
-void	sighandler(int sig);
-void	main_signals(void);
-void	reset_signals(void);
+void			sighandler(int sig);
+void			main_signals(void);
+void			reset_signals(void);
 
 
 //*************************************************************/
 // UTILS
 //*************************************************************/
-char	*join_str_array(char **list, int size);
+char			*join_str_array(char **list, int size);
 
 //*************************************************************/
 // Garbage Collector
 //*************************************************************/
-void	gc_list_clear(t_list **list, void (*del)(void *));
-void	gc_free_ptr(void *addr);
-void	gc_free(void);
-void	gc_close_fds(void);
-void	gc_close_fd(int fd);
-int		gc_add_fd(int fd);
+void			gc_list_clear(t_list **list, void (*del)(void *));
+void			gc_free_ptr(void *addr);
+void			gc_free(void);
+void			gc_close_fds(void);
+void			gc_close_fd(int fd);
+int				gc_add_fd(int fd);
+void			free_redirect(void *content);
 
 
 //*************************************************************/
 // ENVIROMENT
 //*************************************************************/
-void		ms_split_key_value(const char *str, char *key, char *value);
-t_minishell	*ms_minishell_get(void);
-int			ms_add_env_node(const char *key, const char *value);
-int			ms_add_env_dict(const char *str);
-t_dict_env	*ms_get_env_node(const char *key);
-void		ms_open_shells(void);
-bool		ms_set_env_value(const char *key, const char *value);
-int			ms_generate_env(char **env);
-char		*ft_getenv(char *name);
-char		**ms_gen_env(void);
-void		free_env_entry(void *content);
+void			ms_split_key_value(const char *str, char *key, char *value);
+t_minishell		*ms_minishell_get(void);
+int				ms_add_env_node(const char *key, const char *value);
+int				ms_add_env_dict(const char *str);
+t_dict_env		*ms_get_env_node(const char *key);
+void			ms_open_shells(void);
+bool			ms_set_env_value(const char *key, const char *value);
+int				ms_generate_env(char **env);
+char			*ft_getenv(char *name);
+char			**ms_gen_env(void);
+void			free_env_entry(void *content);
 
 
 //*************************************************************/
 // BUILTINS
 //*************************************************************/
-int			ms_pwd(void);
-static int	ms_cd(char *path);
-void		ms_print_env(void);
-int			ft_unset(t_ms_command *command);
+int				ms_pwd(void);
+static int		ms_cd(char *path);
+void			ms_print_env(void);
+int				ft_unset(t_ms_command *command);
 
 
 //*************************************************************/
 // PARSING
 //*************************************************************/
 
-t_ms_sequence	*ms_parse(char* string);
+t_ms_sequence	*ms_parse(char *string);
 t_ms_command	*ms_get_command(t_ms_token *token);
 void			ms_free_sequence(t_ms_sequence *sequence);
 void			ms_free_command(t_ms_command *command);
@@ -257,13 +307,13 @@ void			ms_print_command(t_ms_command *command);
 // Memory Management
 //*************************************************************/
 
-void	gc_free(void);
-void	*gc_malloc(size_t size);
-void	*gc_add(void *ptr);
-void	gc_free_ptr(void *addr);
-void	gc_list_clear(t_list **list, void (*del)(void *));
-void	gc_close_fd(int fd);
-int		gc_add_fd(int fd);
-void	gc_close_fds(void);
+void			gc_free(void);
+void			*gc_malloc(size_t size);
+void			*gc_add(void *ptr);
+void			gc_free_ptr(void *addr);
+void			gc_list_clear(t_list **list, void (*del)(void *));
+void			gc_close_fd(int fd);
+int				gc_add_fd(int fd);
+void			gc_close_fds(void);
 
 #endif

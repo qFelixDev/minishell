@@ -49,6 +49,7 @@ SRCS = \
 	str/ft_strrchr.c \
 	str/ft_striteri.c \
 	str/ft_strcmp.c \
+	str/ft_isspace.c \
 	\
 	gnxl/get_next_line_bonus.c \
 

@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:36:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/29 12:37:34 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:03:14 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	tree_monitor(t_ms_sequence *sequence)
 				or_monitor(sequence->objects[i]);
 		}
 		else
-		{ 
+		{
 			command = ms_get_command(sequence->objects[i]);
 			exe_manager(command);
 		}
@@ -84,11 +84,54 @@ int	tree_monitor(t_ms_sequence *sequence)
 	return (0);
 }
 
+static bool	process_heredoc(t_list *redirects, t_ms_sequence *sequence)
+{
+	t_list		*current;
+	t_redirect	*redirect;
 
-//else
-//{
-//	t_ms_command *cmd = (t_ms_command *)sequence->objects[i];
-//	execute_command(cmd); // Beispiel: übergib Kontext o.ä.
-//}
+	current = redirects;
+	while (current)
+	{
+		redirect = (t_redirect *)current->content;
+		if (redirect->type == MS_TOKEN_REDIRECT_INPUT_APPEND)
+		{
+			if (!redirection_heredoc(redirect->file, sequence))
+				return (false);
+		}
+		current = current->next;
+	}
+	return (true);
+}
 
-//tree_monitor((t_ms_sequence *)sequence->objects[i]);
+bool	traverse_heredocs(t_ms_sequence *sequence)
+{
+	t_list	*redirects;
+	int		exit_code;
+	char	*tmp;
+	bool	result;
+
+	if (!sequence)
+		return (true);
+	// Basic Structure it is like a dummy and an idea, the 0 can be replaced with a counting variable 
+	if (sequence->is_sequence[0 / 8] & (1 << (0 % 8)))
+	{
+		//Maby replace sequence->left, sequence->right, with object i--; and object i++;
+		if (!traverse_heredocs(sequence->left))
+			return (false);
+		if (!traverse_heredocs(sequence->right))
+			return (false);
+		//comming part is maby not useful
+		//if (!(node->type == AST_PARENTHESES && node->value))
+		//	return (true);
+	}
+	redirects = NULL;
+	//Not Useful the next part for our projekt 
+	tmp = filter_and_get_redirects(ms_get_command(sequence->objects[0]), &redirects, &exit_code);
+	//if (!handle_parenteses(tmp, node))
+	//	return (gc_free_ptr(tmp), gc_list_clear(&redirects, free_redirect),
+	//		false);
+	//gc_free_ptr(tmp);
+	result = process_heredoc(redirects, sequence);
+	gc_list_clear(&redirects, free_redirect);
+	return (result);
+}
