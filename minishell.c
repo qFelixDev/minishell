@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/29 12:58:31 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:52:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	handle_shell_input(char *line)
 		return ;
 	}
 	add_history(line);
-	sequence = parse(line);
+	sequence = ms_parse(line);
 	if (sequence == NULL)
 	{
 		if (ms_minishell_get()->exit_status == 0)
@@ -39,13 +39,14 @@ static void	handle_shell_input(char *line)
 	}
 	if (!traverse_heredocs(sequence))
 	{
-		free_ast_node(sequence);
+		ms_free_sequence(sequence);
 		gc_free_ptr(line);
 		if (ms_minishell_get()->exit_status == EXIT_SUCCESS)
 			ms_minishell_get()->exit_status = EXIT_FAILURE;
 		return ;
 	}
-	return (tree_monitor(sequence), free_ms__sequence(), gc_free_ptr(line));
+	return (tree_monitor(sequence), ms_free_sequence(sequence),
+		gc_free_ptr(line));
 }
 
 

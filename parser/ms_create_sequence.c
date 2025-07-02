@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 09:48:24 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 12:56:42 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/02 15:58:11 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_ms_sequence	*allocate_sequence(t_ms_token *token)
 		token = token -> next;
 	}
 	sequence -> objects
-		= ft_calloc(sizeof(void*) * sequence -> object_count, 1);
+		= ft_calloc(sizeof(void*), sequence -> object_count + 1);
 	sequence -> is_sequence
 		= ft_calloc(sizeof(uint8_t) * (sequence -> object_count / 8 + 1), 1);
 	if (sequence -> objects == NULL || sequence -> is_sequence == NULL)
