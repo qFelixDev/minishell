@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 14:05:45 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 12:24:57 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/29 12:35:37 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,22 @@ void	ms_open_shells(void)
 	str = ft_itoa(numb_shells);
 	free(node->value);
 	node->value = str;
+}
+
+bool	is_valid_identifier(const char *identifier)
+{
+	size_t	i;
+
+	if (!identifier || *identifier == '\0')
+		return (false);
+	if (!ft_isalpha(identifier[0]) && identifier[0] != '_')
+		return (false);
+	i = 1;
+	while (identifier[i] != '\0')
+	{
+		if (!ft_isalnum(identifier[i]) && identifier[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
 }

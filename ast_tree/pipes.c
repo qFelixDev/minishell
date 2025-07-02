@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/29 12:36:16 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:03:20 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	pipe_left_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 	gc_close_fd(pipe_data->pipe_fds[0]);
 	dup2(pipe_data->pipe_fds[1], STDOUT_FILENO);
 	gc_close_fd(pipe_data->pipe_fds[1]);
-	destroy_minishell(tree_monitor(sequence->objects));
+	destroy_minishell(tree_monitor(sequence));
 }
 
 void	pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
@@ -25,7 +25,7 @@ void	pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 	gc_close_fd(pipe_data->pipe_fds[1]);
 	dup2(pipe_data->pipe_fds[0], STDIN_FILENO);
 	gc_close_fd(pipe_data->pipe_fds[0]);
-	pipe_data->right_result = tree_monitor(sequence->objects);
+	pipe_data->right_result = tree_monitor(sequence);
 	destroy_minishell(pipe_data->right_result);
 }
 
@@ -70,5 +70,4 @@ void	pipe_monitor(t_ms_sequence *sequence)
 		pipe_data.right_result = WEXITSTATUS(pipe_data.right_status);
 	ms_minishell_get()->exit_status = pipe_data.right_result;
 	return (pipe_data.right_result);
-
 }

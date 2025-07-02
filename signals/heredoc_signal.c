@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   heredoc_signal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 16:07:04 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/25 14:08:47 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/07/02 14:50:56 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/07/02 14:51:12 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ms_pwd(void)
+void	heredoc_sighandler(int sig)
 {
-    char cwd[PATH_MAX];
-	
-	getcwd(cwd, PATH_MAX);
-    if (!cwd)
-        return(perror("pwd"), 1);
-    printf("%s\n", cwd);
-    free(cwd);
-    return (0);
+	(void)sig;
+	unlink("heredoc_temp.txt");
+	destroy_minishell(130);
+}
+
+void	signal_heredoc(void)
+{
+	signal(SIGINT, heredoc_sighandler);
+	signal(SIGTSTP, SIG_IGN);
 }

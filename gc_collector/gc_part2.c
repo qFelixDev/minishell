@@ -6,11 +6,20 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:38:42 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 10:38:42 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/02 11:20:54 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	free_redirect(void *content)
+{
+	t_redirect	*redirect;
+
+	redirect = content;
+	gc_free_ptr(redirect->file);
+	gc_free_ptr(redirect);
+}
 
 static t_list	**get_gc_head_files(void)
 {

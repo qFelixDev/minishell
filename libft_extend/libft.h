@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:34:32 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/04/29 12:44:55 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:51:24 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void			ft_putnbr_fd(int n, int fd);
 char			*get_next_line(int fd);
 int				ft_strcmp(char *s1, char *s2);
+int				ft_isspace(int c);
 
 #endif

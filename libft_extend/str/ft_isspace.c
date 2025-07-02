@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 16:07:04 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/25 14:08:47 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/07/02 13:50:22 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/07/02 13:51:30 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../libft.h"
 
-int ms_pwd(void)
+int	ft_isspace(int c)
 {
-    char cwd[PATH_MAX];
-	
-	getcwd(cwd, PATH_MAX);
-    if (!cwd)
-        return(perror("pwd"), 1);
-    printf("%s\n", cwd);
-    free(cwd);
-    return (0);
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
 }

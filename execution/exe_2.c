@@ -6,40 +6,11 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/21 15:23:40 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/06/29 11:11:26 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-typedef struct s_ms_sequence
-{
-	size_t	object_count;
-	int8_t	operator;
-	void	**objects;
-	uint8_t	*is_sequence;
-}	t_ms_sequence;
-
-typedef struct s_ms_command
-{
-	char	**argv;
-	char	*redirect_delim;
-	char	*redirect_append;
-	char	*redirect_input;
-	char	*redirect_output;
-}	t_ms_command;
-
-///////////////TOKENS
-////////////////////////////////////////////////////////////////
-
-typedef struct s_ms_token
-{
-	struct s_ms_token	*next;
-	int8_t				index;
-	char				*content;
-	bool				concatenate_content;
-}	t_ms_token;
-
 
 //if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
 // if (sequence->is_sequence[i / 8] & (1u << (i % 8)))
@@ -103,9 +74,12 @@ static void	handle_child_process(t_ms_command *command, char **env_cpy)
 
 	path = ft_find_exec_path(command->argv, env_cpy);
 	command_signals();
-	if (execve(path, command->argv, env_cpy) == -1)
-		command_not_found(path);
-	destroy_minishell(EXIT_FAILURE);
+	execve(path, command->argv, env_cpy);
+	command_not_found(path);
+	if (ms_minishell_get()->or_sequenze)
+		ms_minishell_get()->finish_or = false;
+	if (!ms_minishell_get()->or_sequenze)
+		destroy_minishell(EXIT_FAILURE);
 }
 
 static int	wait_for_process(pid_t pid, char **env_cpy)
