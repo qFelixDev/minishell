@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 14:04:18 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/02 15:03:36 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:05:17 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*ft_unescape_string(char *str)
 	quote_type = 0;
 	while (i < len)
 		handle_quotes((t_escape_data){str, &i, &j, &in_quotes, &quote_type,
-						len});
+			len});
 	str[j] = '\0';
 	return (str);
 }
