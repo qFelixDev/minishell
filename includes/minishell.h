@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/29 12:58:19 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/02 09:42:15 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,7 @@ typedef struct s_ms_sequence
 typedef struct s_ms_command
 {
 	char	**argv;
-	char	*redirect_delim;
-	char	*redirect_append;
-	char	*redirect_input;
-	char	*redirect_output;
+	char	***redirects;
 }	t_ms_command;
 
 ///////////////TOKENS
