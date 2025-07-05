@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 13:12:52 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:04:27 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ bool			skip_quotes(const char *str, size_t *i);
 char			**split_quotes(char const *str);
 size_t			count_words(char const *str);
 char			*ft_unescape_string(char *str);
-static bool		process_heredoc(t_list *redirects, t_ms_sequence *sequence);
+bool			process_heredoc(t_list *redirects, t_ms_sequence *sequence);
 void			redirect_input_from_heredoc(const char *filename);
 void			convert_pointer_to_string(char *str, void *ptr);
 bool			redirection_heredoc(const char *delimiter,
@@ -217,7 +217,7 @@ void			pipe_left_process(t_ms_sequence *sequence,
 void			pipe_right_process(t_ms_sequence *sequence,
 					t_pipe_data *pipe_data);
 void			pipe_fork_error(t_pipe_data *pipe_data);
-static void		close_pipe_and_wait(t_pipe_data *pipe_data);
+void			close_pipe_and_wait(t_pipe_data *pipe_data);
 void			pipe_monitor(t_ms_sequence *sequence);
 
 //*************************************************************/
@@ -229,9 +229,11 @@ char			*create_prompt(void);
 //*************************************************************/
 // Shell
 //*************************************************************/
+void			ms_exit(int state);
 void			non_interactive_arg(char **args, int argc);
 void			interactive(void);
 void			minishell_non_interactive(void);
+int				tree_monitor(t_ms_sequence *sequence);
 
 
 //*************************************************************/
@@ -247,12 +249,14 @@ int				get_user_prompt_value(char **value);
 void			sighandler(int sig);
 void			main_signals(void);
 void			reset_signals(void);
+void			command_signals(void);
 
 
 //*************************************************************/
 // UTILS
 //*************************************************************/
 char			*join_str_array(char **list, int size);
+void			ft_free_cluster(char	**cluster);
 
 //*************************************************************/
 // Garbage Collector
@@ -286,7 +290,7 @@ void			free_env_entry(void *content);
 // BUILTINS
 //*************************************************************/
 int				ms_pwd(void);
-static int		ms_cd(char *path);
+int				ms_cd(char *path);
 void			ms_print_env(void);
 int				ft_unset(t_ms_command *command);
 

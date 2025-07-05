@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/25 12:04:16 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:38:44 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **argv, char **envp)
 		interactive();
 	else
 		minishell_non_interactive();
-	//destroy_minishell(ms_minishell_get()->exit_status);
+	ms_exit(ms_minishell_get()->exit_status);
 	return (0);
 }
 

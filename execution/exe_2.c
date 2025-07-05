@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 13:10:22 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:06:30 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,7 @@
 //if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
 // if (sequence->is_sequence[i / 8] & (1u << (i % 8)))
 
-void	ft_free_cluster(char	**cluster)
-{
-	int	i;
-
-	i = -1;
-	while (cluster[++i])
-		free(cluster[i]);
-	free(cluster);
-}
-
-static char	*ft_find_path(char *cmd, char **env)
+static char	*ft_find_path(char *cmd)
 {
 	int		i;
 	char	**path_all;
@@ -33,7 +23,7 @@ static char	*ft_find_path(char *cmd, char **env)
 	char	*exe_path;
 
 	i = 0;
-	path_all = ft_split(env, ':');
+	path_all = ft_split(ft_getenv("PATH"), ':');
 	while (path_all[i])
 	{
 		sub_path = ft_strjoin(path_all[i], "/");
@@ -64,7 +54,7 @@ static char	*ft_find_exec_path(char **cmd_s, char **env)
 		}
 	}
 	else
-		path = ft_find_path(cmd_s[0], env);
+		path = ft_find_path(cmd_s[0]);
 	return (path);
 }
 
@@ -75,11 +65,11 @@ static void	handle_child_process(t_ms_command *command, char **env_cpy)
 	path = ft_find_exec_path(command->argv, env_cpy);
 	command_signals();
 	execve(path, command->argv, env_cpy);
-	command_not_found(path);
+	//command_not_found(path);
 	if (ms_minishell_get()->or_sequenze)
 		ms_minishell_get()->finish_or = false;
 	if (!ms_minishell_get()->or_sequenze)
-		destroy_minishell(EXIT_FAILURE);
+		ms_exit(EXIT_FAILURE);
 }
 
 static int	wait_for_process(pid_t pid, char **env_cpy)
@@ -88,7 +78,7 @@ static int	wait_for_process(pid_t pid, char **env_cpy)
 	int	sig_num;
 
 	waitpid(pid, &status, 0);
-	free_string_array(env_cpy);
+	ft_free_cluster(env_cpy);
 	main_signals();
 	if (WIFSIGNALED(status))
 	{

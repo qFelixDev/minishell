@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_part1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:31:01 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 10:37:51 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:19:12 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,19 @@ static t_list	**get_gc_head(void)
 	static t_list	*gc_head = NULL;
 
 	return (&gc_head);
+}
+
+void	*gc_add(void *pointer)
+{
+	t_list	*new;
+
+	if (pointer == NULL)
+		ms_exit(EXIT_FAILURE);
+	new = ft_lstnew(pointer);
+	if (new == NULL)
+		ms_exit(EXIT_FAILURE);
+	ft_lstadd_back(get_gc_head(), new);
+	return (pointer);
 }
 
 void	gc_free_ptr(void *addr)

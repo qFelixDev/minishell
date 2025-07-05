@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/02 15:03:20 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:11:44 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <signal.h>
 
 void	pipe_left_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 {
 	gc_close_fd(pipe_data->pipe_fds[0]);
 	dup2(pipe_data->pipe_fds[1], STDOUT_FILENO);
 	gc_close_fd(pipe_data->pipe_fds[1]);
-	destroy_minishell(tree_monitor(sequence));
+	ms_exit(tree_monitor(sequence));
 }
 
 void	pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
@@ -26,7 +27,7 @@ void	pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 	dup2(pipe_data->pipe_fds[0], STDIN_FILENO);
 	gc_close_fd(pipe_data->pipe_fds[0]);
 	pipe_data->right_result = tree_monitor(sequence);
-	destroy_minishell(pipe_data->right_result);
+	ms_exit(pipe_data->right_result);
 }
 
 void	pipe_fork_error(t_pipe_data *pipe_data)
@@ -37,7 +38,7 @@ void	pipe_fork_error(t_pipe_data *pipe_data)
 	return (perror("Fork for right process failed"));
 }
 
-static void	close_pipe_and_wait(t_pipe_data *pipe_data)
+void	close_pipe_and_wait(t_pipe_data *pipe_data)
 {
 	gc_close_fd(pipe_data->pipe_fds[0]);
 	gc_close_fd(pipe_data->pipe_fds[1]);
@@ -69,5 +70,5 @@ void	pipe_monitor(t_ms_sequence *sequence)
 	if (WIFEXITED(pipe_data.right_status))
 		pipe_data.right_result = WEXITSTATUS(pipe_data.right_status);
 	ms_minishell_get()->exit_status = pipe_data.right_result;
-	return (pipe_data.right_result);
+	//return (pipe_data.right_result);
 }

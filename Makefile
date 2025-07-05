@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
+#    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/05 13:24:18 by reriebsc         ###   ########.fr        #
+#    Updated: 2025/07/05 14:24:14 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,15 +43,16 @@ SRCS := main.c\
 		parser/token2.c\
 		parser/token.c\
 		parser/ms_tokenize.c\
-		parser/ms_simple_get_command.c\
 		parser/ms_resolve_strings.c\
 		parser/ms_parse.c\
 		parser/ms_get_command.c\
-		parser/ms_expand_precendence.c\
+		parser/ms_expand_wildcards.c\
+		parser/ms_expand_precedence.c\
 		parser/ms_create_sequence.c\
 		parser/ms_check_syntax.c\
 		gc_collector/gc_part1.c\
 		gc_collector/gc_part2.c\
+		gc_collector/gc_part3.c\
 		execution/exe_1.c\
 		execution/exe_2.c\
 		error/errorhandling.c\
@@ -64,10 +65,7 @@ SRCS := main.c\
 		builtins/env.c\
 		builtins/pwd.c\
 		ast_tree/ast_tree.c\
-		ast_tree/heredoc.c\
 		ast_tree/pipes.c\
-
-
 
 # Objekt-Dateien
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -76,7 +74,7 @@ OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $@
 	@echo "$(GREEN)✅ Executable $@ created successfully!$(RESET)"
 
 # Objektdateien-Regel

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 11:02:40 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 12:48:30 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:23:50 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ char	*join_str_array(char **list, int size)
 			ft_strlcat(result, " ", len + 1);
 	}
 	return (result);
+}
+
+void	ft_free_cluster(char **cluster)
+{
+	int	i;
+
+	i = -1;
+	while (cluster[++i])
+		free(cluster[i]);
+	free(cluster);
 }
 
 //void	free_ast_node(void *content)

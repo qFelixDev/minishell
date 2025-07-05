@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/24 11:01:09 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:36:45 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*populate_token_content(
 	else
 		while (string[length] != terminator && string[length] != '\0')
 			length++;
-	if (string[length] != '\0')
+	if (terminator == '\0' || string[length] != '\0')
 		token -> content = malloc(length + 1);
 	if (token -> content == NULL)
 		return (NULL);

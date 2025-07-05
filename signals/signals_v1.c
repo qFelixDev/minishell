@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:00:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 12:57:30 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 13:47:12 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,26 @@ void	sighandler(int sig)
 	gc_free_ptr(prompt);
 }
 
-static void	sigtstp_command(int sig)
+static void signal_exit(int sig)
 {
-	(void)sig;
-	/*destroy_minishell(131);*/
+	ms_exit(128 + sig);
 }
 
 void	main_signals(void)
 {
-	signal(SIGINT, sighandler);
+	signal(SIGINT, signal_exit);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, sigtstp_command);
+	signal(SIGTSTP, signal_exit);
 }
 
 void	reset_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	command_signals(void)
+{
+	signal(SIGINT, signal_exit);
+	signal(SIGQUIT, signal_exit);
 }

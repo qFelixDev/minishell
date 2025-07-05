@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ast_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:36:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 11:49:03 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:07:39 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void exe_manager(t_ms_command *command);
 
 void	and_monitor(t_ms_sequence *sequence)
 {
@@ -46,7 +47,7 @@ void	or_monitor(t_ms_sequence *sequence)
 			tree_monitor(sequence);
 		else
 		{
-			command = ms_get_command(sequence->objects);
+			command = ms_get_command(sequence->objects[i]);
 			exe_manager(command);
 		}
 		++i;
@@ -84,6 +85,7 @@ int	tree_monitor(t_ms_sequence *sequence)
 	return (0);
 }
 
+/*
 static bool	process_heredoc(t_list *redirects, t_ms_sequence *sequence)
 {
 	t_list		*current;
@@ -131,5 +133,4 @@ bool	traverse_heredocs(t_ms_sequence *sequence)
 	gc_list_clear(&redirects, free_redirect);
 	return (result);
 }
-
-bool	traverse
+*/

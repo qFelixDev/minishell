@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:54:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/05 12:58:56 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:27:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_ms_sequence	*ms_parse(char *string)
 	return (sequence);
 }
 
-bool	print_commands_in_sequence(t_ms_sequence *sequence)
+/*bool	print_commands_in_sequence(t_ms_sequence *sequence)
 {
 	int				object_index;
 
@@ -90,4 +90,4 @@ int main() {
 		ms_free_sequence(sequence);
 		ft_memset(buffer, 0, 1000);
 	}
-}
+}*/

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:29:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 10:34:17 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:25:34 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ms_print_env(void)
+/*void	ms_print_env(void)
 {
 	t_dict_env	*node;
 	t_list		*env;
@@ -30,11 +30,10 @@ void	ms_print_env(void)
 		printf("=%s\n", node->value);
 		env = env->next;
 	}
-}
+}*/
 
 char	*ft_getenv(char *name)
 {
-	char		*str;
 	t_list		*env_head;
 	t_dict_env	*env;
 
@@ -47,19 +46,6 @@ char	*ft_getenv(char *name)
 		env_head = env_head->next;
 	}
 	return ("/usr/bin");
-}
-
-static int	ms_cd(char *path)
-{
-	char	cwd[PATH_MAX];
-
-	getcwd(cwd, sizeof(cwd));
-	if (chdir(path) != 0)
-		return (perror("Path Error"), 1);
-	ms_set_env_value("OLDPWD", cwd);
-	getcwd(cwd, sizeof(cwd));
-	ms_set_env_value("PWD", cwd);
-	return (0);
 }
 
 char	**ms_gen_env(void)
