@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 14:04:27 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:23:59 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,8 +292,9 @@ void			free_env_entry(void *content);
 int				ms_pwd(void);
 int				ms_cd(char *path);
 void			ms_print_env(void);
-int				ft_unset(t_ms_command *command);
-
+int				ms_unset(t_ms_command *command);
+int				ms_echo(t_ms_command *command, bool is_n);
+int				ms_export(t_ms_command *command);
 
 //*************************************************************/
 // PARSING
@@ -305,6 +306,7 @@ void			ms_free_sequence(t_ms_sequence *sequence);
 void			ms_free_command(t_ms_command *command);
 void			ms_print_sequence(t_ms_sequence *sequence);
 void			ms_print_command(t_ms_command *command);
+
 
 
 //*************************************************************/

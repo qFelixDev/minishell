@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
+#    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/05 14:24:14 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/05 15:24:57 by reriebsc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,10 @@ SRCS := main.c\
 		env/env_1.c\
 		env/env_2.c\
 		env/env_3.c\
+		builtins/unset.c\
 		builtins/cd.c\
 		builtins/clear.c\
+		builtins/export.c\
 		builtins/echo.c\
 		builtins/env.c\
 		builtins/pwd.c\

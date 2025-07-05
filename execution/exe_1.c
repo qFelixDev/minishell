@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 13:05:27 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:36:36 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	res = 1;
 	if (index_buildin == 0)
 		ms_print_env();
-	//else if (index_buildin == 1)
-	//	ms_exit();
-	//else if (index_buildin == 2)
-	//	ms_unset();
-	//else if (index_buildin == 3)
-	//	ms_export();
+	else if (index_buildin == 1)
+		ms_exit(0);
+	else if (index_buildin == 2)
+		ms_unset(command);
+	else if (index_buildin == 3)
+		ms_export(command);
 	else if (index_buildin == 4)
 		ms_pwd();
 	else if (index_buildin == 5)
 		ms_cd(command->argv[1]);
-	//else if (index_buildin == 6)
-	//	ms_echo();
+	else if (index_buildin == 6)
+		ms_echo(command, false);
 	return (0);
 }
 
@@ -57,7 +57,7 @@ void exe_manager(t_ms_command *command)
 	i = 0;
 	while (i < 7)
 	{
-		if (ft_strncmp(command->argv[0], build_ins[i], ft_strlen(build_ins[i]) + 1) == 0)
+		if (ft_strncmp(command->argv[0], build_ins[i], ft_strlen(build_ins[i])) == 0)
 		{
 			result = buildin_exe(command, i);
 		}

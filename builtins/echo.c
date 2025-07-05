@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 10:46:13 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/25 13:57:43 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:17:14 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	print_echo_arguments(t_ms_command *cmd, int start_idx)
 	}
 }
 
-int	ft_echo(t_ms_command *command, bool is_n)
+int	ms_echo(t_ms_command *command, bool is_n)
 {
 	int	start_idx;
 
