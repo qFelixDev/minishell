@@ -6,7 +6,7 @@
 #    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/06/25 12:03:42 by reriebsc         ###   ########.fr        #
+#    Updated: 2025/07/05 13:24:18 by reriebsc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ PATH_ENVIROMENT := env
 PATH_LIBFT := libft_extend
 PATH_BUILTINS := builtins
 LIBFT := $(PATH_LIBFT)/libft.a
+OBJ_DIR := obj
 
 
 ##                   Quellen
@@ -63,22 +64,25 @@ SRCS := main.c\
 		builtins/env.c\
 		builtins/pwd.c\
 		ast_tree/ast_tree.c\
+		ast_tree/heredoc.c\
+		ast_tree/pipes.c\
 
 
 
 # Objekt-Dateien
-OBJS := $(SRCS:.c=.o)
+OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 # Targets
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $< -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@
 	@echo "$(GREEN)✅ Executable $@ created successfully!$(RESET)"
 
 # Objektdateien-Regel
-%.o: %.c
-	$(CC) $(CFLAGS) -I$(LIBFT_PATH) -c $< -o $@
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I$(PATH_LIBFT) -c $< -o $@
 
 #@mkdir -p $(OBJ_PATH)
 
@@ -89,6 +93,7 @@ $(LIBFT):
 clean:
 	$(RM) $(OBJS) $(OBJS_BONUS)
 	@$(MAKE) -C $(LIBFT_PATH) clean
+	$(RM) -r $(OBJ_DIR)
 	@echo "$(RED)🧹 Object files removed$(RESET)"
 
 fclean: clean

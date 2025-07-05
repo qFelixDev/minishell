@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 11:47:27 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 12:05:30 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static void	handle_shell_input(char *line)
 			ms_minishell_get()->exit_status = 258;
 		return (gc_free_ptr(line));
 	}
-	if (!traverse_heredocs(sequence))
-	{
-		ms_free_sequence(sequence);
-		gc_free_ptr(line);
-		if (ms_minishell_get()->exit_status == EXIT_SUCCESS)
-			ms_minishell_get()->exit_status = EXIT_FAILURE;
-		return ;
-	}
+	//if (!traverse_heredocs(sequence))
+	//{
+	//	ms_free_sequence(sequence);
+	//	gc_free_ptr(line);
+	//	if (ms_minishell_get()->exit_status == EXIT_SUCCESS)
+	//		ms_minishell_get()->exit_status = EXIT_FAILURE;
+	//	return ;
+	//}
 	return (tree_monitor(sequence), ms_free_sequence(sequence), gc_free_ptr(line));
 }
 
