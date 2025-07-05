@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:36:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/02 15:03:14 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 11:49:03 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,17 +105,13 @@ static bool	process_heredoc(t_list *redirects, t_ms_sequence *sequence)
 
 bool	traverse_heredocs(t_ms_sequence *sequence)
 {
-	t_list	*redirects;
+//	t_list	*redirects;
 	int		exit_code;
 	char	*tmp;
 	bool	result;
 
-	if (!sequence)
-		return (true);
-	// Basic Structure it is like a dummy and an idea, the 0 can be replaced with a counting variable 
-	if (sequence->is_sequence[0 / 8] & (1 << (0 % 8)))
+	if (sequence->is_sequence[0] & 1)
 	{
-		//Maby replace sequence->left, sequence->right, with object i--; and object i++;
 		if (!traverse_heredocs(sequence->left))
 			return (false);
 		if (!traverse_heredocs(sequence->right))
@@ -124,7 +120,7 @@ bool	traverse_heredocs(t_ms_sequence *sequence)
 		//if (!(node->type == AST_PARENTHESES && node->value))
 		//	return (true);
 	}
-	redirects = NULL;
+//	redirects = NULL;
 	//Not Useful the next part for our projekt 
 	tmp = filter_and_get_redirects(ms_get_command(sequence->objects[0]), &redirects, &exit_code);
 	//if (!handle_parenteses(tmp, node))
@@ -135,3 +131,5 @@ bool	traverse_heredocs(t_ms_sequence *sequence)
 	gc_list_clear(&redirects, free_redirect);
 	return (result);
 }
+
+bool	traverse

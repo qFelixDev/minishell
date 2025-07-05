@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/02 15:52:25 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 11:47:27 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,12 @@ static void	handle_shell_input(char *line)
 {
 	t_ms_sequence	*sequence;
 
-	if(is_empty_str(line))
-	{
-		gc_free_ptr(line);
-		return ;
-	}
 	add_history(line);
 	sequence = ms_parse(line);
 	if (sequence == NULL)
 	{
 		if (ms_minishell_get()->exit_status == 0)
-			ms_minishell_get()->exit_status = 1;
+			ms_minishell_get()->exit_status = 258;
 		return (gc_free_ptr(line));
 	}
 	if (!traverse_heredocs(sequence))
@@ -45,10 +40,8 @@ static void	handle_shell_input(char *line)
 			ms_minishell_get()->exit_status = EXIT_FAILURE;
 		return ;
 	}
-	return (tree_monitor(sequence), ms_free_sequence(sequence),
-		gc_free_ptr(line));
+	return (tree_monitor(sequence), ms_free_sequence(sequence), gc_free_ptr(line));
 }
-
 
 //This fuction will be called if the main function is startet with some Arguments and building a string out of the arguments 
 void	non_interactive_arg(char **args, int argc)
@@ -101,7 +94,6 @@ void	minishell_non_interactive(void)
 			gc_free_ptr(line);
 			continue ;
 		}
-		//add_history(line);
 		handle_shell_input(line);
 	}
 }
