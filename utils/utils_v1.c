@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_v1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 11:02:40 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 11:12:24 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 12:48:30 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*join_str_array(char **list, int size)
 		len += ft_strlen(list[i++]) + 1;
 	result = (char *)gc_add(ft_calloc(len + 1, sizeof(char)));
 	if (!result)
-		return (pev(ERROR_MALLOC), NULL);
+		return (/*pev(ERROR_MALLOC), */NULL);
 	i = 0;
 	while (i < size)
 	{

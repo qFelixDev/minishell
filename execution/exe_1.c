@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/25 12:09:15 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:05:27 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	ms_execution_command(t_ms_command *command);
 
 static void	generatebuildins(char *buildins[7])
 {
@@ -30,19 +32,19 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	res = 1;
 	if (index_buildin == 0)
 		ms_print_env();
-	else if (index_buildin == 1)
-		ms_exit();
-	else if (index_buildin == 2)
-		ms_unset();
-	else if (index_buildin == 3)
-		ms_export();
+	//else if (index_buildin == 1)
+	//	ms_exit();
+	//else if (index_buildin == 2)
+	//	ms_unset();
+	//else if (index_buildin == 3)
+	//	ms_export();
 	else if (index_buildin == 4)
 		ms_pwd();
 	else if (index_buildin == 5)
 		ms_cd(command->argv[1]);
-	else if (index_buildin == 6)
-		ms_echo();
-	
+	//else if (index_buildin == 6)
+	//	ms_echo();
+	return (0);
 }
 
 void exe_manager(t_ms_command *command)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/29 11:11:26 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:10:22 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 //if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
 // if (sequence->is_sequence[i / 8] & (1u << (i % 8)))
 
-//void	ft_free_cluster(char	**cluster)
-//{
-//	int	i;
-//
-//	i = -1;
-//	while (cluster[++i])
-//		free(cluster[i]);
-//	free(cluster);
-//}
+void	ft_free_cluster(char	**cluster)
+{
+	int	i;
 
-static char	*ft_find_path(char *cmd, char *env)
+	i = -1;
+	while (cluster[++i])
+		free(cluster[i]);
+	free(cluster);
+}
+
+static char	*ft_find_path(char *cmd, char **env)
 {
 	int		i;
 	char	**path_all;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_v1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:00:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/02 15:03:10 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 12:57:30 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sighandler(int sig)
 static void	sigtstp_command(int sig)
 {
 	(void)sig;
-	destroy_minishell(131);
+	/*destroy_minishell(131);*/
 }
 
 void	main_signals(void)

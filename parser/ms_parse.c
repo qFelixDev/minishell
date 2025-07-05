@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:54:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/16 11:59:08 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 12:58:56 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ t_ms_sequence	*ms_parse(char *string)
 bool	print_commands_in_sequence(t_ms_sequence *sequence)
 {
 	int				object_index;
-	t_ms_command* 	command;
 
 	object_index = 0;
-	while (object_index < sequence->object_count)
+	while (object_index < (int)sequence->object_count)
 	{
 		if (sequence -> is_sequence[object_index / 8]
 			& (1u << (object_index % 8)))
@@ -67,10 +66,10 @@ bool	print_commands_in_sequence(t_ms_sequence *sequence)
 		else
 		{
 			t_ms_command* command = ms_get_command(sequence->objects[object_index]);
-			//if (command == NULL)
-			//	return (false);
-			//ms_print_command(command);
-			//ms_free_command(command);
+			if (command == NULL)
+				return (false);
+			ms_print_command(command);
+			ms_free_command(command);
 		}
 		object_index++;
 	}

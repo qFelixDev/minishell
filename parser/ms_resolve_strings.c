@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 12:24:58 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/23 11:13:42 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 12:57:51 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_ms_token	*add_string_token(t_ms_token *token, char *string)
 bool	ms_resolve_strings(t_ms_token *token)
 {
 	char	*string;
-	int8_t	index;
 	int		string_index;
 
 	while (token != NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commants.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/22 13:24:25 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 12:57:13 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*create_prompt(void)
 	char		*user;
 	char		*prompt;
 
-	user = get_env_value("USER");
+	user = ft_getenv("USER");
 	if (!user)
 		user = "User";
 	len = get_prompt_length(user, exit_code);
@@ -102,7 +102,7 @@ int	get_user_prompt_value(char **value)
 		clear_history();
 		printf("exit\n");
 		gc_free_ptr(*value);
-		destroy_minishell(0);
+		/*destroy_minishell(0);*/
 	}
 	add_history(*value);
 	return (1);

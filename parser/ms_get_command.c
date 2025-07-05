@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/03 13:55:23 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 13:01:21 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	ruin_delimiter(t_ms_token *token)
 	if (token -> index == MS_TOKEN_WILDCARD)
 	{
 		token -> content = ft_strdup("*");
-		if (content == NULL)
+		if (token -> content == NULL)
 			return (false);
 		token -> index = MS_TOKEN_STRING;
 	}
@@ -67,7 +67,6 @@ bool	ruin_delimiter(t_ms_token *token)
 
 bool	ruin_delimiters(t_ms_token *token)
 {
-	char	*string;
 	bool	is_ruining;
 
 	while (token != NULL)
@@ -176,7 +175,6 @@ t_ms_command	*ms_allocate_command(t_ms_token *token)
 
 bool	check_ambiguity(t_ms_token *token)
 {
-	char	*pattern;
 	size_t	result;
 
 	if (token == NULL)
