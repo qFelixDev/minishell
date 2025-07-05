@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:27:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/03 15:06:28 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 16:07:35 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 {
 	size_t		match_count;
 	bool		is_absolute;
+	int			pattern_index;
 	char *const	pattern = ft_calloc(1, get_pattern(token, NULL) + 1);
 
 	assert(token -> index >= MS_TOKEN_WILDCARD);
@@ -162,13 +163,19 @@ size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 		return (0);
 	get_pattern(token, pattern);
 	is_absolute = (pattern[0] == '/');
-	print_pattern(pattern);
+	//print_pattern(pattern);
 	match_count = enumerate_matches(
 		pattern + is_absolute, ft_strdup(&"./"[is_absolute]), NULL);
 	if (paths == NULL)
-		return (match_count);
+		return (match_count + (match_count == 0));
 	match_count = enumerate_matches(
 		pattern + is_absolute, ft_strdup(&"./"[is_absolute]), paths);
-	free(pattern);
-	return (match_count);
+	if (match_count != 0)
+		return (free(pattern), match_count);
+	pattern_index = -1;
+	while (pattern[++pattern_index] != '\0')
+		if (pattern[pattern_index] == '\1')
+			pattern[pattern_index] = '*';
+	*paths = pattern;
+	return (1);
 }

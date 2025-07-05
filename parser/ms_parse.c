@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:54:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/05 14:27:25 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:57:05 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ t_ms_sequence	*ms_parse(char *string)
 				ms_get_identity(token->next->index),
 				ms_get_identity(token->index)),
 			ms_free_tokens(first, false), NULL);
-	ms_print_tokens(first);
+	//ms_print_tokens(first);
 	if (ms_expand_precedence(first, MS_TOKEN_AND) == NULL)
 		return (printf("Expansion failed\n"),
 			ms_free_tokens(first, false), NULL);
-	ms_print_tokens(first);
+	//ms_print_tokens(first);
 	if (ms_expand_precedence(first, MS_TOKEN_OR) == NULL)
 		return (printf("Expansion failed\n"),
 			ms_free_tokens(first, false), NULL);
-	ms_print_tokens(first);
+	//ms_print_tokens(first);
 	if (!ms_resolve_strings(first))
 		return (printf("Resolution failed\n"),
 			ms_free_tokens(first, false), NULL);
-	ms_print_tokens(first);
+	//ms_print_tokens(first);
 	sequence = ms_create_sequence(first -> next);
 	ms_free_tokens(first, true);
 	return (sequence);

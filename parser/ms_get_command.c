@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/05 13:01:21 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 16:01:29 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,17 +233,17 @@ t_ms_command	*ms_get_command(t_ms_token *token)
 {
 	t_ms_command	*command;
 
-	ms_print_tokens(token);
+	//ms_print_tokens(token);
 	if (!ruin_delimiters(token)) {
 		puts("Unable to ruin delimiters");
 		return (NULL);
 	}
-	ms_print_tokens(token);
+	//ms_print_tokens(token);
 	if (!expand_variables(token)) {
 		puts("Variable expansion failed");
 		return (NULL);
 	}
-	ms_print_tokens(token);
+	//ms_print_tokens(token);
 	if (!check_ambiguity(token))
 		return (NULL);
 	command = ms_allocate_command(token);
@@ -256,6 +256,16 @@ t_ms_command	*ms_get_command(t_ms_token *token)
 	int argument_count = 0;
 	while(command -> argv[argument_count] != NULL)
 		argument_count++;
-	printf("%d\n", argument_count);
+	//printf("%d\n", argument_count);
 	return (command);
+}
+
+void	ms_print_command(t_ms_command *command)
+{
+	char	**argv;
+
+	argv = command -> argv;
+	while (*argv != NULL)
+		printf("%s ", *(argv++));
+	printf("\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 15:36:36 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:13:51 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	else if (index_buildin == 5)
 		ms_cd(command->argv[1]);
 	else if (index_buildin == 6)
-		ms_echo(command, false);
+		ms_echo(command, true);
 	return (0);
 }
 
