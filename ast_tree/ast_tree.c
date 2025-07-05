@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:36:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 15:43:45 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:27:49 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	and_monitor(t_ms_sequence *sequence)
 	}
 }
 
+const char* ms_get_identity(int8_t index);
+
 void	or_monitor(t_ms_sequence *sequence)
 {
 	size_t			i;
@@ -44,7 +46,7 @@ void	or_monitor(t_ms_sequence *sequence)
 		ms_minishell_get()->finish_or = true;
 		ms_minishell_get()->or_sequenze = true;
 		if (sequence->is_sequence[i / 8] & (1 << (i % 8)))
-			tree_monitor(sequence);
+			tree_monitor(sequence -> objects[i]);
 		else
 		{
 			command = ms_get_command(sequence->objects[i]);
@@ -72,8 +74,9 @@ int	tree_monitor(t_ms_sequence *sequence)
 				pipe_monitor(sequence->objects[i]);
 			else if (sequence->operator == MS_TOKEN_AND)
 				and_monitor(sequence->objects[i]);
-			else if (sequence->operator == MS_TOKEN_OR)
+			else if (sequence->operator == MS_TOKEN_OR) {
 				or_monitor(sequence->objects[i]);
+			}
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 14:06:30 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 16:28:57 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static char	*ft_find_path(char *cmd)
 	char	*sub_path;
 	char	*exe_path;
 
+	if (ft_strchr(cmd, '/') != NULL)
+		return (ft_strdup(cmd));
 	i = 0;
 	path_all = ft_split(ft_getenv("PATH"), ':');
 	while (path_all[i])

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 13:38:44 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 16:58:18 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ms_exit(int state)
 	rl_clear_history();
 	gc_close_fds();
 	gc_free();
-	printf("exit\n");
+	//printf("exit\n");
 	exit(state);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 16:13:51 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 17:07:00 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	else if (index_buildin == 5)
 		ms_cd(command->argv[1]);
 	else if (index_buildin == 6)
-		ms_echo(command, true);
+		ms_echo(command, false);
 	return (0);
 }
 

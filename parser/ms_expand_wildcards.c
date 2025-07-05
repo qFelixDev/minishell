@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:27:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/05 16:07:35 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 17:06:10 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,11 +165,11 @@ size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 	is_absolute = (pattern[0] == '/');
 	//print_pattern(pattern);
 	match_count = enumerate_matches(
-		pattern + is_absolute, ft_strdup(&"./"[is_absolute]), NULL);
+		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), NULL); // Change when ./ is omitted
 	if (paths == NULL)
 		return (match_count + (match_count == 0));
 	match_count = enumerate_matches(
-		pattern + is_absolute, ft_strdup(&"./"[is_absolute]), paths);
+		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), paths); // Change when ./ is omitted
 	if (match_count != 0)
 		return (free(pattern), match_count);
 	pattern_index = -1;
