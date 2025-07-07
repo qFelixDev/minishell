@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 16:58:18 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/05 19:41:59 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,4 @@ int	main(int ac, char **argv, char **envp)
 	else
 		minishell_non_interactive();
 	ms_exit(ms_minishell_get()->exit_status);
-	return (0);
 }
-
