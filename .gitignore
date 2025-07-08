@@ -5,3 +5,4 @@ _*
 *.o
 *.a
 minishell
+tmp*
