@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/08 10:09:07 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/08 10:53:10 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,19 @@ bool	expand_variables(t_ms_token *token)
 	{
 		if (token -> index == MS_TOKEN_VARIABLE)
 		{
-			value = getenv(token -> content);
-			if (value == NULL)
-				value = "";
-			value = ft_strdup(value);
-			if (value == NULL)
-				return (false);
+			if (token -> content[0] == '$')
+				value = ft_itoa(getpid());
+			else if (token -> content[0] == '?')
+				value = ft_itoa(ms_minishell_get() -> exit_status);
+			else
+			{
+				value = getenv(token -> content);
+				if (value == NULL)
+					value = "";
+				value = ft_strdup(value);
+				if (value == NULL)
+					return (false);
+			}
 			free(token -> content);
 			token -> index = MS_TOKEN_STRING;
 			token -> content = value;

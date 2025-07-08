@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:27:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/05 17:06:10 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/08 11:01:16 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,17 @@ size_t	add_match(char *pattern, char *path, char *name, char **matches)
 
 size_t	enumerate_matches(char *pattern, char *path, char **matches)
 {
-	DIR *const		directory = opendir(path);
+	DIR				*directory;
 	struct dirent	*entry;
 	size_t			match_count;
 
-	match_count = 0;
+	if (path[0] == '\0')
+		directory = opendir("./");
+	else
+		directory = opendir(path);
 	if (directory == NULL)
 		return (0);
+	match_count = 0;
 	entry = readdir(directory);
 	while (entry != NULL)
 	{
@@ -163,13 +167,12 @@ size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 		return (0);
 	get_pattern(token, pattern);
 	is_absolute = (pattern[0] == '/');
-	//print_pattern(pattern);
 	match_count = enumerate_matches(
-		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), NULL); // Change when ./ is omitted
+		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), NULL);
 	if (paths == NULL)
 		return (match_count + (match_count == 0));
 	match_count = enumerate_matches(
-		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), paths); // Change when ./ is omitted
+		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), paths);
 	if (match_count != 0)
 		return (free(pattern), match_count);
 	pattern_index = -1;

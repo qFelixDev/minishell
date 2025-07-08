@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 12:24:58 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/05 12:57:51 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/08 10:49:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ t_ms_token	*add_string_token(t_ms_token *token, char *string)
 	int8_t	index;
 	size_t	length;
 
-	index = MS_TOKEN_STRING;
-	if (*string == '$')
-	{
-		index = MS_TOKEN_VARIABLE;
-		string++;
-	}
+	index = MS_TOKEN_STRING * (*string != '$')
+		+ MS_TOKEN_VARIABLE * (*string == '$');
+	string += (*string == '$');
 	length = 0;
-	while (string[length] != '$' && string[length] != '\0'
-		&& (index != MS_TOKEN_VARIABLE || ft_isalnum(string[length])
-			|| string[length] == '_'))
-		length++;
+	if (*string == '$' || *string == '?')
+		length = 1;
+	else
+		while (string[length] != '$' && string[length] != '\0'
+			&& (index != MS_TOKEN_VARIABLE || ft_isalnum(string[length])
+				|| string[length] == '_'))
+			length++;
 	if (token -> index != MS_TOKEN_UNRESOLVED_STRING)
 		token = ms_insert_token(token, index);
 	else
