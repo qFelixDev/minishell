@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 13:32:59 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/08 09:43:37 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	non_interactive_arg(char **args, int argc)
 	handle_shell_input(line);
 }
 
+#include<sys/time.h>
+
 // Setzt Signal-Handler für z.B. Ctrl-C
 // Schleife läuft solange kein exit()
 // Prompt holen
@@ -71,7 +73,11 @@ void	interactive(void)
 		if (!get_user_prompt_value(&user_prompt))
 			break ;
 		gc_add(user_prompt);
+		//struct timeval start, end;
+		//gettimeofday(&start, NULL);
 		handle_shell_input(user_prompt);
+		//gettimeofday(&end, NULL);
+		//printf("%ld\n", end.tv_usec - start.tv_usec + 1000000 * (end.tv_sec - start.tv_sec));
 	}
 }
 

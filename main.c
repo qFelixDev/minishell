@@ -6,13 +6,13 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 19:41:59 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/08 10:19:46 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ms_exit(int state)
+int	ms_exit(int state)
 {
 	gc_list_clear(&ms_minishell_get()->env, free_env_entry);
 	rl_clear_history();
@@ -20,6 +20,7 @@ void	ms_exit(int state)
 	gc_free();
 	//printf("exit\n");
 	exit(state);
+	return (0);
 }
 
 // 1) Building the Shell enviroment 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 15:23:59 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:20:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ char			*create_prompt(void);
 //*************************************************************/
 // Shell
 //*************************************************************/
-void			ms_exit(int state);
+int				ms_exit(int state);
 void			non_interactive_arg(char **args, int argc);
 void			interactive(void);
 void			minishell_non_interactive(void);
@@ -291,7 +291,7 @@ void			free_env_entry(void *content);
 //*************************************************************/
 int				ms_pwd(void);
 int				ms_cd(char *path);
-void			ms_print_env(void);
+int				ms_print_env(void);
 int				ms_unset(t_ms_command *command);
 int				ms_echo(t_ms_command *command, bool is_n);
 int				ms_export(t_ms_command *command);

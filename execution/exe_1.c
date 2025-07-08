@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 17:07:00 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/08 10:19:05 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,23 @@ static void	generatebuildins(char *buildins[7])
 int	buildin_exe(t_ms_command *command, int index_buildin)
 {
 	int	res;
-	
+
 	res = 1;
 	if (index_buildin == 0)
-		ms_print_env();
+		return (ms_print_env());
 	else if (index_buildin == 1)
-		ms_exit(0);
+		return (ms_exit(0));
 	else if (index_buildin == 2)
-		ms_unset(command);
+		return (ms_unset(command));
 	else if (index_buildin == 3)
-		ms_export(command);
+		return (ms_export(command));
 	else if (index_buildin == 4)
-		ms_pwd();
+		return (ms_pwd());
 	else if (index_buildin == 5)
-		ms_cd(command->argv[1]);
+		return (ms_cd(command->argv[1]));
 	else if (index_buildin == 6)
-		ms_echo(command, false);
-	return (0);
+		return (ms_echo(command, false));
+	return (127);
 }
 
 void exe_manager(t_ms_command *command)
@@ -60,6 +60,8 @@ void exe_manager(t_ms_command *command)
 		if (ft_strncmp(command->argv[0], build_ins[i], ft_strlen(build_ins[i])) == 0)
 		{
 			result = buildin_exe(command, i);
+			if (result != 127)
+				return ;
 		}
 		++i;
 	}

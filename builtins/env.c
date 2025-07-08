@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:33:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 13:56:22 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/08 10:19:24 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-void	ms_print_env(void)
+int	ms_print_env(void)
 {
 	t_dict_env	*node;
 	t_list		*env;
@@ -33,4 +33,5 @@ void	ms_print_env(void)
 		printf("=%s\n", node->value);
 		env = env->next;
 	}
+	return (0);
 }

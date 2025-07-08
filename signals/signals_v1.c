@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:00:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 13:47:12 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/08 09:42:41 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void signal_exit(int sig)
 
 void	main_signals(void)
 {
-	signal(SIGINT, signal_exit);
+	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, signal_exit);
 }
