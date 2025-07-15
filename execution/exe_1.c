@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/08 10:19:05 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 18:25:54 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	int	res;
 
 	res = 1;
+	(void)res;
 	if (index_buildin == 0)
 		return (ms_print_env());
 	else if (index_buildin == 1)

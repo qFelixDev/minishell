@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:36:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/07 10:37:51 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 19:10:07 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	and_monitor(t_ms_sequence *sequence)
 		{
 			command = ms_get_command(sequence->objects[i]);
 			exe_manager(command);
+			ms_free_command(command);
 		}
 		++i;
 	}
@@ -82,6 +83,7 @@ int	tree_monitor(t_ms_sequence *sequence)
 		{
 			command = ms_get_command(sequence->objects[i]);
 			exe_manager(command);
+			ms_free_command(command);
 		}
 		++i;
 	}

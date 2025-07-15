@@ -6,11 +6,12 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:00:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/08 09:42:41 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 18:25:23 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <signal.h>
 
 void	sighandler(int sig)
 {

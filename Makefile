@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
+#    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/05 15:24:57 by reriebsc         ###   ########.fr        #
+#    Updated: 2025/07/13 19:12:07 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -fsanitize=address,undefined -lreadline -o $@
 	@echo "$(GREEN)✅ Executable $@ created successfully!$(RESET)"
 
 # Objektdateien-Regel
@@ -88,17 +88,17 @@ $(OBJ_DIR)/%.o: %.c
 
 # libft bauen
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_PATH)
+	@$(MAKE) -C $(PATH_LIBFT)
 
 clean:
 	$(RM) $(OBJS) $(OBJS_BONUS)
-	@$(MAKE) -C $(LIBFT_PATH) clean
+	@$(MAKE) -C $(PATH_LIBFT) clean
 	$(RM) -r $(OBJ_DIR)
 	@echo "$(RED)🧹 Object files removed$(RESET)"
 
 fclean: clean
 	$(RM) $(NAME) $(NAME_BONUS)
-	@$(MAKE) -C $(LIBFT_PATH) fclean
+	@$(MAKE) -C $(PATH_LIBFT) fclean
 	@echo "$(RED)🧹 Executables removed$(RESET)"
 
 re: fclean all

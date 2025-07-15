@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:27:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/08 11:01:16 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 18:41:47 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 	match_count = enumerate_matches(
 		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), NULL);
 	if (paths == NULL)
-		return (match_count + (match_count == 0));
+		return (free(pattern), match_count + (match_count == 0));
 	match_count = enumerate_matches(
 		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), paths);
 	if (match_count != 0)

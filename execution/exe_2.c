@@ -6,11 +6,12 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 16:28:57 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 18:26:41 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <sys/wait.h>
 
 //if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
 // if (sequence->is_sequence[i / 8] & (1u << (i % 8)))

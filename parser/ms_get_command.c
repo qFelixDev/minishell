@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/08 10:53:10 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 18:38:46 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	ms_free_command(t_ms_command *command)
 		index = 0;
 		while (command -> argv[index] != NULL)
 			free(command -> argv[index++]);
+		free(command -> argv);
 	}
 	if (command -> redirects != NULL)
 	{
@@ -146,8 +147,10 @@ void	ms_free_command(t_ms_command *command)
 			file_index = 0;
 			while (command -> redirects[index][file_index] != NULL)
 				free(command -> redirects[index][file_index++]);
+			free(command -> redirects[index]);
 		}
 	}
+	free(command);
 }
 
 t_ms_command	*ms_allocate_command(t_ms_token *token)

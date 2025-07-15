@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/08 09:43:37 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 19:13:15 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	handle_shell_input(char *line)
 	//		ms_minishell_get()->exit_status = EXIT_FAILURE;
 	//	return ;
 	//}
+	//ms_print_sequence(sequence, 0);
 	return (tree_monitor(sequence), ms_free_sequence(sequence), gc_free_ptr(line));
 }
 
@@ -54,8 +55,6 @@ void	non_interactive_arg(char **args, int argc)
 	//add_history(line);
 	handle_shell_input(line);
 }
-
-#include<sys/time.h>
 
 // Setzt Signal-Handler für z.B. Ctrl-C
 // Schleife läuft solange kein exit()

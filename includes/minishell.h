@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/08 10:20:25 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 17:53:16 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,7 @@ t_ms_sequence	*ms_parse(char *string);
 t_ms_command	*ms_get_command(t_ms_token *token);
 void			ms_free_sequence(t_ms_sequence *sequence);
 void			ms_free_command(t_ms_command *command);
-void			ms_print_sequence(t_ms_sequence *sequence);
+void			ms_print_sequence(t_ms_sequence *sequence, int indentation);
 void			ms_print_command(t_ms_command *command);
 
 

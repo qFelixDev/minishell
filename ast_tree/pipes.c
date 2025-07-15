@@ -6,12 +6,13 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 14:11:44 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 18:27:31 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <signal.h>
+#include <sys/wait.h>
 
 void	pipe_left_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 {

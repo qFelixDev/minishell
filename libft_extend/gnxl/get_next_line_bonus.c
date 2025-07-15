@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:26:30 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/04/29 11:28:08 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/13 18:31:41 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_err_hand(char *arr, char *nxtl, char *line)
 
 char	*get_next_line(int fd)
 {
-	static char		matrix[OPEN_MAX][BUFFER_SIZE + 1];
+	static char		matrix[1024][BUFFER_SIZE + 1];
 	char			*line;
 	char			*nextline;
 

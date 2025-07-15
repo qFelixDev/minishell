@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 12:24:58 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/08 10:49:25 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/13 18:06:26 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ bool	ms_resolve_strings(t_ms_token *token)
 				string_index += (token -> index == MS_TOKEN_VARIABLE)
 					+ ft_strlen(token -> content);
 			}
-			free(string);
+			//free(string);
 		}
 		token = token -> next;
 	}
