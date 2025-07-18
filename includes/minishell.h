@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 16:45:57 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/18 20:25:09 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void			pipe_right_process(t_ms_sequence *sequence,
 					t_pipe_data *pipe_data);
 void			pipe_fork_error(t_pipe_data *pipe_data);
 void			close_pipe_and_wait(t_pipe_data *pipe_data);
-void			pipe_monitor(t_ms_sequence *sequence);
+int				ms_execute_pipeline(t_ms_sequence *sequence);
 
 //*************************************************************/
 // Commands
@@ -234,7 +234,7 @@ void			non_interactive_arg(char **args, int argc);
 void			interactive(void);
 void			minishell_non_interactive(void);
 int				ms_execute_sequence(t_ms_sequence *sequence);
-
+int				wait_for_process(pid_t pid);
 
 //*************************************************************/
 // Signals 
