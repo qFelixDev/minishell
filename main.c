@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/08 10:19:46 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/18 18:27:53 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ms_exit(int state)
 	rl_clear_history();
 	gc_close_fds();
 	gc_free();
-	//printf("exit\n");
 	exit(state);
 	return (0);
 }
@@ -28,7 +27,6 @@ int	ms_exit(int state)
 // 3) Cleanup and exit the shell 
 int	main(int ac, char **argv, char **envp)
 {
-
 	if (!ms_generate_env(envp))
 		ms_exit(1);
 	if (ac >= 2)
