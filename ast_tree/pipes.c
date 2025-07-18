@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 16:09:59 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:25:34 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	pipe_left_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 	gc_close_fd(pipe_data->pipe_fds[0]);
 	dup2(pipe_data->pipe_fds[1], STDOUT_FILENO);
 	gc_close_fd(pipe_data->pipe_fds[1]);
-	ms_exit(tree_monitor(sequence));
+	ms_exit(ms_execute_sequence(sequence));
 }
 
 void	pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
@@ -27,7 +27,7 @@ void	pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 	gc_close_fd(pipe_data->pipe_fds[1]);
 	dup2(pipe_data->pipe_fds[0], STDIN_FILENO);
 	gc_close_fd(pipe_data->pipe_fds[0]);
-	pipe_data->right_result = tree_monitor(sequence);
+	pipe_data->right_result = ms_execute_sequence(sequence);
 	ms_exit(pipe_data->right_result);
 }
 
@@ -53,8 +53,8 @@ void	pipe_monitor(t_ms_sequence *sequence)
 	t_pipe_data	pipe_data;
 
 	reset_signals();
-	if (!sequence->objects || !sequence->operator + 1)
-		perror("No Command du use Pipe");
+	if (!sequence->objects) //|| !sequence->operator + 1)
+		return (perror("No Command du use Pipe"));
 	if (pipe(pipe_data.pipe_fds) == -1)
 		return (perror("Pipe creation failed"));
 	pipe_data.left_pid = fork();
@@ -72,4 +72,16 @@ void	pipe_monitor(t_ms_sequence *sequence)
 		pipe_data.right_result = WEXITSTATUS(pipe_data.right_status);
 	ms_minishell_get()->exit_status = pipe_data.right_result;
 	//return (pipe_data.right_result);
+}
+
+int	pipe_monitor(t_ms_sequence *sequence)
+{
+	size_t	pipe_index;
+
+	pipe_index = 0;
+	while (pipe_index < sequence -> object_count - 1)
+	{
+		
+		pipe_index++;
+	}
 }

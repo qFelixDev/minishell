@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/13 17:53:16 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/18 16:45:57 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ int				ms_exit(int state);
 void			non_interactive_arg(char **args, int argc);
 void			interactive(void);
 void			minishell_non_interactive(void);
-int				tree_monitor(t_ms_sequence *sequence);
+int				ms_execute_sequence(t_ms_sequence *sequence);
 
 
 //*************************************************************/

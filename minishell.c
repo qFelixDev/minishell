@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/13 19:13:15 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/18 16:45:05 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static void	handle_shell_input(char *line)
 	//	return ;
 	//}
 	//ms_print_sequence(sequence, 0);
-	return (tree_monitor(sequence), ms_free_sequence(sequence), gc_free_ptr(line));
+	return (ms_execute_sequence(sequence), ms_free_sequence(sequence),
+		gc_free_ptr(line));
 }
 
 //This fuction will be called if the main function is startet with some Arguments and building a string out of the arguments 

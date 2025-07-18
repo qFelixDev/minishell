@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ast_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:36:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 16:09:56 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:07:14 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void exe_manager(t_ms_command *command);
+int exe_manager(t_ms_command *command);
 
-void	and_monitor(t_ms_sequence *sequence)
+/*void	and_monitor(t_ms_sequence *sequence)
 {
 	size_t			i;
 	t_ms_command	*command;
@@ -23,7 +23,7 @@ void	and_monitor(t_ms_sequence *sequence)
 	while (i < sequence->object_count)
 	{
 		if (sequence->is_sequence[i / 8] & (1 << (i % 8)))
-			tree_monitor(sequence);
+			tree_monitor(sequence -> objects[i]);
 		else
 		{
 			command = ms_get_command(sequence->objects[i]);
@@ -68,6 +68,36 @@ int	tree_monitor(t_ms_sequence *sequence)
 	else if (sequence->operator == MS_TOKEN_OR) 
 		or_monitor(sequence);
 	return (0);
+}*/
+
+// !exit_code bedeutet, dass die success/failure-bedeutung von exit codes
+// int die false/true-bedeutung von booleans umgewandelt wird
+int	ms_execute_sequence(t_ms_sequence *sequence)
+{
+	size_t			object_index;
+	int				exit_code;
+	t_ms_command	*command;
+	const bool		expectation = (sequence -> operator == MS_TOKEN_AND);
+
+	if (sequence -> operator == MS_TOKEN_PIPE)
+		return (pipe_monitor(sequence), 0);
+	object_index = 0;
+	while (object_index < sequence -> object_count)
+	{
+		if (sequence -> is_sequence[object_index / 8]
+			& (1u << (object_index % 8)))
+			exit_code = ms_execute_sequence(sequence -> objects[object_index]);
+		else
+		{
+			command = ms_get_command(sequence -> objects[object_index]);
+			exit_code = exe_manager(command);
+			ms_free_command(command);
+		}
+		if (!exit_code != expectation)
+			return (exit_code);
+		object_index++;
+	}
+	return (exit_code);
 }
 
 /*
