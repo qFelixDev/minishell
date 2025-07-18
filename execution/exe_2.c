@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 17:13:57 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/18 21:58:57 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,22 @@ static void	handle_child_process(t_ms_command *command, char **env_cpy)
 	command_signals();
 	execve(path, command->argv, env_cpy);
 	//command_not_found(path);
-	if (ms_minishell_get()->or_sequenze)
+	/*if (ms_minishell_get()->or_sequenze)
 		ms_minishell_get()->finish_or = false;
 	if (!ms_minishell_get()->or_sequenze)
-		ms_exit(EXIT_FAILURE);
+		ms_exit(EXIT_FAILURE);*/
+	ms_exit(EXIT_FAILURE);
 }
 
-static int	wait_for_process(pid_t pid, char **env_cpy)
+int	wait_for_process(pid_t pid)
 {
 	int	status;
-	int	sig_num;
 
 	waitpid(pid, &status, 0);
-	ft_free_cluster(env_cpy);
-	main_signals();
 	if (WIFSIGNALED(status))
 	{
 		printf("\n");
-		sig_num = WTERMSIG(status);
-		return (128 + sig_num);
+		return (128 + WTERMSIG(status));
 	}
 	return (WEXITSTATUS(status));
 }
@@ -105,6 +102,6 @@ int	ms_execution_command(t_ms_command *command)
 		return (perror(ERROR_FORK), 1);
 	if (pid == 0)
 		handle_child_process(command, env_cpy);
-	return (wait_for_process(pid, env_cpy));
+	return (main_signals(), ft_free_cluster(env_cpy), wait_for_process(pid));
 }
 

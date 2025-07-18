@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 17:09:54 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/18 20:24:49 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ms_execute_sequence(t_ms_sequence *sequence)
 	const bool		expectation = (sequence -> operator == MS_TOKEN_AND);
 
 	if (sequence -> operator == MS_TOKEN_PIPE)
-		return (pipe_monitor(sequence), 0);
+		return (ms_execute_pipeline(sequence));
 	object_index = 0;
 	while (object_index < sequence -> object_count)
 	{
