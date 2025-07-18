@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:36:19 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/13 19:10:07 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/18 16:09:56 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,32 +61,12 @@ void	or_monitor(t_ms_sequence *sequence)
 // Objekt ist ein Kommando
 int	tree_monitor(t_ms_sequence *sequence)
 {
-	size_t			i;
-	t_ms_command	*command;
-
-	i = 0;
-	if (!sequence)
-		return (0);
-	while (i < sequence->object_count)
-	{
-		if (sequence->is_sequence[i / 8] & (1 << (i % 8)))
-		{
-			if (sequence->operator == MS_TOKEN_PIPE)
-				pipe_monitor(sequence->objects[i]);
-			else if (sequence->operator == MS_TOKEN_AND)
-				and_monitor(sequence->objects[i]);
-			else if (sequence->operator == MS_TOKEN_OR) {
-				or_monitor(sequence->objects[i]);
-			}
-		}
-		else
-		{
-			command = ms_get_command(sequence->objects[i]);
-			exe_manager(command);
-			ms_free_command(command);
-		}
-		++i;
-	}
+	if (sequence->operator == MS_TOKEN_PIPE)
+		pipe_monitor(sequence);
+	else if (sequence->operator == MS_TOKEN_AND)
+		and_monitor(sequence);
+	else if (sequence->operator == MS_TOKEN_OR) 
+		or_monitor(sequence);
 	return (0);
 }
 
