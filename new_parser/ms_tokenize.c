@@ -109,3 +109,20 @@ t_ms_token	*ms_tokenize(char *string)
 	}
 }
 
+char	*ms_get_token_identity(int8_t index)
+{
+	static char	*identities[MS_TOKEN_MAX] = {"&&", "||", "|", "(", ")", "<<",
+		">>", "<", ">", "~", " "}
+}
+
+void	ms_print_tokens(t_ms_token *token)
+{
+	while (token != NULL)
+	{
+		printf();
+		token = token -> next;
+	}
+}
+
+int main() {
+}

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 17:25:34 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/18 18:24:12 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,36 @@
 #include <signal.h>
 #include <sys/wait.h>
 
+int	exe_manager(t_ms_command *command);
+
 void	pipe_left_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 {
+	t_ms_command	*command;
+
 	gc_close_fd(pipe_data->pipe_fds[0]);
 	dup2(pipe_data->pipe_fds[1], STDOUT_FILENO);
 	gc_close_fd(pipe_data->pipe_fds[1]);
-	ms_exit(ms_execute_sequence(sequence));
+	if (sequence -> is_sequence[0] & 1)
+		ms_exit(ms_execute_sequence(sequence -> objects[0]));
+	command = ms_get_command(sequence -> objects[0]);
+	exe_manager(command);
+	ms_free_command(command);
 }
 
 void	pipe_right_process(t_ms_sequence *sequence, t_pipe_data *pipe_data)
 {
+	t_ms_command	*command;
+
 	gc_close_fd(pipe_data->pipe_fds[1]);
 	dup2(pipe_data->pipe_fds[0], STDIN_FILENO);
 	gc_close_fd(pipe_data->pipe_fds[0]);
-	pipe_data->right_result = ms_execute_sequence(sequence);
-	ms_exit(pipe_data->right_result);
+	if (sequence -> is_sequence[0] & 2)
+		ms_exit(ms_execute_sequence(sequence));
+	command = ms_get_command(sequence -> objects[1]);
+	exe_manager(command);
+	ms_free_command(command);
+	//pipe_data->right_result = ms_execute_sequence(sequence);
+	//ms_exit(pipe_data->right_result);
 }
 
 void	pipe_fork_error(t_pipe_data *pipe_data)
