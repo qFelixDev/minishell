@@ -6,7 +6,7 @@
 #    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/13 19:12:07 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/19 12:34:09 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,6 @@ SRCS := main.c\
 		builtins/echo.c\
 		builtins/env.c\
 		builtins/pwd.c\
-		ast_tree/ast_tree.c\
 		ast_tree/pipes.c\
 
 # Objekt-Dateien

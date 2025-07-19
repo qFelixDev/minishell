@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commants.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 17:13:35 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/19 15:20:48 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*create_prompt(void)
 	char		*user;
 	char		*prompt;
 
-	user = get_env_value("USER");
+	user = ft_getenv("USER");
 	if (!user)
 		user = "User";
 	len = get_prompt_length(user, exit_code);
@@ -89,21 +89,89 @@ char	*create_prompt(void)
 	return (prompt);
 }
 
-int	get_user_prompt_value(char **value)
+//int	get_user_prompt_value(char **value)
+//{
+//	char	*prompt;
+//
+//	prompt = create_prompt();
+//	fprintf(stderr, "%s", prompt);
+//	*value = readline(NULL);
+//	//add_history(value);
+//	gc_free_ptr(prompt);
+//	if (*value == NULL)
+//	{
+//		clear_history();
+//		printf("exit\n");
+//		gc_free_ptr(*value);
+//		ms_exit(0);
+//	}
+//	add_history(*value);
+//	return (1);
+//}
+
+//int	get_user_prompt_value(char **value, int tty)
+//{
+//	char	*prompt;
+//
+//	prompt = create_prompt();
+//	write(tty, prompt, ft_strlen(prompt));
+//	*value = readline(NULL);
+//	gc_free_ptr(prompt);
+//
+//	if (*value == NULL)
+//	{
+//		clear_history();
+//		printf("exit\n");
+//		gc_free_ptr(*value);
+//		ms_exit(0);
+//	}
+//
+//	add_history(*value);
+//	return (1);
+//}
+
+int	get_user_prompt_value(char **value, int tty)
 {
 	char	*prompt;
+	int		stdout_copy;
+	int		tty_in;
 
 	prompt = create_prompt();
-	*value = readline(prompt);
-	//add_history(value);
+	write(tty, prompt, ft_strlen(prompt));
+
+	// 🛡️ Um stdout zu retten
+	stdout_copy = dup(STDOUT_FILENO);
+
+	// 🔄 /dev/tty öffnen für output
+	tty_in = open("/dev/tty", O_WRONLY);
+	if (tty_in == -1)
+	{
+		perror("open /dev/tty");
+		gc_free_ptr(prompt);
+		return (0);
+	}
+
+	// 🔁 Leite stdout temporär um → so wird echo von readline nicht in out.txt geschrieben
+	dup2(tty_in, STDOUT_FILENO);
+	close(tty_in);
+
+	// 🔄 readline lesen (Prompt wurde ja manuell schon geschrieben)
+	*value = readline(NULL);
+
+	// ✅ Restore stdout
+	dup2(stdout_copy, STDOUT_FILENO);
+	close(stdout_copy);
+
 	gc_free_ptr(prompt);
+
 	if (*value == NULL)
 	{
 		clear_history();
-		printf("exit\n");
+		//printf("exit\n");
 		gc_free_ptr(*value);
-		destroy_minishell(0);
+		ms_exit(0);
 	}
+
 	add_history(*value);
 	return (1);
 }

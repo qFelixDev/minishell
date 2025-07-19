@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 16:45:05 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 14:46:11 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	handle_shell_input(char *line)
 {
 	t_ms_sequence	*sequence;
 
+	if (line[0] == '\0')
+		return ;
 	add_history(line);
 	sequence = ms_parse(line);
 	if (sequence == NULL)
@@ -65,13 +67,13 @@ void	non_interactive_arg(char **args, int argc)
 void	interactive(void)
 {
 	char	*user_prompt;
+	int		tty;
 
+	tty = gc_add_fd(open("/dev/tty", O_WRONLY));
 	user_prompt = NULL;
 	main_signals();
-	while (!ms_minishell_get()->exit_status)
+	while (get_user_prompt_value(&user_prompt, tty))
 	{
-		if (!get_user_prompt_value(&user_prompt))
-			break ;
 		gc_add(user_prompt);
 		//struct timeval start, end;
 		//gettimeofday(&start, NULL);
@@ -79,7 +81,11 @@ void	interactive(void)
 		//gettimeofday(&end, NULL);
 		//printf("%ld\n", end.tv_usec - start.tv_usec + 1000000 * (end.tv_sec - start.tv_sec));
 	}
+	gc_close_fd(tty);
 }
+
+
+
 
 //Wird aufgerufen, wenn Minishell nicht interaktiv läuft (z. B. bei Pipe oder Datei-Umleitung).
 //Startet eine Schleife, solange exit_status der Shell nicht gesetzt ist.

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 20:24:49 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 13:44:45 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	if (index_buildin == 0)
 		return (ms_print_env());
 	else if (index_buildin == 1)
-		return (ms_exit(0));
+		return (ms_exit(ms_minishell_get() -> exit_status));
 	else if (index_buildin == 2)
 		return (ms_unset(command));
 	else if (index_buildin == 3)
@@ -60,7 +60,8 @@ int exe_manager(t_ms_command *command)
 	i = 0;
 	while (i < 7)
 	{
-		if (ft_strncmp(command->argv[0], build_ins[i], ft_strlen(build_ins[i])) == 0)
+		if (ft_strncmp(command->argv[0], build_ins[i],
+			ft_strlen(command -> argv[0])) == 0)
 		{
 			result = buildin_exe(command, i);
 			if (result != 127)
@@ -73,6 +74,34 @@ int exe_manager(t_ms_command *command)
 
 // !exit_code bedeutet, dass die success/failure-bedeutung von exit codes
 // int die false/true-bedeutung von booleans umgewandelt wird
+//int	ms_execute_sequence(t_ms_sequence *sequence)
+//{
+//	size_t			object_index;
+//	int				exit_code;
+//	t_ms_command	*command;
+//	const bool		expectation = (sequence -> operator == MS_TOKEN_AND);
+//
+//	if (sequence -> operator == MS_TOKEN_PIPE)
+//		return (ms_execute_pipeline(sequence));
+//	object_index = 0;
+//	while (object_index < sequence -> object_count)
+//	{
+//		if (sequence -> is_sequence[object_index / 8]
+//			& (1u << (object_index % 8)))
+//			exit_code = ms_execute_sequence(sequence -> objects[object_index]);
+//		else
+//		{
+//			command = ms_get_command(sequence -> objects[object_index]);
+//			exit_code = exe_manager(command);
+//			ms_free_command(command);
+//		}
+//		if (!exit_code != expectation)
+//			return (exit_code);
+//		object_index++;
+//	}
+//	return (exit_code);
+//}
+
 int	ms_execute_sequence(t_ms_sequence *sequence)
 {
 	size_t			object_index;
@@ -81,13 +110,12 @@ int	ms_execute_sequence(t_ms_sequence *sequence)
 	const bool		expectation = (sequence -> operator == MS_TOKEN_AND);
 
 	if (sequence -> operator == MS_TOKEN_PIPE)
-		return (ms_execute_pipeline(sequence));
+		return (pipe_monitor(sequence));
 	object_index = 0;
 	while (object_index < sequence -> object_count)
 	{
-		if (sequence -> is_sequence[object_index / 8]
-			& (1u << (object_index % 8)))
-			exit_code = ms_execute_sequence(sequence -> objects[object_index]);
+		if (sequence -> is_sequence[object_index / 8] & (1u << (object_index % 8)))
+			exit_code = ms_execute_sequence(sequence->objects[object_index]);
 		else
 		{
 			command = ms_get_command(sequence -> objects[object_index]);
@@ -95,8 +123,9 @@ int	ms_execute_sequence(t_ms_sequence *sequence)
 			ms_free_command(command);
 		}
 		if (!exit_code != expectation)
-			return (exit_code);
+			return (ms_minishell_get() -> exit_status = exit_code);
 		object_index++;
 	}
+	ms_minishell_get() -> exit_status = exit_code;
 	return (exit_code);
 }

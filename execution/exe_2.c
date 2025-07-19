@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 21:58:57 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/19 15:58:38 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,45 @@ static char	*ft_find_exec_path(char **cmd_s, char **env)
 	return (path);
 }
 
+static bool	apply_redirects(char **redirects, int type)
+{
+	size_t	redirect_index;
+	size_t	last_index;
+	int		descriptor;
+
+	if (redirects[0] == NULL)
+		return (true);
+	last_index = 0;
+	while (redirects[last_index + 1] != NULL)
+		last_index++;
+	redirect_index = 0;
+	while (redirect_index < last_index)
+	{
+		descriptor = open(redirects[redirect_index++],
+			O_CREAT * (type != 2), 0777);
+		if (descriptor == -1)
+			return (false);
+		close(descriptor);
+	}
+	descriptor = open(redirects[last_index], (O_CREAT * (type != 2))
+		| (O_WRONLY * (type != 2)) | (O_RDONLY * (type == 2))
+		| (O_APPEND * (type == 1)) | (O_TRUNC * (type == 3)), 0777);
+	if (descriptor == -1)
+		return (false);
+	dup2(descriptor, STDOUT_FILENO * (type != 2) + STDIN_FILENO * (type == 2));
+	return (close(descriptor), true);
+}
+
 static void	handle_child_process(t_ms_command *command, char **env_cpy)
 {
-	char *path;
+	char	*path;
 
+	if (!apply_redirects(command -> redirects[1], 1))
+		ms_exit(1);
+	if (!apply_redirects(command -> redirects[2], 2))
+		ms_exit(1);
+	if (!apply_redirects(command -> redirects[3], 3))
+		ms_exit(1);
 	path = ft_find_exec_path(command->argv, env_cpy);
 	command_signals();
 	execve(path, command->argv, env_cpy);
@@ -89,19 +124,50 @@ int	wait_for_process(pid_t pid)
 	return (WEXITSTATUS(status));
 }
 
+
+
+//int	ms_execution_command(t_ms_command *command)
+//{
+//	//pid_t	pid;
+//	char	**env_cpy;
+//
+//	env_cpy = ms_gen_env();
+//	if (!env_cpy)
+//		return (perror(ERROR_MALLOC), 1);
+//	//pid = fork();
+//	//if (pid == -1)
+//	//	return (perror(ERROR_FORK), 1);
+//	//if (pid == 0)
+//	handle_child_process(command, env_cpy);
+//	return (main_signals(), ft_free_cluster(env_cpy), 1); //wait_for_process(pid));
+//}
+
+
 int	ms_execution_command(t_ms_command *command)
 {
 	pid_t	pid;
 	char	**env_cpy;
+	int		status;
 
 	env_cpy = ms_gen_env();
 	if (!env_cpy)
 		return (perror(ERROR_MALLOC), 1);
+
 	pid = fork();
 	if (pid == -1)
-		return (perror(ERROR_FORK), 1);
+		return (perror(ERROR_FORK), ft_free_cluster(env_cpy), 1);
+
 	if (pid == 0)
 		handle_child_process(command, env_cpy);
-	return (main_signals(), ft_free_cluster(env_cpy), wait_for_process(pid));
+
+	// Parent: wartet auf das Kind und räumt auf
+	waitpid(pid, &status, 0);
+	main_signals(); // ggf. Signale wieder setzen
+	ft_free_cluster(env_cpy);
+
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else
+		return (1); // Abnormaler Exit (z.B. durch Signal)
 }
 
