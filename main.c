@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 13:44:16 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 17:08:56 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ int	ms_exit(int state)
 	exit(state);
 }
 
-// 1) Building the Shell enviroment 
-// 2) Modus switch for different Shell forms
-// 3) Cleanup and exit the shell 
 int	main(int ac, char **argv, char **envp)
 {
 	if (!ms_generate_env(envp))

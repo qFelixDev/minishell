@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_v1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 11:02:40 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 14:23:50 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:47:48 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*join_str_array(char **list, int size)
 		len += ft_strlen(list[i++]) + 1;
 	result = (char *)gc_add(ft_calloc(len + 1, sizeof(char)));
 	if (!result)
-		return (/*pev(ERROR_MALLOC), */NULL);
+		return (NULL);
 	i = 0;
 	while (i < size)
 	{
@@ -44,28 +44,3 @@ void	ft_free_cluster(char **cluster)
 		free(cluster[i]);
 	free(cluster);
 }
-
-//void	free_ast_node(void *content)
-//{
-//	t_ms_sequence	*node;
-//
-//	node = content;
-//	if (node->left)
-//		free_ast_node(node->left);
-//	if (node->right)
-//		free_ast_node(node->right);
-//	gc_free_ptr(node->value);
-//	node->value = NULL;
-//	if (node->heredoc_filename)
-//	{
-//		unlink(node->heredoc_filename);
-//		gc_free_ptr(node->heredoc_filename);
-//		node->heredoc_filename = NULL;
-//	}
-//	if (node->type == AST_COMMAND)
-//	{
-//		gc_list_clear(&node->redirects, free_redirect);
-//		node->redirects = NULL;
-//	}
-//	gc_free_ptr(node);
-//}

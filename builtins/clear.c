@@ -6,14 +6,14 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:04:28 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 13:12:58 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:00:51 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ms_clear(void)
+int	ms_clear(void)
 {
-    printf("\033[H\033[J");
-    return 0;
+	printf("\033[H\033[J");
+	return (0);
 }

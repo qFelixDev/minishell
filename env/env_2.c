@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 14:05:45 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/29 12:35:37 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:02:24 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_dict_env	*ms_get_env_node(const char *key)
 	gen_node = ms_minishell_get()->env;
 	while (gen_node)
 	{
-		if (ft_strncmp(((t_dict_env *)gen_node->content)->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(((t_dict_env *)gen_node->content)->key, key,
+				ft_strlen(key)) == 0)
 		{
 			return ((t_dict_env *)gen_node->content);
 		}

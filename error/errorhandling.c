@@ -6,9 +6,8 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:01:33 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/20 08:23:34 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:09:15 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-

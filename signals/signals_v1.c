@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_v1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:00:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/18 18:50:25 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:45:24 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	sighandler(int sig)
 	gc_free_ptr(prompt);
 }
 
-static void signal_exit(int sig)
+static void	signal_exit(int sig)
 {
 	ms_exit(128 + sig);
 }

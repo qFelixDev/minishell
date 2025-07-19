@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:29:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 14:25:34 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 17:23:04 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*void	ms_print_env(void)
-{
-	t_dict_env	*node;
-	t_list		*env;
-
-	env = ms_minishell_get()->env;
-	while (env)
-	{
-		node = env->content;
-		if (env->next && !node->value)
-		{
-			env = env->next;
-			continue ;
-		}
-		printf("%s", node->key);
-		printf("=%s\n", node->value);
-		env = env->next;
-	}
-}*/
 
 char	*ft_getenv(char *name)
 {
@@ -59,7 +39,7 @@ char	**ms_gen_env(void)
 	if (!env)
 		exit(127);
 	current = ms_minishell_get()->env;
-	i = 0;
+	i = -1;
 	while (current)
 	{
 		if (!((t_dict_env *)current->content)->value)
@@ -70,13 +50,11 @@ char	**ms_gen_env(void)
 		tmp = ft_strjoin(((t_dict_env *)current->content)->key, "=");
 		if (!tmp)
 			exit(127);
-		env[i] = ft_strjoin(tmp, ((t_dict_env *)current->content)->value);
+		env[++i] = ft_strjoin(tmp, ((t_dict_env *)current->content)->value);
 		free(tmp);
 		current = current->next;
-		i++;
 	}
-	env[i] = NULL;
-	return (env);
+	return (env[i] = NULL, env);
 }
 
 void	free_env_entry(void *content)
@@ -88,23 +66,3 @@ void	free_env_entry(void *content)
 	gc_free_ptr(entry->value);
 	gc_free_ptr(entry);
 }
-
-
-//int	main(int ac, char **av, char **env)
-//{
-//	if (!ms_generate_env(env))
-//		return (1);
-//	//ms_print_env();
-//	//ms_cd("../includes");
-//	//ms_print_env();
-//
-//	//printf("\n\n\n");
-//
-//	char *str;
-//	char *key;
-//
-//	key = "PATH";
-//	str = ft_getenv(key);
-//	printf("%s", str);
-//	return (0);
-//}

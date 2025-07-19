@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:33:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/08 10:19:24 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:54:30 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ms_print_env(void)
 	t_dict_env	*node;
 	t_list		*env;
 
-	env = ms_minishell_get() -> env;
+	env = ms_minishell_get()->env;
 	while (env)
 	{
 		node = env->content;

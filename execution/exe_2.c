@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 15:58:38 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 17:10:02 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <sys/wait.h>
-
-//if (sequence->is_sequence[object_index / 8] & (1u << (object_index % 8)))
-// if (sequence->is_sequence[i / 8] & (1u << (i % 8)))
 
 static char	*ft_find_path(char *cmd)
 {
@@ -76,21 +73,21 @@ static bool	apply_redirects(char **redirects, int type)
 	while (redirect_index < last_index)
 	{
 		descriptor = open(redirects[redirect_index++],
-			O_CREAT * (type != 2), 0777);
+				O_CREAT * (type != 2), 0777);
 		if (descriptor == -1)
 			return (false);
 		close(descriptor);
 	}
 	descriptor = open(redirects[last_index], (O_CREAT * (type != 2))
-		| (O_WRONLY * (type != 2)) | (O_RDONLY * (type == 2))
-		| (O_APPEND * (type == 1)) | (O_TRUNC * (type == 3)), 0777);
+			| (O_WRONLY * (type != 2)) | (O_RDONLY * (type == 2))
+			| (O_APPEND * (type == 1)) | (O_TRUNC * (type == 3)), 0777);
 	if (descriptor == -1)
 		return (false);
 	dup2(descriptor, STDOUT_FILENO * (type != 2) + STDIN_FILENO * (type == 2));
 	return (close(descriptor), true);
 }
 
-static void	handle_child_process(t_ms_command *command, char **env_cpy)
+void	handle_child_process(t_ms_command *command, char **env_cpy)
 {
 	char	*path;
 
@@ -103,11 +100,6 @@ static void	handle_child_process(t_ms_command *command, char **env_cpy)
 	path = ft_find_exec_path(command->argv, env_cpy);
 	command_signals();
 	execve(path, command->argv, env_cpy);
-	//command_not_found(path);
-	/*if (ms_minishell_get()->or_sequenze)
-		ms_minishell_get()->finish_or = false;
-	if (!ms_minishell_get()->or_sequenze)
-		ms_exit(EXIT_FAILURE);*/
 	ms_exit(EXIT_FAILURE);
 }
 
@@ -123,51 +115,3 @@ int	wait_for_process(pid_t pid)
 	}
 	return (WEXITSTATUS(status));
 }
-
-
-
-//int	ms_execution_command(t_ms_command *command)
-//{
-//	//pid_t	pid;
-//	char	**env_cpy;
-//
-//	env_cpy = ms_gen_env();
-//	if (!env_cpy)
-//		return (perror(ERROR_MALLOC), 1);
-//	//pid = fork();
-//	//if (pid == -1)
-//	//	return (perror(ERROR_FORK), 1);
-//	//if (pid == 0)
-//	handle_child_process(command, env_cpy);
-//	return (main_signals(), ft_free_cluster(env_cpy), 1); //wait_for_process(pid));
-//}
-
-
-int	ms_execution_command(t_ms_command *command)
-{
-	pid_t	pid;
-	char	**env_cpy;
-	int		status;
-
-	env_cpy = ms_gen_env();
-	if (!env_cpy)
-		return (perror(ERROR_MALLOC), 1);
-
-	pid = fork();
-	if (pid == -1)
-		return (perror(ERROR_FORK), ft_free_cluster(env_cpy), 1);
-
-	if (pid == 0)
-		handle_child_process(command, env_cpy);
-
-	// Parent: wartet auf das Kind und räumt auf
-	waitpid(pid, &status, 0);
-	main_signals(); // ggf. Signale wieder setzen
-	ft_free_cluster(env_cpy);
-
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else
-		return (1); // Abnormaler Exit (z.B. durch Signal)
-}
-

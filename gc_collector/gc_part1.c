@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_part1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:31:01 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 14:19:12 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:55:28 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,3 @@ void	gc_free(void)
 	ft_lstclear(get_gc_head(), free);
 	*get_gc_head() = NULL;
 }
-

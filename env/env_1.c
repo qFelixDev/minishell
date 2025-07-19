@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:52:36 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/06/15 14:41:34 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:19:03 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,3 @@ int	ms_generate_env(char **env)
 		ms_set_env_value("PWD", cwd);
 	return (1);
 }
-

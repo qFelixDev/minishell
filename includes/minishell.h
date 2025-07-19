@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 16:24:50 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/19 17:48:10 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <stdint.h>
-
-
-
 
 //*************************************************************/
 // ERROt Message Makros
@@ -236,6 +233,7 @@ void			interactive(void);
 void			minishell_non_interactive(void);
 int				ms_execute_sequence(t_ms_sequence *sequence);
 int				wait_for_process(pid_t pid);
+void			handle_child_process(t_ms_command *command, char **env_cpy);
 
 //*************************************************************/
 // Signals 
@@ -245,16 +243,17 @@ void			main_signals(void);
 void			reset_signals(void);
 void			command_signals(void);
 
-
 //*************************************************************/
 // UTILS
 //*************************************************************/
+
 char			*join_str_array(char **list, int size);
 void			ft_free_cluster(char	**cluster);
 
 //*************************************************************/
 // Garbage Collector
 //*************************************************************/
+
 void			gc_list_clear(t_list **list, void (*del)(void *));
 void			gc_free_ptr(void *addr);
 void			gc_free(void);
@@ -263,10 +262,10 @@ void			gc_close_fd(int fd);
 int				gc_add_fd(int fd);
 void			free_redirect(void *content);
 
-
 //*************************************************************/
 // ENVIROMENT
 //*************************************************************/
+
 void			ms_split_key_value(const char *str, char *key, char *value);
 t_minishell		*ms_minishell_get(void);
 int				ms_add_env_node(const char *key, const char *value);
@@ -279,10 +278,10 @@ char			*ft_getenv(char *name);
 char			**ms_gen_env(void);
 void			free_env_entry(void *content);
 
-
 //*************************************************************/
 // BUILTINS
 //*************************************************************/
+
 int				ms_pwd(void);
 int				ms_cd(char *path);
 int				ms_print_env(void);
@@ -301,7 +300,16 @@ void			ms_free_command(t_ms_command *command);
 void			ms_print_sequence(t_ms_sequence *sequence, int indentation);
 void			ms_print_command(t_ms_command *command);
 
+//*************************************************************/
+// Pipes
+//*************************************************************/
 
+void			close_all_pipes(t_ms_sequence *seq, int pipes[1024][2]);
+int				init_pipes(t_ms_sequence *sequence, int pipes[1024][2]);
+void			child_process(t_ms_sequence *seq, int pipes[1024][2], size_t i);
+int				fork_children(t_ms_sequence *sequence, int pipes[1024][2]);
+void			wait_for_children(t_ms_sequence *seq, int *status);
+int				pipe_monitor(t_ms_sequence *sequence);
 
 //*************************************************************/
 // Memory Management

@@ -6,21 +6,11 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/05 15:35:05 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:12:59 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-//static void	print_invalid_identifier_error(const char *key)
-//{
-//	write(STDERR_FILENO, RED, ft_strlen(RED));
-//	write(STDERR_FILENO, "minishell: export: `", 20);
-//	write(STDERR_FILENO, key, ft_strlen(key));
-//	write(STDERR_FILENO, "': not a valid identifier", 26);
-//	write(STDERR_FILENO, RESET, ft_strlen(RESET));
-//	write(STDERR_FILENO, "\n", 1);
-//}
 
 static int	handle_plus_equals(char *arg, char *plus_equal_sign)
 {
@@ -32,9 +22,8 @@ static int	handle_plus_equals(char *arg, char *plus_equal_sign)
 	ft_strlcpy(key, arg, plus_equal_sign - arg);
 	key[plus_equal_sign - arg] = '\0';
 	if (key[0] == '\0')
-		return (perror("minishell: export: `+=': not a valid identifier"), EXIT_FAILURE);
-	//if (!is_valid_identifier(key))
-	//	return (print_invalid_identifier_error(key), 1);
+		return (perror("minishell: export: `+=': not a valid identifier")
+			, EXIT_FAILURE);
 	ft_strlcpy(value, plus_equal_sign + 2, MAX_VAR_LEN);
 	existing_value = ft_getenv(key);
 	if (existing_value)
@@ -58,12 +47,6 @@ static void	handle_equal(char *arg, char *equal_sign, int *result)
 		perror("minishell: export: `=': not a valid identifier");
 		return ;
 	}
-	//if (!is_valid_identifier(key))
-	//{
-	//	print_invalid_identifier_error(key);
-	//	*result = 1;
-	//	return ;
-	//}
 	ft_strlcpy(value, equal_sign + 1, MAX_VAR_LEN);
 	ms_set_env_value(key, value);
 	(void)result;
@@ -95,8 +78,6 @@ int	ms_export(t_ms_command *command)
 			handle_equal(command->argv[i], equal_sign, &result);
 		else
 		{
-			//if (!is_valid_identifier(command->argv[i]))
-			//	return (perror(ERROR_EXPORT), EXIT_FAILURE);
 			ms_set_env_value(command->argv[i], NULL);
 		}
 		i++;

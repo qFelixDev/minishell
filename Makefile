@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
+#    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/19 12:34:09 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/19 17:42:02 by reriebsc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRCS := main.c\
 		gc_collector/gc_part3.c\
 		execution/exe_1.c\
 		execution/exe_2.c\
+		execution/exe_v3.c\
 		error/errorhandling.c\
 		env/env_1.c\
 		env/env_2.c\
@@ -66,6 +67,7 @@ SRCS := main.c\
 		builtins/echo.c\
 		builtins/env.c\
 		builtins/pwd.c\
+		ast_tree/main_pipes.c\
 		ast_tree/pipes.c\
 
 # Objekt-Dateien
