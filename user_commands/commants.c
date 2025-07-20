@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 16:50:19 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:00:53 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,24 +89,52 @@ char	*create_prompt(void)
 	return (prompt);
 }
 
+//int	get_user_prompt_value(char **value, int tty)
+//{
+//	char	*prompt;
+//	int		stdout_copy;
+//	int		tty_in;
+//
+//	prompt = create_prompt();
+//	write(tty, prompt, ft_strlen(prompt));
+//	stdout_copy = dup(STDOUT_FILENO);
+//	tty_in = open("/dev/tty", O_WRONLY);
+//	if (tty_in == -1)
+//		return (perror("open /dev/tty"), gc_free_ptr(prompt), 0);
+//	dup2(tty_in, STDOUT_FILENO);
+//	close(tty_in);
+//	*value = readline(NULL);
+//	dup2(stdout_copy, STDOUT_FILENO);
+//	close(stdout_copy);
+//	gc_free_ptr(prompt);
+//	if (*value == NULL)
+//	{
+//		clear_history();
+//		gc_free_ptr(*value);
+//		ms_exit(0);
+//	}
+//	return (add_history(*value), 1);
+//}
+
 int	get_user_prompt_value(char **value, int tty)
 {
 	char	*prompt;
 	int		stdout_copy;
 	int		tty_in;
 
+	(void)tty;
 	prompt = create_prompt();
-	write(tty, prompt, ft_strlen(prompt));
 	stdout_copy = dup(STDOUT_FILENO);
 	tty_in = open("/dev/tty", O_WRONLY);
 	if (tty_in == -1)
 		return (perror("open /dev/tty"), gc_free_ptr(prompt), 0);
 	dup2(tty_in, STDOUT_FILENO);
 	close(tty_in);
-	*value = readline(NULL);
+	*value = readline(prompt);
 	dup2(stdout_copy, STDOUT_FILENO);
 	close(stdout_copy);
 	gc_free_ptr(prompt);
+
 	if (*value == NULL)
 	{
 		clear_history();

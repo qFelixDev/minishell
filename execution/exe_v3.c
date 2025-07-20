@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:05:36 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:17:19 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:12:42 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	ms_execution_command(t_ms_command *command)
 	if (pid == -1)
 		return (perror(ERROR_FORK), ft_free_cluster(env_cpy), 1);
 	if (pid == 0)
+	{
+		command_signals();
 		handle_child_process(command, env_cpy);
+	}
+	reset_signals();
 	waitpid(pid, &status, 0);
 	main_signals();
 	ft_free_cluster(env_cpy);

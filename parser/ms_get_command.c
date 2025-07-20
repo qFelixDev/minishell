@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/19 13:18:18 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/20 15:22:07 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,9 +263,9 @@ t_ms_command	*ms_get_command(t_ms_token *token)
 	}
 	if (!populate_command(command, token))
 		return (ms_free_command(command), NULL);
-	int argument_count = 0;
-	while(command -> argv[argument_count] != NULL)
-		argument_count++;
+	//int argument_count = 0;
+	//while(command -> argv[argument_count] != NULL)
+	//	argument_count++;
 	//printf("%d\n", argument_count);
 	return (command);
 }

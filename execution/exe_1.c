@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:04:37 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:29:33 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,44 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	return (127);
 }
 
+//int	exe_manager(t_ms_command *command)
+//{
+//	char				*build_ins[7];
+//	int					i;
+//	int					result;
+//
+//	if (command == NULL)
+//		return (1);
+//	generatebuildins(build_ins);
+//	i = 0;
+//	while (i < 7)
+//	{
+//		if (ft_strncmp(command->argv[0], build_ins[i],
+//				ft_strlen(command -> argv[0])) == 0)
+//		{
+//			result = buildin_exe(command, i);
+//			if (result != 127)
+//				return (result);
+//		}
+//		++i;
+//	}
+//	return (ms_execution_command(command));
+//}
+
 int	exe_manager(t_ms_command *command)
 {
-	char				*build_ins[7];
-	int					i;
-	int					result;
+	char	*build_ins[7];
+	int		i;
+	int		result;
 
-	if (command == NULL)
+	if (command->argv[0] == NULL)
 		return (1);
 	generatebuildins(build_ins);
 	i = 0;
 	while (i < 7)
 	{
 		if (ft_strncmp(command->argv[0], build_ins[i],
-				ft_strlen(command -> argv[0])) == 0)
+				ft_strlen(command->argv[0])) == 0)
 		{
 			result = buildin_exe(command, i);
 			if (result != 127)

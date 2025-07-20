@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:00:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 16:45:24 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:17:43 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	sighandler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	printf("\n%s", prompt);
 	gc_free_ptr(prompt);
 }
 
