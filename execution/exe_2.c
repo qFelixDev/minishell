@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/21 19:24:11 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 19:42:01 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	handle_child_process(t_ms_command *command, char **env_cpy)
 		unlink("minishell_delim_file.tmp");
 	}
 	execve(path, command->argv, env_cpy);
+	perror("Command not Found");
 	ms_exit(127);
 }
 
