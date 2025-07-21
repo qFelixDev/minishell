@@ -6,7 +6,7 @@
 #    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/20 17:13:41 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/21 21:41:35 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS := main.c\
 		builtins/export.c\
 		builtins/echo.c\
 		builtins/env.c\
+		builtins/exit.c\
 		builtins/pwd.c\
 		ast_tree/main_pipes.c\
 		ast_tree/pipes.c\

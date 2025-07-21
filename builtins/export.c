@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:12:59 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:55:37 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	handle_plus_equals(char *arg, char *plus_equal_sign)
+/*static int	handle_plus_equals(char *arg, char *plus_equal_sign)
 {
 	char	key[MAX_VAR_LEN];
 	char	value[MAX_VAR_LEN];
@@ -81,6 +81,84 @@ int	ms_export(t_ms_command *command)
 			ms_set_env_value(command->argv[i], NULL);
 		}
 		i++;
+	}
+	return (result);
+}*/
+
+char	*get_closest_operator(char *string)
+{
+	while (*string != '\0')
+	{
+		if (string[0] == '=')
+			return (string);
+		if (string[0] == '+' && string[1] == '=')
+			return (string);
+		string++;
+	}
+	return (NULL);
+}
+
+void	perform_operation(char *operation, char *string)
+{
+	char *const	key = gc_add(ft_substr(operation, 0, string - operation));
+	char		*value;
+
+	if (string[0] == '=')
+	{
+		string += 1;
+		ms_set_env_value(key, string);
+	}
+	else
+	{
+		string += 2;
+		value = ft_getenv(key);
+		if (value == NULL)
+			ms_set_env_value(key, string);
+		else
+		{
+			value = gc_add(ft_strjoin(value, string));
+			ms_set_env_value(key, value);
+			gc_free_ptr(value);
+		}
+	}
+	gc_free_ptr(key);
+}
+
+bool	is_key_valid(char *key, char *terminator)
+{
+	if (key == terminator)
+		return (false);
+	while (key < terminator)
+	{
+		if (ft_strchr("+=.", *key) != NULL)
+			return (false);
+		key++;
+	}
+	return (true);
+}
+
+int	ms_export(char **argv)
+{
+	int		argument_index;
+	int		result;
+	char	*operator;
+
+	if (argv[1] == NULL)
+		return (ms_print_env(), 0);
+	result = 0;
+	argument_index = 0;
+	while (argv[++argument_index] != NULL)
+	{
+		operator = get_closest_operator(argv[argument_index]);
+		if (operator == NULL)
+			continue ;
+		if (!is_key_valid(argv[argument_index], operator))
+		{
+			fprintf(stderr, "Invalid Key\n");
+			result = 1;
+			continue;
+		}
+		perform_operation(argv[argument_index], operator);
 	}
 	return (result);
 }

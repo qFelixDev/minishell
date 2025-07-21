@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:54:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/21 15:34:24 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 20:17:31 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ t_ms_sequence	*ms_parse(char *string)
 	t_ms_token *const	first = ms_tokenize(string);
 
 	if (first == NULL)
-		return (printf("Tokenization failed\n"), NULL);
+		return (fprintf(stderr, "Tokenization failed\n"), NULL);
 	token = ms_check_syntax(first);
 	if (token != NULL)
 	{
 		gc_close_fd(ms_read_delims(first, token));
-		return (printf("Unexpected %s after %s\n",
+		return (fprintf(stderr, "Unexpected %s after %s\n",
 				ms_get_identity(token->next->index),
 				ms_get_identity(token->index)),
 			ms_free_tokens(first, false), NULL);

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/21 19:21:34 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 21:38:20 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ bool	expand_variables(t_ms_token *token)
 	{
 		if (token -> index == MS_TOKEN_VARIABLE)
 		{
-			if (token -> content[0] == '\0' && !token -> concatenate_content)
+			if (token -> content[0] == '\0' && (!token -> concatenate_content
+				|| token -> next == NULL))
 				value = ft_strdup("$");
 			else if (token -> content[0] == '$')
 				value = ft_itoa(getpid());

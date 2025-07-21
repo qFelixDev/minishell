@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/21 17:40:20 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:25:17 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,12 +288,14 @@ void			free_env_entry(void *content);
 // BUILTINS
 //*************************************************************/
 
+int				ms_exit_builtin(t_ms_command *command);
 int				ms_pwd(void);
 int				ms_cd(char *path);
 int				ms_print_env(void);
 int				ms_unset(t_ms_command *command);
 int				ms_echo(t_ms_command *command, bool is_n);
-int				ms_export(t_ms_command *command);
+int				ms_export(char **argv);
+//int			ms_export(t_ms_command *command);
 
 //*************************************************************/
 // PARSING

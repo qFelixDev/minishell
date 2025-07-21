@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 15:33:23 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/21 20:46:32 by ghodges          ###   ########.fr       */
+/*   Created: 2025/07/21 21:02:16 by ghodges           #+#    #+#             */
+/*   Updated: 2025/07/21 21:41:54 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ms_cd(char *path)
+int	ms_exit_builtin(t_ms_command *command)
 {
-	char	cwd[PATH_MAX];
-
-	if (path == NULL)
-	{
-		path = ft_getenv("HOME");
-		if (path == NULL)
-			path = "/";
-	}
-	if (ft_strcmp(path, "-") == 0)
-	{
-		path = ft_getenv("OLDPWD");
-		printf("%s\n", path);
-	}
-	getcwd(cwd, sizeof(cwd));
-	if (chdir(path) != 0)
-		return (perror("Path Error"), 1);
-	ms_set_env_value("OLDPWD", cwd);
-	getcwd(cwd, sizeof(cwd));
-	ms_set_env_value("PWD", cwd);
-	return (0);
+	if (command -> argv[1] == NULL)
+		ms_exit(ms_minishell_get() -> exit_status);
+	ms_exit(ft_atoi(command -> argv[1]));
+	return (1);
 }

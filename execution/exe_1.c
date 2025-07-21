@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/21 17:38:28 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:25:24 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	if (index_buildin == 0)
 		return (ms_print_env());
 	else if (index_buildin == 1)
-		return (ms_exit(ms_minishell_get()->exit_status));
+		return (ms_exit_builtin(command));
 	else if (index_buildin == 2)
 		return (ms_unset(command));
 	else if (index_buildin == 3)
-		return (ms_export(command));
+		return (ms_export(command -> argv));
 	else if (index_buildin == 4)
 		return (ms_pwd());
 	else if (index_buildin == 5)
