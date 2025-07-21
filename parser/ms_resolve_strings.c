@@ -6,12 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 12:24:58 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/13 18:06:26 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/20 17:20:45 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft_extend/libft.h"
-#include "token.h"
+#include "../includes/minishell.h"
 
 t_ms_token	*add_string_token(t_ms_token *token, char *string)
 {

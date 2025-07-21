@@ -6,9 +6,23 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:59:55 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/20 15:08:04 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 12:12:58 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#define BRANCHES_AND				0b0001011111111
+#define BRANCHES_OR					0b0001011111111
+#define BRANCHES_PIPE				0b0001011111111
+#define BRANCHES_OPEN				0b0001011111111
+#define BRANCHES_CLOSE				0b1110100000000
+#define BRANCHES_DELIM				0b0000000001111
+#define BRANCHES_APPEND				0b0000000001111
+#define BRANCHES_INPUT				0b0000000001111
+#define BRANCHES_OUTPUT				0b0000000001111
+#define BRANCHES_WILDCARD			0b1110111111111
+#define BRANCHES_VARIABLE			0b1110111111111
+#define BRANCHES_UNRESOLVED_STRING	0b1110111111111
+#define BRANCHES_STRING				0b1110111111111
 
 t_ms_token	*ms_check_syntax(t_ms_token *token)
 {

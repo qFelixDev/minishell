@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
+#    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/19 17:42:02 by reriebsc         ###   ########.fr        #
+#    Updated: 2025/07/20 17:13:41 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS := main.c\
 		parser/token2.c\
 		parser/token.c\
 		parser/ms_tokenize.c\
+		parser/ms_read_delim.c\
 		parser/ms_resolve_strings.c\
 		parser/ms_parse.c\
 		parser/ms_get_command.c\

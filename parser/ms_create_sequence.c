@@ -6,12 +6,12 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 09:48:24 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/02 15:58:11 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/20 17:17:36 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft_extend/libft.h"
-#include "token.h"
+#include "../includes/minishell.h"
 
 void	ms_free_sequence(t_ms_sequence *sequence)
 {
@@ -56,6 +56,8 @@ static t_ms_sequence	*allocate_sequence(t_ms_token *token)
 		= ft_calloc(sizeof(void*), sequence -> object_count + 1);
 	sequence -> is_sequence
 		= ft_calloc(sizeof(uint8_t) * (sequence -> object_count / 8 + 1), 1);
+	sequence -> delim_descriptors
+		= ft_calloc(sizeof(int), sequence -> object_count + 1);
 	if (sequence -> objects == NULL || sequence -> is_sequence == NULL)
 		return (ms_free_sequence(sequence), NULL);
 	return (sequence);

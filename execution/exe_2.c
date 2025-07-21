@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:10:02 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:48:39 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,13 @@ void	handle_child_process(t_ms_command *command, char **env_cpy)
 		ms_exit(1);
 	path = ft_find_exec_path(command->argv, env_cpy);
 	command_signals();
+	printf("handle_child_process %d\n", command -> delim_descriptor);
+	if (command -> delim_descriptor != -1)
+	{
+		dup2(command -> delim_descriptor, STDIN_FILENO);
+		gc_close_fd(command -> delim_descriptor);
+		unlink("minishell_delim_file.tmp");
+	}
 	execve(path, command->argv, env_cpy);
 	ms_exit(EXIT_FAILURE);
 }

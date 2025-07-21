@@ -6,11 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:55:30 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/16 09:18:10 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/20 17:22:04 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token.h"
+#include "../includes/minishell.h"
 
 #define BRANCHES_AND				0b00010111111111
 #define BRANCHES_OR					0b00010111111111

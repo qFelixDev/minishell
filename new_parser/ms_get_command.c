@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:54:37 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/20 14:56:10 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/20 15:57:09 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ void	expand_variables(t_ms_token *token)
 	{
 		if (token -> index == MS_TOKEN_VARIABLE)
 		{
-			if (token -> content[0] == '$')
-				value = gc_add(ft_itoa(getpid()));
-			else if (token -> content[0] == '?')
+			if (token -> content[0] == '?')
 				value = gc_add(ft_itoa(ms_minishell_get() -> exit_status));
 			else
 			{

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/20 15:22:07 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:07:07 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define MS_TOKENS
 #include "../includes/minishell.h"
-#include "token.h"
 
 void	ms_print_tokens(t_ms_token *token);
 size_t	ms_expand_wildcards(t_ms_token *token, char **paths);
@@ -31,7 +29,7 @@ bool	expand_variables(t_ms_token *token)
 				value = ft_itoa(ms_minishell_get() -> exit_status);
 			else
 			{
-				value = getenv(token -> content);
+				value = ft_getenv(token -> content);
 				if (value == NULL)
 					value = "";
 				value = ft_strdup(value);
