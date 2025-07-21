@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:15:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/21 21:38:20 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 01:36:06 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ bool	populate_command(t_ms_command *command, t_ms_token *token)
 		}
 		while (token != NULL && token -> concatenate_content)
 			token = token -> next;
-		if (token != NULL)
+		if (token != NULL && token -> index >= MS_TOKEN_WILDCARD)
 			token = token -> next;
 	}
 	return (true);
@@ -264,10 +264,6 @@ t_ms_command	*ms_get_command(t_ms_token *token)
 	}
 	if (!populate_command(command, token))
 		return (ms_free_command(command), NULL);
-	//int argument_count = 0;
-	//while(command -> argv[argument_count] != NULL)
-	//	argument_count++;
-	//printf("%d\n", argument_count);
 	return (command);
 }
 
