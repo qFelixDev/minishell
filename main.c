@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:08:56 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:39:10 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include<stdlib.h>
 
 int	ms_exit(int state)
 {

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:54:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/21 14:52:51 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:24 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_ms_sequence	*ms_parse(char *string)
 	ms_resolve_strings(first);
 }
 
-/*bool	print_commands_in_sequence(t_ms_sequence *sequence)
+bool	print_commands_in_sequence(t_ms_sequence *sequence)
 {
 	int				object_index;
 

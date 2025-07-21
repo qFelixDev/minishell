@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/20 18:13:06 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 17:40:20 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,10 @@ void			minishell_non_interactive(void);
 int				ms_execute_sequence(t_ms_sequence *sequence);
 int				wait_for_process(pid_t pid);
 void			handle_child_process(t_ms_command *command, char **env_cpy);
+int				exe_manager(t_ms_command *command);
+void			generatebuildins(char *buildins[7]);
+int				buildin_exe(t_ms_command *command, int index_buildin);
+int				ms_execution_command(t_ms_command *command);
 
 //*************************************************************/
 // Signals 

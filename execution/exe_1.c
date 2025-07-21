@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/20 18:09:30 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 17:38:28 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ms_execution_command(t_ms_command *command);
 
-static void	generatebuildins(char *buildins[7])
+void	generatebuildins(char *buildins[7])
 {
 	buildins[0] = "env";
 	buildins[1] = "exit";
@@ -72,29 +72,77 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 //	return (ms_execution_command(command));
 //}
 
-int	exe_manager(t_ms_command *command)
-{
-	char	*build_ins[7];
-	int		i;
-	int		result;
 
-	if (command->argv[0] == NULL)
-		return (1);
-	generatebuildins(build_ins);
-	i = 0;
-	while (i < 7)
-	{
-		if (ft_strncmp(command->argv[0], build_ins[i],
-				ft_strlen(command->argv[0])) == 0)
-		{
-			result = buildin_exe(command, i);
-			if (result != 127)
-				return (result);
-		}
-		++i;
-	}
-	return (ms_execution_command(command));
-}
+
+//int	exe_manager(t_ms_command *command)
+//{
+//	char	*build_ins[7];
+//	int		i;
+//	int		result;
+//
+//	if (command->argv[0] == NULL)
+//		return (1);
+//	generatebuildins(build_ins);
+//	i = 0;
+//	while (i < 7)
+//	{
+//		if (ft_strncmp(command->argv[0], build_ins[i],
+//				ft_strlen(command->argv[0])) == 0)
+//		{
+//			result = buildin_exe(command, i);
+//			if (result != 127)
+//				return (result);
+//		}
+//		++i;
+//	}
+//	return (ms_execution_command(command));
+//}
+
+//int	exe_manager(t_ms_command *command)
+//{
+//	char	*build_ins[7];
+//	int		i;
+//	int		result;
+//	int		stdin_backup;
+//	int		stdout_backup;
+//
+//	if (command->argv[0] == NULL)
+//		return (1);
+//
+//	stdin_backup = dup(STDIN_FILENO);
+//	stdout_backup = dup(STDOUT_FILENO);
+//	ms_redirect_io(command);  // setzt Redirections per dup2()
+//
+//	generatebuildins(build_ins);
+//	i = 0;
+//	while (i < 7)
+//	{
+//		if (ft_strncmp(command->argv[0], build_ins[i],
+//				ft_strlen(command->argv[0])) == 0)
+//		{
+//			result = buildin_exe(command, i);
+//
+//			// Restore original IO
+//			dup2(stdin_backup, STDIN_FILENO);
+//			dup2(stdout_backup, STDOUT_FILENO);
+//			close(stdin_backup);
+//			close(stdout_backup);
+//
+//			if (result != 127)
+//				return (result);
+//		}
+//		++i;
+//	}
+//
+//	// Restore IO auch vor externem Kommando – sicherheitshalber
+//	dup2(stdin_backup, STDIN_FILENO);
+//	dup2(stdout_backup, STDOUT_FILENO);
+//	close(stdin_backup);
+//	close(stdout_backup);
+//
+//	return (ms_execution_command(command));
+//}
+
 
 int	ms_execute_sequence(t_ms_sequence *sequence)
 {

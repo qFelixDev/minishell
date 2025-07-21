@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 16:47:10 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:49:37 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static void	handle_shell_input(char *line)
 	sequence = ms_parse(line);
 	if (sequence == NULL)
 	{
-		if (ms_minishell_get()->exit_status == 0)
-			ms_minishell_get()->exit_status = 258;
+		ms_minishell_get()->exit_status = 258;
 		return (gc_free_ptr(line));
 	}
 	return (ms_execute_sequence(sequence), ms_free_sequence(sequence),
@@ -54,20 +53,39 @@ void	interactive(void)
 	gc_close_fd(tty);
 }
 
+//void	minishell_non_interactive(void)
+//{
+//	char	*line;
+//
+//	while (true)
+//	{
+//		line = readline(NULL);
+//		if (line == NULL)
+//			break ;
+//		gc_add(line);
+//		if (*line == '\0')
+//		{
+//			gc_free_ptr(line);
+//			continue ;
+//		}
+//		handle_shell_input(line);
+//	}
+//}
+
 void	minishell_non_interactive(void)
 {
 	char	*line;
 
-	while (!ms_minishell_get()->exit_status)
+	while ((line = get_next_line(STDIN_FILENO)) != NULL)
 	{
-		line = gc_add(readline(NULL));
-		if (line == NULL)
-			break ;
-		if (*line == '\0')
+		gc_add(line);
+		if (*line == '\0' || *line == '\n')
 		{
 			gc_free_ptr(line);
 			continue ;
 		}
+		// Entferne das Newline-Zeichen, das get_next_line mitliefert
+		line[ft_strlen(line) - 1] = '\0';
 		handle_shell_input(line);
 	}
 }
