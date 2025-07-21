@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:12:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/20 19:48:58 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 15:45:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ms_read_delims(t_ms_token *token, t_ms_token *last)
 	const int			descriptor = gc_add_fd(open("minishell_delim_file.tmp", O_CREAT | O_TRUNC | O_WRONLY | O_RDONLY, 0777));
 	t_ms_token *const	last_delim = get_last_delim(token);
 
-	printf("ms_read_delims %d\n", descriptor);
+	//printf("ms_read_delims %d\n", descriptor);
 	if (last_delim == NULL)
 		return (-1);
 	while (token != last)

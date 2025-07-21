@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 16:47:10 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:59:54 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static void	handle_shell_input(char *line)
 	sequence = ms_parse(line);
 	if (sequence == NULL)
 	{
-		if (ms_minishell_get()->exit_status == 0)
-			ms_minishell_get()->exit_status = 258;
+		ms_minishell_get()->exit_status = 258;
 		return (gc_free_ptr(line));
 	}
 	return (ms_execute_sequence(sequence), ms_free_sequence(sequence),
@@ -58,11 +57,12 @@ void	minishell_non_interactive(void)
 {
 	char	*line;
 
-	while (!ms_minishell_get()->exit_status)
+	while (true)
 	{
-		line = gc_add(readline(NULL));
+		line = readline(NULL);
 		if (line == NULL)
 			break ;
+		gc_add(line);
 		if (*line == '\0')
 		{
 			gc_free_ptr(line);
