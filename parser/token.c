@@ -6,13 +6,13 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:04:46 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/20 13:07:37 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/20 17:20:24 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "token.h"
+#include "../includes/minishell.h"
 
 size_t	ms_count_index(t_ms_token *token, int8_t index)
 {

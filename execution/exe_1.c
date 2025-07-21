@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/20 15:29:33 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:09:30 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	ms_execute_sequence(t_ms_sequence *sequence)
 		else
 		{
 			command = ms_get_command(sequence -> objects[object_index]);
+			command -> delim_descriptor = sequence -> delim_descriptors[object_index];
 			exit_code = exe_manager(command);
 			ms_free_command(command);
 		}

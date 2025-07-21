@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:29:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:23:04 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:07:51 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_getenv(char *name)
 			return (env->value);
 		env_head = env_head->next;
 	}
-	return ("/usr/bin");
+	return (NULL);
 }
 
 char	**ms_gen_env(void)

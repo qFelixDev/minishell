@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:48:10 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:13:06 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct s_ms_sequence
 	size_t	object_count;
 	int8_t	operator;
 	void	**objects;
+	int		*delim_descriptors;
 	uint8_t	*is_sequence;
 }	t_ms_sequence;
 
@@ -156,6 +157,7 @@ typedef struct s_ms_command
 {
 	char	**argv;
 	char	***redirects; // [redirect][index]
+	int		delim_descriptor;
 }	t_ms_command;
 
 ///////////////TOKENS
@@ -299,6 +301,20 @@ void			ms_free_sequence(t_ms_sequence *sequence);
 void			ms_free_command(t_ms_command *command);
 void			ms_print_sequence(t_ms_sequence *sequence, int indentation);
 void			ms_print_command(t_ms_command *command);
+
+// Token
+//*************************************************************/
+
+size_t			ms_count_index(t_ms_token *token, int8_t index);
+const char		*ms_get_identity(int8_t index);
+void			ms_free_tokens(t_ms_token *token, bool detach_only);
+void			ms_print_tokens(t_ms_token *token);
+int8_t			ms_next_operator(t_ms_token *token);
+t_ms_token		*ms_insert_token(t_ms_token *token, int8_t index);
+bool			ms_isspace(char character);
+t_ms_command	*ms_get_command(t_ms_token *token);
+void			ms_print_command(t_ms_command *command);
+void			ms_free_command(t_ms_command *command);
 
 //*************************************************************/
 // Pipes

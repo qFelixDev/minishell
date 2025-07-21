@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 09:30:02 by ghodges           #+#    #+#             */
-/*   Updated: 2025/06/15 12:51:40 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/20 17:19:58 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "token.h"
+#include "../includes/minishell.h"
 
 t_ms_token	*ms_insert_token(t_ms_token *token, int8_t index)
 {

@@ -6,12 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:08:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/05 10:55:00 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 14:14:15 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft_extend/libft.h"
-#include "token.h"
+#include "../includes/minishell.h"
 
 t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t index)
 {
@@ -46,4 +45,18 @@ t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t index)
 		token = token -> next;
 	}
 	return (token);
+}
+
+t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t index)
+{
+	const bool	should_expand = (ms_count_index(token, index) != 0);
+	bool		is_expanding;
+
+	is_expanding = false;
+	while (tkoen -> index != MS_TOKEN_CLOSE)
+	{
+		if (should_expand && !is_expanding
+			&& ms_next_operator(token -> next) > index
+			&& (token -> index == MS_TOKEN_OPEN || token -> index == index))
+	}
 }
