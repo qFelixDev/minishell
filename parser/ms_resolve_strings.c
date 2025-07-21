@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 12:24:58 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/20 17:20:45 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/21 19:09:59 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_ms_token	*add_string_token(t_ms_token *token, char *string)
 
 	index = MS_TOKEN_STRING * (*string != '$')
 		+ MS_TOKEN_VARIABLE * (*string == '$');
-	string += (*string == '$');
+	if (index == MS_TOKEN_VARIABLE && !ft_isalnum(string[1])
+		&& string[1] != '_' && string[1] != '$' && string[1] != '?')
+		index = MS_TOKEN_STRING;
+	string += (index == MS_TOKEN_VARIABLE);
 	length = 0;
 	if (*string == '$' || *string == '?')
 		length = 1;
@@ -37,8 +40,7 @@ t_ms_token	*add_string_token(t_ms_token *token, char *string)
 	token -> content = malloc(length + 1);
 	if (token -> content == NULL)
 		return (NULL);
-	ft_strlcpy(token -> content, string, length + 1);
-	return (token);
+	return (ft_strlcpy(token -> content, string, length + 1), token);
 }
 
 bool	ms_resolve_strings(t_ms_token *token)
