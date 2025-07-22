@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:46:36 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:11:06 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,17 @@ int	exe_manager(t_ms_command *command);
 //	return (WEXITSTATUS(status));
 //}
 
+static void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
+{
+	for (size_t j = 0; j < n_cmds - 1; j++)
+	{
+		if (j != i - 1)
+			close(pipes[j][0]);
+		if (j != i)
+			close(pipes[j][1]);
+	}
+}
+
 void	close_all_pipes(t_ms_sequence *seq, int pipes[1024][2])
 {
 	size_t	i;
@@ -234,33 +245,94 @@ int	init_pipes(t_ms_sequence *sequence, int pipes[1024][2])
 	return (0);
 }
 
+//void	child_process(t_ms_sequence *seq, int pipes[1024][2], size_t i)
+//{
+//	size_t			j;
+//	int				result;
+//	t_ms_command	*cmd;
+//
+//	j = 0;
+////	if (i > 0)
+////		dup2(pipes[i - 1][0], STDIN_FILENO);
+////	if (i < seq->object_count - 1)
+////		dup2(pipes[i][1], STDOUT_FILENO);
+//	if (i > 0)
+//	{
+//		dup2(pipes[i - 1][0], STDIN_FILENO);
+//		close(pipes[i - 1][0]); // WICHTIG!
+//	}
+//	if (i < seq->object_count - 1)
+//	{
+//		dup2(pipes[i][1], STDOUT_FILENO);
+//		close(pipes[i][1]); // WICHTIG!
+//	}
+//
+//	while (j < seq->object_count - 1)
+//	{
+//		close(pipes[j][0]);
+//		close(pipes[j][1]);
+//		j++;
+//	}
+//	if (seq->is_sequence[i / 8] & (1u << (i % 8)))
+//		exit(ms_execute_sequence(seq->objects[i]));
+//	else
+//	{
+//		cmd = ms_get_command(seq->objects[i]);
+//		result = exe_manager(cmd);
+//		ms_free_command(cmd);
+//		exit(result);
+//	}
+//}
+
 void	child_process(t_ms_sequence *seq, int pipes[1024][2], size_t i)
 {
-	size_t			j;
-	int				result;
 	t_ms_command	*cmd;
 
-	j = 0;
 	if (i > 0)
 		dup2(pipes[i - 1][0], STDIN_FILENO);
 	if (i < seq->object_count - 1)
 		dup2(pipes[i][1], STDOUT_FILENO);
-	while (j < seq->object_count - 1)
-	{
-		close(pipes[j][0]);
-		close(pipes[j][1]);
-		j++;
-	}
+
+	close_unused_pipes(pipes, seq->object_count, i);
+
 	if (seq->is_sequence[i / 8] & (1u << (i % 8)))
 		exit(ms_execute_sequence(seq->objects[i]));
 	else
 	{
 		cmd = ms_get_command(seq->objects[i]);
-		result = exe_manager(cmd);
-		ms_free_command(cmd);
-		exit(result);
+		cmd->delim_descriptor = seq->delim_descriptors[i];
+		char **env_cpy = ms_gen_env();
+		handle_child_process(cmd, env_cpy);
 	}
 }
+
+
+//void	child_process(t_ms_sequence *seq, int pipes[1024][2], size_t i)
+//{
+//	t_ms_command	*cmd;
+//	int				result;
+//
+//	if (i > 0)
+//	{
+//		dup2(pipes[i - 1][0], STDIN_FILENO);
+//	}
+//	if (i < seq->object_count - 1)
+//	{
+//		dup2(pipes[i][1], STDOUT_FILENO);
+//	}
+//
+//	close_unused_pipes(pipes, seq->object_count, i);
+//
+//	if (seq->is_sequence[i / 8] & (1u << (i % 8)))
+//		exit(ms_execute_sequence(seq->objects[i]));
+//	else
+//	{
+//		cmd = ms_get_command(seq->objects[i]);
+//		result = exe_manager(cmd);
+//		ms_free_command(cmd);
+//		exit(result);
+//	}
+//}
 
 int	fork_children(t_ms_sequence *sequence, int pipes[1024][2])
 {
