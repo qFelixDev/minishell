@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:22:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 14:58:33 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 16:42:31 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ms_print_tokens(t_ms_token *token)
 {
 	while (token != NULL)
 	{
-		printf("%s ", ms_get_identity(token -> index));
+		printf("%s<%u> ", ms_get_identity(token -> index), token -> concatenation);
 		token = token -> next;
 	}
 	printf("\n");

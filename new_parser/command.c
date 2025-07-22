@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:54:37 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 14:58:07 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 17:57:08 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ruin_delimiter(t_ms_token *token)
 	char			*content;
 	const uint32_t	concatenation = token -> concatenation;
 
-	while (token -> concatenation == concatenation)
+	while (token != NULL && token -> concatenation == concatenation)
 	{
 		if (token -> index == MS_TOKEN_WILDCARD)
 			token -> content = gc_add(ft_strdup("*"));
@@ -56,6 +56,9 @@ void	expand_variable(t_ms_token *token)
 			value = "";
 		value = gc_add(ft_strdup(value));
 	}
+	gc_free_ptr(token -> content);
+	token -> index = MS_TOKEN_STRING;
+	token -> content = value;
 }
 
 void	populate_command(t_ms_command *command, t_ms_token *token)
@@ -104,7 +107,7 @@ t_ms_command	*ms_get_command(t_ms_token *first)
 			expand_variable(token);
 		token = token -> next;
 	}
-	command = ms_allocate_command(token);
+	command = ms_allocate_command(first);
 	populate_command(command, first);
 	return (command);
 }

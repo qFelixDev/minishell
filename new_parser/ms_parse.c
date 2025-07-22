@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:35:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 16:15:11 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 17:53:25 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ t_ms_sequence	*ms_parse(char *string)
 	t_ms_token			*token;
 	t_ms_token *const	first = ms_tokenize(string);
 
-	ms_print_tokens(first);
+	//ms_print_tokens(first);
 	if (first == NULL)
 		return (fprintf(stderr, "Missing quote\n"), NULL);
 	token = ms_check_syntax(first);
 	if (token != NULL)
 	{
-		puts("Syntax error");
 		if (token -> next == NULL)
 			return (fprintf(stderr, "Missing bracket\n"), NULL);
 		else

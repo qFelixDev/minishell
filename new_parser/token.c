@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:01:51 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 15:51:08 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 17:29:03 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ t_ms_token	*ms_insert_token(t_ms_token *token, int8_t index)
 	t_ms_token *const	new_token = gc_add(ft_calloc(1, sizeof(t_ms_token)));
 
 	new_token -> index = index;
-	if (token != NULL && index >= MS_TOKEN_WILDCARD)
-		new_token -> concatenation = UINT32_MAX;
 	if (token == NULL)
+	{
+		if (index >= MS_TOKEN_WILDCARD)
+			new_token -> concatenation = UINT32_MAX;
 		return (new_token);
+	}
 	new_token -> next = token -> next;
 	token -> next = new_token;
+	new_token -> concatenation = token -> concatenation;
 	return (new_token);
 }
 

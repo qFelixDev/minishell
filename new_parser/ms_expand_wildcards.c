@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 15:50:13 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 17:31:11 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ size_t	enumerate_matches(char *pattern, char *path, char **matches)
 	return (match_count);
 }
 
+#include<assert.h>
+
 size_t	get_pattern(t_ms_token *token, char *pattern)
 {
 	const uint32_t	concatenation = token -> concatenation;
@@ -129,7 +131,7 @@ size_t	get_pattern(t_ms_token *token, char *pattern)
 		length += (token -> index == MS_TOKEN_WILDCARD);
 		token = token -> next;
 	}
-	return (length + 1);
+	return (length);
 }
 
 size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
@@ -137,16 +139,16 @@ size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 	size_t		match_count;
 	int			pattern_index;
 	bool		is_absolute;
-	char *const	pattern = gc_add(ft_calloc(1, get_pattern(token, NULL)));
+	char *const	pattern = gc_add(ft_calloc(1, get_pattern(token, NULL) + 1));
 
 	get_pattern(token, pattern);
 	is_absolute = (pattern[0] == '/');
 	match_count = enumerate_matches(
-		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), NULL);
+		pattern + is_absolute, gc_add(ft_strdup(&"/"[!is_absolute])), NULL);
 	if (paths == NULL)
 		return (gc_free_ptr(pattern), match_count + (match_count == 0));
 	match_count = enumerate_matches(
-		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), paths);
+		pattern + is_absolute, gc_add(ft_strdup(&"/"[!is_absolute])), paths);
 	if (match_count != 0)
 		return (gc_free_ptr(pattern), match_count);
 	pattern_index = -1;

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:54:07 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 15:11:54 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 17:51:31 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*populate_token_content(
 	if (terminator == '\0' || terminator == '$')
 		while (!ms_isspace(string[length])
 			&& ft_strncmp(string + length, "&&", 2) != 0
-			&& ft_strchr("|()<>~*$\"'", string[length]) == NULL)
+			&& ft_strchr("|()<>*$\"'", string[length]) == NULL)
 			length++;
 	else
 		while (string[length] != terminator && string[length] != '\0')
@@ -73,9 +73,9 @@ t_ms_token	*ms_tokenize(char *string)
 		if (string == NULL)
 			return (ms_free_tokens(first, false), NULL);
 		token -> concatenation = concatenation
-			* (token -> index >= MS_TOKEN_VARIABLE);
+			* (token -> index >= MS_TOKEN_WILDCARD);
 		if (ms_isspace(*string))
-			token -> concatenation++;
+			concatenation++;
 		while (ms_isspace(*string))
 			string++;
 	}

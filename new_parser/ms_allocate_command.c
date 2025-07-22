@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 12:48:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 14:59:40 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 16:59:09 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ t_ms_command	*ms_allocate_command(t_ms_token *token)
 	int					redirect_index;
 
 	command -> argv
-		= gc_add(ft_calloc(argument_count + 1, sizeof(t_ms_command)));
+		= gc_add(ft_calloc(argument_count + 1, sizeof(char *)));
 	command -> redirects
-		= gc_add(ft_calloc(4, sizeof(char **)));
+		= gc_add(ft_calloc(MS_REDIRECT_MAX, sizeof(char **)));
 	redirect_index = 0;
-	while (redirect_index < 4)
+	while (redirect_index < MS_REDIRECT_MAX)
 	{
 		command -> redirects[redirect_index] = gc_add(ft_calloc(
 				ms_count_index(token, MS_TOKEN_DELIM + redirect_index) + 1,
