@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 12:59:05 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:38:32 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ typedef enum e_redirect_type
 	MS_REDIRECT_DELIM,
 	MS_REDIRECT_APPEND,
 	MS_REDIRECT_INPUT,
-	MS_REDIRECT_OUTPUT
+	MS_REDIRECT_OUTPUT,
+	MS_REDIRECT_MAX
 }	t_redirect_type;
 
 //*************************************************************/
@@ -167,6 +168,7 @@ typedef struct s_ms_command
 ///////////////TOKENS
 ////////////////////////////////////////////////////////////////
 
+#if 0
 typedef struct s_ms_token
 {
 	struct s_ms_token	*next;
@@ -174,6 +176,15 @@ typedef struct s_ms_token
 	char				*content;
 	bool				concatenate_content;
 }	t_ms_token;
+#else
+typedef struct s_ms_token
+{
+	struct s_ms_token	*next;
+	int8_t				index;
+	char				*content;
+	uint32_t			concatenation;
+}	t_ms_token;
+#endif
 
 ///////////////Escape Date 
 ////////////////////////////////////////////////////////////////

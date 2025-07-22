@@ -6,9 +6,12 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:22:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 11:33:00 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 14:58:33 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
+#include <stdint.h>
 
 const char	*ms_get_identity(int8_t index)
 {

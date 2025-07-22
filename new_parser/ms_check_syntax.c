@@ -6,23 +6,26 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:59:55 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/21 12:12:58 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 16:19:31 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define BRANCHES_AND				0b0001011111111
-#define BRANCHES_OR					0b0001011111111
-#define BRANCHES_PIPE				0b0001011111111
-#define BRANCHES_OPEN				0b0001011111111
-#define BRANCHES_CLOSE				0b1110100000000
-#define BRANCHES_DELIM				0b0000000001111
-#define BRANCHES_APPEND				0b0000000001111
-#define BRANCHES_INPUT				0b0000000001111
-#define BRANCHES_OUTPUT				0b0000000001111
-#define BRANCHES_WILDCARD			0b1110111111111
-#define BRANCHES_VARIABLE			0b1110111111111
-#define BRANCHES_UNRESOLVED_STRING	0b1110111111111
-#define BRANCHES_STRING				0b1110111111111
+#include "../includes/minishell.h"
+
+#define BRANCHES_AND				0b00010111111111
+#define BRANCHES_OR					0b00010111111111
+#define BRANCHES_PIPE				0b00010111111111
+#define BRANCHES_OPEN				0b00010111111111
+#define BRANCHES_CLOSE				0b11101000000000
+#define BRANCHES_DELIM				0b00000000011111
+#define BRANCHES_APPEND				0b00000000011111
+#define BRANCHES_INPUT				0b00000000011111
+#define BRANCHES_OUTPUT				0b00000000011111
+#define BRANCHES_WILDCARD			0b11101111111111
+#define BRANCHES_VARIABLE			0b11101111111111
+#define BRANCHES_UNRESOLVED_STRING	0b11101111111111
+#define BRANCHES_STRING				0b11101111111111
+#define BRANCHES_SHADOW_STRING		0b11101111111111
 
 t_ms_token	*ms_check_syntax(t_ms_token *token)
 {
@@ -32,10 +35,11 @@ t_ms_token	*ms_check_syntax(t_ms_token *token)
 		BRANCHES_OUTPUT, BRANCHES_WILDCARD, BRANCHES_VARIABLE,
 		BRANCHES_UNRESOLVED_STRING, BRANCHES_STRING, BRANCHES_SHADOW_STRING
 	};
+	t_ms_token		*next_token;
 	int				bracket_level;
 
 	bracket_level = 0;
-	next_token = token -> next;
+	next_token = token;
 	while (next_token != NULL)
 	{
 		next_token = token -> next;
@@ -44,7 +48,8 @@ t_ms_token	*ms_check_syntax(t_ms_token *token)
 			return (token);
 		bracket_level += (token -> index == MS_TOKEN_OPEN);
 		bracket_level -= (token -> index == MS_TOKEN_CLOSE);
-		token = next_token;
+		if (next_token != NULL)
+			token = next_token;
 	}
 	if (bracket_level != 0)
 		return (token);

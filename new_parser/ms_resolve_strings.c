@@ -6,9 +6,13 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:55:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 11:45:17 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:09:51 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
+#include <stdint.h>
+#include <stddef.h>
 
 t_ms_token	*insert_string_token(t_ms_token *token, char *string)
 {
@@ -18,7 +22,7 @@ t_ms_token	*insert_string_token(t_ms_token *token, char *string)
 	index = MS_TOKEN_STRING;
 	if (string[0] == '$' && (ft_isalnum(string[1]) || string[1] == '_'
 			|| string[1] == '$' || string[1] == '?'))
-		index == MS_TOKEN_VARIABLE;
+		index = MS_TOKEN_VARIABLE;
 	string += (index == MS_TOKEN_VARIABLE);
 	length = 0;
 	if (*string == '$' || *string == '?')
@@ -56,5 +60,4 @@ void	ms_resolve_strings(t_ms_token *token)
 		}
 		token = token -> next;
 	}
-	return (true);
 }

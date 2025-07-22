@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 11:02:40 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 13:55:01 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:21:12 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,9 @@ void	ft_free_cluster(char **cluster)
 	while (cluster[++i])
 		free(cluster[i]);
 	free(cluster);
+}
+
+bool	ms_isspace(char character)
+{
+	return (character == 32 || (character >= 9 && character <= 13));
 }

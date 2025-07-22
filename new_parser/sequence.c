@@ -6,9 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:48:34 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 12:00:11 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:18:49 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
 
 static t_ms_token	*next_object(t_ms_token *token)
 {
@@ -61,7 +63,8 @@ t_ms_sequence	*ms_allocate_sequence(t_ms_token *token)
 
 t_ms_sequence	*ms_create_sequence(t_ms_token *token)
 {
-	t_ms_sequence *const	sequence = allocate_sequence(token);
+	size_t					object_index;
+	t_ms_sequence *const	sequence = ms_allocate_sequence(token);
 
 	if (sequence == NULL)
 		return (NULL);

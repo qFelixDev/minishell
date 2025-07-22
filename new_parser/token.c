@@ -6,9 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:01:51 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 11:22:23 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:51:08 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
 
 t_ms_token	*ms_insert_token(t_ms_token *token, int8_t index)
 {
@@ -16,7 +18,7 @@ t_ms_token	*ms_insert_token(t_ms_token *token, int8_t index)
 
 	new_token -> index = index;
 	if (token != NULL && index >= MS_TOKEN_WILDCARD)
-		new_token -> concatenation = MS_FIRST_CONCATENATION;
+		new_token -> concatenation = UINT32_MAX;
 	if (token == NULL)
 		return (new_token);
 	new_token -> next = token -> next;
@@ -24,7 +26,7 @@ t_ms_token	*ms_insert_token(t_ms_token *token, int8_t index)
 	return (new_token);
 }
 
-size_t	ms_count_index_at_bracket_level(t_ms_token *token, int8_t index)
+size_t	ms_count_index(t_ms_token *token, int8_t index)
 {
 	int		bracket_level;
 	size_t	count;
@@ -72,6 +74,6 @@ void	ms_free_tokens(t_ms_token *token, bool detach_only)
 		if (!detach_only && temp -> index >= MS_TOKEN_VARIABLE)
 			gc_free_ptr(temp -> content);
 		if (!detach_only || temp -> index < MS_TOKEN_DELIM)
-			free(temp);
+			gc_free_ptr(temp);
 	}
 }

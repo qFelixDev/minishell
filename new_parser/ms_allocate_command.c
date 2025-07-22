@@ -6,9 +6,13 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 12:48:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 13:53:57 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 14:59:40 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
+
+size_t	ms_expand_wildcards(t_ms_token *token, char **paths);
 
 int	count_arguments(t_ms_token *token)
 {
@@ -22,7 +26,7 @@ int	count_arguments(t_ms_token *token)
 	while (token != NULL)
 	{
 		concatenation = token -> concatenation;
-		argument_count += ms_expand_wildcards(token -> index, NULL);
+		argument_count += ms_expand_wildcards(token, NULL);
 		while (token != NULL && token -> concatenation == concatenation)
 			token = token -> next;
 	}
@@ -35,8 +39,10 @@ t_ms_command	*ms_allocate_command(t_ms_token *token)
 	const int			argument_count = count_arguments(token);
 	int					redirect_index;
 
-	command -> argv = gc_add(ft_calloc(1, sizeof(t_ms_command)));
-	command -> redirects = gc_add(ft_calloc(4, sizeof(char **)));
+	command -> argv
+		= gc_add(ft_calloc(argument_count + 1, sizeof(t_ms_command)));
+	command -> redirects
+		= gc_add(ft_calloc(4, sizeof(char **)));
 	redirect_index = 0;
 	while (redirect_index < 4)
 	{

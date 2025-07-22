@@ -6,9 +6,14 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/21 12:26:23 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:50:13 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
+#include <stddef.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
 size_t	get_word_length(char *word)
 {
@@ -50,6 +55,8 @@ bool	matches_pattern(char *pattern, char *string)
 	//printf("%zu %zu\n", ft_strlen(string), length);
 	return (ft_strncmp(pattern, string, length) == 0);
 }
+
+size_t	enumerate_matches(char *pattern, char *path, char **matches);
 
 size_t	add_match(char *pattern, char *path, char *name, char **matches)
 {
@@ -122,7 +129,7 @@ size_t	get_pattern(t_ms_token *token, char *pattern)
 		length += (token -> index == MS_TOKEN_WILDCARD);
 		token = token -> next;
 	}
-	return (length);
+	return (length + 1);
 }
 
 size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
