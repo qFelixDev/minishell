@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:35:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 18:17:09 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 20:17:43 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_ms_sequence	*ms_parse(char *string)
 	ms_expand_precedence(first, MS_TOKEN_OR);
 	ms_resolve_strings(first);
 	sequence = ms_create_sequence(first -> next);
-	ms_traverse_delims(sequence);
+	assign_heredocs(sequence);
 	ms_free_tokens(first, true);
 	return (sequence);
 }

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:01:51 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 17:29:03 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 18:58:28 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_ms_token	*ms_insert_token(t_ms_token *token, int8_t index)
 	}
 	new_token -> next = token -> next;
 	token -> next = new_token;
-	new_token -> concatenation = token -> concatenation;
+	if (index >= MS_TOKEN_WILDCARD)
+		new_token -> concatenation = token -> concatenation;
 	return (new_token);
 }
 

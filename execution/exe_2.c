@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 18:07:21 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 20:13:07 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,8 +240,7 @@ int	exe_manager(t_ms_command *command)
 	i = 0;
 	while (i < 7)
 	{
-		if (ft_strncmp(command->argv[0], build_ins[i],
-				ft_strlen(command->argv[0])) == 0)
+		if (ft_strcmp(command->argv[0], build_ins[i]) == 0)
 		{
 			result = buildin_exe(command, i);
 

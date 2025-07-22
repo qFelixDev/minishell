@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:54:37 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 17:57:08 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 19:21:11 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ void	populate_command(t_ms_command *command, t_ms_token *token)
 		{
 			redirect = token -> index - MS_TOKEN_DELIM;
 			token = token -> next;
-			argument_index += ms_expand_wildcards(token,
-				command -> redirects[redirect]
+			ms_expand_wildcards(token, command -> redirects[redirect]
 				+ redirect_indices[redirect]++);
 		}
 		concatenation = token -> concatenation;
@@ -120,7 +119,7 @@ void	ms_free_command(t_ms_command *command)
 	if (command == NULL)
 		return ;
 	index = 0;
-	while (command -> argv[index])
+	while (command -> argv[index] != NULL)
 		gc_free_ptr(command -> argv[index++]);
 	gc_free_ptr(command -> argv);
 	index = 0;
