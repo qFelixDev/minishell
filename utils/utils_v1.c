@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 11:02:40 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 15:21:12 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 00:09:26 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,33 @@ void	ft_free_cluster(char **cluster)
 bool	ms_isspace(char character)
 {
 	return (character == 32 || (character >= 9 && character <= 13));
+}
+
+size_t	ms_deflate_string(char *string, char *deflated)
+{
+	size_t	length;
+
+	length = 0;
+	while (ms_isspace(*string))
+		string++;
+	while (*string != '\0')
+	{
+		while (!ms_isspace(*string) && *string != '\0')
+		{
+			if (deflated != NULL)
+				deflated[length] = *string;
+			length++;
+			string++;
+		}
+		if (*string == '\0')
+			break ;
+		if (deflated != NULL)
+			deflated[length] = ' ';
+		length++;
+		while (ms_isspace(*string))
+			string++;
+	}
+	if (deflated != NULL)
+		deflated[length] = '\0';
+	return (length);
 }

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:54:07 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 20:00:08 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 00:18:45 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ t_ms_token	*ms_tokenize(char *string)
 
 	token = first;
 	concatenation = 1;
+	while (ms_isspace(*string))
+		string++;
 	while (*string != '\0')
 	{
 		token -> next = gc_add(ft_calloc(1, sizeof(t_ms_token)));

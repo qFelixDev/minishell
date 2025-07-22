@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:54:37 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 19:21:11 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 00:05:52 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ruin_delimiter(t_ms_token *token)
 
 void	expand_variable(t_ms_token *token)
 {
+	char	*raw_value;
 	char	*value;
 
 	if (token -> content[0] == '\0' && (token -> next == NULL
@@ -51,10 +52,11 @@ void	expand_variable(t_ms_token *token)
 		value = gc_add(ft_itoa(ms_minishell_get() -> exit_status));
 	else
 	{
-		value = ft_getenv(token -> content);
-		if (value == NULL)
-			value = "";
-		value = gc_add(ft_strdup(value));
+		raw_value = ft_getenv(token -> content);
+		if (raw_value == NULL)
+			raw_value = "";
+		value = gc_malloc(ms_deflate_string(raw_value, NULL) + 1);
+		ms_deflate_string(raw_value, value);
 	}
 	gc_free_ptr(token -> content);
 	token -> index = MS_TOKEN_STRING;

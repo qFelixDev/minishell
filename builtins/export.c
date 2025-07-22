@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 19:43:56 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 00:03:49 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,17 @@ char	*get_closest_operator(char *string)
 			return (string);
 		string++;
 	}
-	return (NULL);
+	return (string);
 }
 
 void	perform_operation(char *operation, char *string)
 {
-	char *const	key = gc_add(ft_substr(operation, 0, string - operation));
+	char		*key;
 	char		*value;
 
+	if (string[0] == '\0')
+		return ;
+	key = gc_add(ft_substr(operation, 0, string - operation));
 	if (string[0] == '=')
 	{
 		string += 1;
@@ -130,7 +133,7 @@ bool	is_key_valid(char *key, char *terminator)
 		return (false);
 	while (key < terminator)
 	{
-		if (ft_strchr("+=.", *key) != NULL)
+		if (!ft_isalpha(*key) && *key != '_')
 			return (false);
 		key++;
 	}
@@ -150,8 +153,6 @@ int	ms_export(char **argv)
 	while (argv[++argument_index] != NULL)
 	{
 		operator = get_closest_operator(argv[argument_index]);
-		if (operator == NULL)
-			continue ;
 		if (!is_key_valid(argv[argument_index], operator))
 		{
 			fprintf(stderr, "Invalid Key\n");

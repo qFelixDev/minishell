@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:33:23 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/21 20:46:32 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 00:28:37 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ms_cd(char *path)
 		path = ft_getenv("OLDPWD");
 		printf("%s\n", path);
 	}
+	if (ft_strcmp(path, "--") == 0)
+		path = ft_getenv("HOME");
 	getcwd(cwd, sizeof(cwd));
 	if (chdir(path) != 0)
 		return (perror("Path Error"), 1);

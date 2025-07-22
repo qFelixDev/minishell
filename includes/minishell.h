@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 15:38:32 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 00:03:14 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ void			command_signals(void);
 
 char			*join_str_array(char **list, int size);
 void			ft_free_cluster(char	**cluster);
+size_t			ms_deflate_string(char *string, char *deflated);
 
 //*************************************************************/
 // Garbage Collector
@@ -298,6 +299,7 @@ int				ms_generate_env(char **env);
 char			*ft_getenv(char *name);
 char			**ms_gen_env(void);
 void			free_env_entry(void *content);
+bool			is_valid_identifier(const char *identifier);
 
 //*************************************************************/
 // BUILTINS
