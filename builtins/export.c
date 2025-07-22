@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/21 22:55:37 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 19:43:56 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,3 +162,4 @@ int	ms_export(char **argv)
 	}
 	return (result);
 }
+
