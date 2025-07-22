@@ -6,7 +6,7 @@
 #    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/22 15:48:41 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/22 18:16:30 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS := main.c\
 		new_parser/ms_parse.c\
 		new_parser/ms_resolve_strings.c\
 		new_parser/ms_tokenize.c\
+		new_parser/ms_traverse_delims.c\
 		new_parser/sequence.c\
 		new_parser/token.c\
 		gc_collector/gc_part1.c\

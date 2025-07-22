@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:35:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 17:53:25 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 18:17:09 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_ms_token		*ms_check_syntax(t_ms_token *token);
 void			ms_expand_precedence(t_ms_token *token, int8_t operator);
 void			ms_resolve_strings(t_ms_token *token);
 t_ms_sequence	*ms_create_sequence(t_ms_token *token);
+void			ms_traverse_delims(t_ms_sequence *sequence);
 
 t_ms_sequence	*ms_parse(char *string)
 {
@@ -41,6 +42,7 @@ t_ms_sequence	*ms_parse(char *string)
 	ms_expand_precedence(first, MS_TOKEN_OR);
 	ms_resolve_strings(first);
 	sequence = ms_create_sequence(first -> next);
+	ms_traverse_delims(sequence);
 	ms_free_tokens(first, true);
 	return (sequence);
 }
