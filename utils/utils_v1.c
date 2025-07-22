@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_v1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 11:02:40 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 16:47:48 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:55:01 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_free_cluster(char **cluster)
 {
 	int	i;
 
+	if (cluster == NULL)
+		return ;
 	i = -1;
 	while (cluster[++i])
 		free(cluster[i]);

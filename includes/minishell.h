@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/21 22:25:17 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/22 12:59:05 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,16 @@ typedef enum e_token_type
 	MS_TOKEN_UNRESOLVED_STRING,
 	MS_TOKEN_STRING,
 	MS_TOKEN_SHADOW_STRING,
-	MS_TOKEN_MAX,
-	MS_TOKEN_REDIRECT_INPUT,
-	MS_TOKEN_REDIRECT_OUTPUT,
-	MS_TOKEN_REDIRECT_APPEND,
-	MS_TOKEN_REDIRECT_INPUT_APPEND,
+	MS_TOKEN_MAX
 }						t_token_type;
+
+typedef enum e_redirect_type
+{
+	MS_REDIRECT_DELIM,
+	MS_REDIRECT_APPEND,
+	MS_REDIRECT_INPUT,
+	MS_REDIRECT_OUTPUT
+}	t_redirect_type;
 
 //*************************************************************/
 // STRUCTS

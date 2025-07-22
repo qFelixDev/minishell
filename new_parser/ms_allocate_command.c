@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_allocate_command.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 12:48:33 by ghodges           #+#    #+#             */
+/*   Updated: 2025/07/22 13:53:57 by ghodges          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+int	count_arguments(t_ms_token *token)
+{
+	int			argument_count;
+	uint32_t	concatenation;
+
+	argument_count = -ms_count_index(token, MS_TOKEN_DELIM);
+	argument_count -= ms_count_index(token, MS_TOKEN_APPEND);
+	argument_count -= ms_count_index(token, MS_TOKEN_INPUT);
+	argument_count -= ms_count_index(token, MS_TOKEN_OUTPUT);
+	while (token != NULL)
+	{
+		concatenation = token -> concatenation;
+		argument_count += ms_expand_wildcards(token -> index, NULL);
+		while (token != NULL && token -> concatenation == concatenation)
+			token = token -> next;
+	}
+	return (argument_count);
+}
+
+t_ms_command	*ms_allocate_command(t_ms_token *token)
+{
+	t_ms_command *const	command = gc_add(ft_calloc(1, sizeof(t_ms_command)));
+	const int			argument_count = count_arguments(token);
+	int					redirect_index;
+
+	command -> argv = gc_add(ft_calloc(1, sizeof(t_ms_command)));
+	command -> redirects = gc_add(ft_calloc(4, sizeof(char **)));
+	redirect_index = 0;
+	while (redirect_index < 4)
+	{
+		command -> redirects[redirect_index] = gc_add(ft_calloc(
+				ms_count_index(token, MS_TOKEN_DELIM + redirect_index) + 1,
+				sizeof(char *)));
+		redirect_index++;
+	}
+	return (command);
+}
