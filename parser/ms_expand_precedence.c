@@ -6,18 +6,18 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:44:20 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 14:04:46 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 14:56:49 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include<assert.h>
 
 t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t operator)
 {
-	const bool	should_expand = (ms_count_index(token, operator) != 0);
+	const bool	should_expand = (ms_count_index(token -> next, operator) != 0);
 	bool		is_expanding;
 
-	printf("%d\n", should_expand);
 	is_expanding = false;
 	while (token -> index != MS_TOKEN_CLOSE)
 	{
