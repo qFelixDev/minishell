@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 11:17:54 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:32:57 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,15 @@ bool	is_key_valid(char *key, char *terminator)
 	return (true);
 }
 
+bool	is_argument_invalid(char *argument)
+{
+	if (*argument != '-')
+		return (false);
+	while (*argument == '-')
+		argument++;
+	return (*argument != '\0');
+}
+
 int	ms_export(char **argv)
 {
 	int		argument_index;
@@ -79,6 +88,8 @@ int	ms_export(char **argv)
 	argument_index = 0;
 	while (argv[++argument_index] != NULL)
 	{
+		if (is_argument_invalid(argv[argument_index]))
+			return (fprintf(stderr, "Invalid Usage\n"), 2);
 		operator = get_closest_operator(argv[argument_index]);
 		if (!is_key_valid(argv[argument_index], operator))
 		{

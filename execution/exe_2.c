@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 11:29:56 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:18:58 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	handle_child_process(t_ms_command *command, char **env_cpy)
 		ms_exit(1);
 	if (!apply_redirects(command->redirects[3], 3))
 		ms_exit(1);
+	if (command -> argv[0] == NULL)
+		ms_exit(0);
 	path = ft_find_exec_path(command->argv, env_cpy);
 	command_signals();
 	execve(path, command->argv, env_cpy);
