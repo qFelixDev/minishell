@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 00:47:36 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 12:32:22 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,12 @@ void	interactive(void)
 	gc_close_fd(tty);
 }
 
-//void	minishell_non_interactive(void)
-//{
-//	char	*line;
-//
-//	while (true)
-//	{
-//		line = readline(NULL);
-//		if (line == NULL)
-//			break ;
-//		gc_add(line);
-//		if (*line == '\0')
-//		{
-//			gc_free_ptr(line);
-//			continue ;
-//		}
-//		handle_shell_input(line);
-//	}
-//}
-
 void	minishell_non_interactive(void)
 {
 	char	*line;
 
-	while ((line = get_next_line(STDIN_FILENO)) != NULL)
+	line = get_next_line(STDIN_FILENO);
+	while (line != NULL)
 	{
 		gc_add(line);
 		if (*line == '\0' || *line == '\n')
@@ -84,8 +66,8 @@ void	minishell_non_interactive(void)
 			gc_free_ptr(line);
 			continue ;
 		}
-		// Entferne das Newline-Zeichen, das get_next_line mitliefert
 		line[ft_strlen(line) - 1] = '\0';
 		handle_shell_input(line);
+		line = get_next_line(STDIN_FILENO);
 	}
 }
