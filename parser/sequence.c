@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:48:34 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 15:18:49 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 15:59:13 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ t_ms_sequence	*ms_allocate_sequence(t_ms_token *token)
 		token = token -> next;
 	}
 	sequence -> objects = gc_add(
-		ft_calloc(sizeof(void *), sequence -> object_count + 1));
-	sequence -> is_sequence = gc_add(
-		ft_calloc(sizeof(uint8_t) * (sequence -> object_count / 8 + 1), 1));
+			ft_calloc(sizeof(void *), sequence -> object_count + 1));
+	sequence -> is_sequence = gc_add(ft_calloc(sizeof(uint8_t)
+				* (sequence -> object_count / 8 + 1), 1));
 	sequence -> delim_descriptors = gc_add(
-		ft_calloc(sizeof(int), sequence -> object_count + 1));
+			ft_calloc(sizeof(int), sequence -> object_count + 1));
 	return (sequence);
 }
 

@@ -6,12 +6,11 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:44:20 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 14:56:49 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:03:39 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include<assert.h>
 
 t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t operator)
 {

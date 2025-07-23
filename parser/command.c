@@ -6,13 +6,13 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:54:37 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 00:05:52 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:02:10 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-size_t	ms_expand_wildcards(t_ms_token *token, char **paths);
+size_t			ms_expand_wildcards(t_ms_token *token, char **paths);
 t_ms_command	*ms_allocate_command(t_ms_token *token);
 
 void	ruin_delimiter(t_ms_token *token)
@@ -49,7 +49,7 @@ void	expand_variable(t_ms_token *token)
 	else if (token -> content[0] == '$')
 		value = gc_add(ft_itoa(getpid()));
 	else if (token -> content[0] == '?')
-		value = gc_add(ft_itoa(ms_minishell_get() -> exit_status));
+		value = gc_add(ft_itoa(ms_minishell_get()-> exit_status));
 	else
 	{
 		raw_value = ft_getenv(token -> content);
@@ -76,7 +76,7 @@ void	populate_command(t_ms_command *command, t_ms_token *token)
 	{
 		if (token -> index >= MS_TOKEN_WILDCARD)
 			argument_index += ms_expand_wildcards(token,
-				command -> argv + argument_index);
+					command -> argv + argument_index);
 		else
 		{
 			redirect = token -> index - MS_TOKEN_DELIM;

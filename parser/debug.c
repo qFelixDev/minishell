@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:22:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 13:49:42 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:03:13 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 const char	*ms_get_identity(int8_t index)
 {
-	static char *token_identities[MS_TOKEN_MAX] = {"&&", "||", "|", "(",
+	static char	*token_identities[MS_TOKEN_MAX] = {"&&", "||", "|", "(",
 		")", "<<", ">>", "<", ">", "*", "$STR", "\"STR\"", "'STR'", "~STR~"};
+
 	if (index == MS_TOKEN_NONE)
 		return ("");
 	return (token_identities[index]);

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 12:48:33 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 19:36:34 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:03:24 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_ms_command	*ms_allocate_command(t_ms_token *token)
 	while (redirect_index < MS_REDIRECT_MAX)
 	{
 		command -> redirects[redirect_index] = gc_add(ft_calloc(
-				ms_count_index(token, MS_TOKEN_DELIM + redirect_index) + 1,
-				sizeof(char *)));
+					ms_count_index(token, MS_TOKEN_DELIM + redirect_index) + 1,
+					sizeof(char *)));
 		redirect_index++;
 	}
 	return (command);

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 19:10:03 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:04:28 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ bool	matches_pattern(char *pattern, char *string)
 	while ((ft_strncmp(pattern, string, length) != 0
 			|| ft_strlen(string) != length) && *string != '\0')
 		string++;
-	//printf("%zu %zu\n", ft_strlen(string), length);
 	return (ft_strncmp(pattern, string, length) == 0);
 }
 
