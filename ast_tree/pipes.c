@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 16:48:02 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:46:19 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	exe_manager(t_ms_command *command, int delim_descriptor);
 
-static void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
+void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
 {
 	size_t	j;
 
@@ -28,19 +28,6 @@ static void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
 		if (j != i)
 			close(pipes[j][1]);
 		j++;
-	}
-}
-
-void	close_all_pipes(t_ms_sequence *seq, int pipes[1024][2])
-{
-	size_t	i;
-
-	i = 0;
-	while (i < seq->object_count - 1)
-	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
-		i++;
 	}
 }
 

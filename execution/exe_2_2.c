@@ -6,14 +6,14 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:20:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:03:15 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:44:50 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <sys/wait.h>
 
-static void	restore_std_fds(int stdin_backup, int stdout_backup)
+void	restore_std_fds(int stdin_backup, int stdout_backup)
 {
 	dup2(stdin_backup, STDIN_FILENO);
 	dup2(stdout_backup, STDOUT_FILENO);
@@ -21,7 +21,7 @@ static void	restore_std_fds(int stdin_backup, int stdout_backup)
 	close(stdout_backup);
 }
 
-static int	try_execute_builtin(t_ms_command *command, char **build_ins,
+int	try_execute_builtin(t_ms_command *command, char **build_ins,
 				int stdin_backup, int stdout_backup)
 {
 	int	i;
@@ -42,7 +42,7 @@ static int	try_execute_builtin(t_ms_command *command, char **build_ins,
 	return (-1);
 }
 
-static bool	apply_redirects(char **redirects, int type)
+bool	apply_redirects(char **redirects, int type)
 {
 	size_t	last_index;
 	int		descriptor;

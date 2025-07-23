@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:38:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:10:16 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:45:54 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-static void	close_all_pipes(t_ms_sequence *seq, int pipes[1024][2])
+void	close_all_pipes(t_ms_sequence *seq, int pipes[1024][2])
 {
 	size_t	i;
 
@@ -27,7 +27,7 @@ static void	close_all_pipes(t_ms_sequence *seq, int pipes[1024][2])
 	}
 }
 
-static void	wait_for_children(t_ms_sequence *seq, int *status)
+void	wait_for_children(t_ms_sequence *seq, int *status)
 {
 	size_t	i;
 
