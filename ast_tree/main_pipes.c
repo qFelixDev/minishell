@@ -6,13 +6,38 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:38:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 15:51:27 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:10:16 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <signal.h>
 #include <sys/wait.h>
+
+static void	close_all_pipes(t_ms_sequence *seq, int pipes[1024][2])
+{
+	size_t	i;
+
+	i = 0;
+	while (i < seq->object_count - 1)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
+}
+
+static void	wait_for_children(t_ms_sequence *seq, int *status)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < seq->object_count)
+	{
+		wait(status);
+		i++;
+	}
+}
 
 int	pipe_monitor(t_ms_sequence *sequence)
 {
@@ -27,16 +52,4 @@ int	pipe_monitor(t_ms_sequence *sequence)
 	wait_for_children(sequence, &status);
 	ms_minishell_get()->exit_status = WEXITSTATUS(status);
 	return (WEXITSTATUS(status));
-}
-
-void	wait_for_children(t_ms_sequence *seq, int *status)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < seq->object_count)
-	{
-		wait(status);
-		i++;
-	}
 }

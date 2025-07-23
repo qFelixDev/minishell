@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 16:35:23 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:07:12 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <sys/wait.h>
 
-char	*ft_find_path(char *cmd)
+static char	*ft_find_path(char *cmd)
 {
 	int		i;
 	char	**path_all;
@@ -40,7 +40,7 @@ char	*ft_find_path(char *cmd)
 	return (ft_free_cluster(path_all), NULL);
 }
 
-char	*ft_find_exec_path(char **cmd_s, char **env)
+static char	*ft_find_exec_path(char **cmd_s, char **env)
 {
 	char	*path;
 
