@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 15:51:55 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:48:02 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-int	exe_manager(t_ms_command *command);
+int	exe_manager(t_ms_command *command, int delim_descriptor);
 
 static void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
 {
