@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:52:36 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:10:42 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:37:15 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ms_add_env_node(const char *key, const char *value)
 	t_list		*new_node;
 
 	env_node = gc_malloc(sizeof(t_dict_env));
-	new_node = gc_add_list_node(ft_lstnew(env_node));
+	new_node = gc_add(ft_lstnew(env_node));
 	env_node->key = gc_add(ft_strdup(key));
 	if (value)
 		env_node->value = gc_add(ft_strdup(value));
