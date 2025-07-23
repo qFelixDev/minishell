@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:35:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 18:08:15 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:08:42 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_ms_sequence	*ms_parse(char *string)
 			return (ft_putendl_fd("Missing bracket", 2), NULL);
 		else
 			return (ft_putstr_fd("Unexpected ", 2),
-			ft_putstr_fd(ms_get_identity(token -> next -> index), 2),
-			ft_putstr_fd(" after ", 2),
-			ft_putendl_fd(ms_get_identity(token -> index), 2), NULL);
+				ft_putstr_fd(ms_get_identity(token -> next -> index), 2),
+				ft_putstr_fd(" after ", 2),
+				ft_putendl_fd(ms_get_identity(token -> index), 2), NULL);
 	}
 	ms_expand_precedence(first, MS_TOKEN_AND);
 	ms_expand_precedence(first, MS_TOKEN_OR);
