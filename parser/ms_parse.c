@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:35:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 15:27:52 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:12:47 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_ms_sequence	*ms_parse(char *string)
 	t_ms_token			*token;
 	t_ms_token *const	first = ms_tokenize(string);
 
-	//ms_print_tokens(first);
 	if (first == NULL)
 		return (fprintf(stderr, "Missing quote\n"), NULL);
 	token = ms_check_syntax(first);
@@ -38,11 +37,8 @@ t_ms_sequence	*ms_parse(char *string)
 					ms_get_identity(token -> next -> index),
 					ms_get_identity(token -> index)), NULL);
 	}
-	//ms_print_tokens(first);
 	ms_expand_precedence(first, MS_TOKEN_AND);
-	//ms_print_tokens(first);
 	ms_expand_precedence(first, MS_TOKEN_OR);
-	//ms_print_tokens(first);
 	ms_resolve_strings(first);
 	sequence = ms_create_sequence(first -> next);
 	ms_free_tokens(first, true);

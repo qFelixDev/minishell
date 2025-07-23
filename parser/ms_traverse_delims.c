@@ -6,13 +6,13 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:12:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 16:10:16 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:12:14 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *get_delim_string(t_ms_token *token)
+char	*get_delim_string(t_ms_token *token)
 {
 	char		*delimiter = NULL;
 	char		*append;
@@ -110,7 +110,6 @@ int	ms_read_delims(t_ms_token *token, t_ms_token *last)
 		return (-1);
 	return (read_fd);
 }
-
 
 void	ms_traverse_delims(t_ms_sequence *sequence)
 {
