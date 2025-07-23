@@ -6,7 +6,7 @@
 #    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/23 12:03:32 by reriebsc         ###   ########.fr        #
+#    Updated: 2025/07/23 18:12:00 by reriebsc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS := main.c\
 		parser/ms_check_syntax.c\
 		parser/ms_expand_precedence.c\
 		parser/ms_expand_wildcards.c\
+		parser/ms_expand_wildcards_2.c\
 		parser/ms_parse.c\
 		parser/ms_resolve_strings.c\
 		parser/ms_tokenize.c\
