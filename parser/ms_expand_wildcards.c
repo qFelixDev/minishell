@@ -6,14 +6,13 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 16:16:06 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:35:04 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stddef.h>
 #include <dirent.h>
-#include <sys/stat.h>
 
 size_t	get_word_length(char *word)
 {
