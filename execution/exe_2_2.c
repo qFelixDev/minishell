@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:20:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 12:17:42 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:44:05 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,16 @@ int	try_execute_builtin(t_ms_command *command, char **build_ins,
 	return (-1);
 }
 
-int	exe_manager(t_ms_command *command)
+int	exe_manager(t_ms_command *command, int delim_descriptor)
 {
 	char	*build_ins[7];
 	int		stdin_backup;
 	int		stdout_backup;
 	int		result;
 
+	if (command == NULL)
+		return (1);
+	command -> delim_descriptor = delim_descriptor;
 	if (command->argv[0] == NULL)
 		return (1);
 	if (!backup_std_fds(&stdin_backup, &stdout_backup))

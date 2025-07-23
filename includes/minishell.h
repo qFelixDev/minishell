@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 16:34:55 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:44:43 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ void			minishell_non_interactive(void);
 int				ms_execute_sequence(t_ms_sequence *sequence);
 int				wait_for_process(pid_t pid);
 void			handle_child_process(t_ms_command *command, char **env_cpy);
-int				exe_manager(t_ms_command *command);
+int				exe_manager(t_ms_command *command, int delim_descriptor);
 void			generatebuildins(char *buildins[7]);
 int				buildin_exe(t_ms_command *command, int index_buildin);
 int				ms_execution_command(t_ms_command *command);
