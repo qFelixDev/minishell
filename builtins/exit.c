@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:02:16 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 22:54:11 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 13:41:47 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	is_numeric(char *string)
 		if (!ms_isspace(string[length + index]))
 			return (false);
 	if (length != 19)
-		return (length < 19);
+		return (length < 19 && length != 0);
 	index = 0;
 	while (index < 18)
 	{
@@ -57,6 +57,13 @@ int64_t	atoi64(char *string)
 
 int	ms_exit_builtin(t_ms_command *command)
 {
+	int	argc;
+
+	argc = 0;
+	while (command -> argv[argc] != NULL)
+		argc++;
+	if (argc > 2)
+		return (fprintf(stderr, "Too many arguments\n"), 1);
 	if (command -> argv[1] != NULL && !is_numeric(command -> argv[1]))
 	{
 		fprintf(stderr, "Numeric argument required\n");

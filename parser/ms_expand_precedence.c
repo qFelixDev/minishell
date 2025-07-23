@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:44:20 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 15:27:47 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 14:04:46 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t operator)
 	const bool	should_expand = (ms_count_index(token, operator) != 0);
 	bool		is_expanding;
 
+	printf("%d\n", should_expand);
 	is_expanding = false;
 	while (token -> index != MS_TOKEN_CLOSE)
 	{
@@ -32,8 +33,8 @@ t_ms_token	*ms_expand_precedence(t_ms_token *token, int8_t operator)
 		if (should_expand && is_expanding && (token -> next -> index
 				== MS_TOKEN_CLOSE || token -> next -> index == operator))
 		{
-			token = ms_insert_token(token, MS_TOKEN_OPEN);
-			is_expanding = true;
+			token = ms_insert_token(token, MS_TOKEN_CLOSE);
+			is_expanding = false;
 		}
 		token = token -> next;
 	}
