@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 18:20:36 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:51:20 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,6 @@ size_t	get_word_length(char *word)
 	while (word[length] != '\0' && word[length] != '\1' && word[length] != '/')
 		length++;
 	return (length);
-}
-
-bool	matches_pattern(char *pattern, char *string)
-{
-	size_t	length;
-
-	if (pattern[0] != '.' && string[0] == '.')
-		return (false);
-	length = get_word_length(pattern);
-	if (pattern[length] != '\1')
-		return (ft_strncmp(pattern, string, length) == 0
-			&& ft_strlen(string) == length);
-	while (true)
-	{
-		if (ft_strncmp(pattern, string, length) != 0)
-			return (false);
-		pattern += length;
-		string += length;
-		while (*pattern == '\1')
-			pattern++;
-		length = get_word_length(pattern);
-		if (pattern[length] != '\1')
-			break ;
-		while (ft_strncmp(pattern, string, length) != 0 && *string != '\0')
-			string++;
-	}
-	while ((ft_strncmp(pattern, string, length) != 0
-			|| ft_strlen(string) != length) && *string != '\0')
-		string++;
-	return (ft_strncmp(pattern, string, length) == 0);
 }
 
 size_t	add_match(char *pattern, char *path, char *name, char **matches)

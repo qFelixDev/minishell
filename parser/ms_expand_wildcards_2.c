@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 18:10:11 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 18:18:32 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:50:49 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,44 @@ size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 			pattern[pattern_index] = '*';
 	*paths = pattern;
 	return (1);
+}
+
+static bool	match_suffix(char *pattern, char *string, size_t length)
+{
+	while ((ft_strncmp(pattern, string, length) != 0
+			|| ft_strlen(string) != length) && *string != '\0')
+		string++;
+	return (ft_strncmp(pattern, string, length) == 0);
+}
+
+static bool	match_prefix(char **pattern, char **string)
+{
+	size_t	length;
+
+	length = get_word_length(*pattern);
+	if ((*pattern)[length] != '\1')
+		return (ft_strncmp(*pattern, *string, length) == 0
+			&& ft_strlen(*string) == length);
+	while (true)
+	{
+		if (ft_strncmp(*pattern, *string, length) != 0)
+			return (false);
+		*pattern += length;
+		*string += length;
+		while (**pattern == '\1')
+			(*pattern)++;
+		length = get_word_length(*pattern);
+		if ((*pattern)[length] != '\1')
+			break ;
+		while (ft_strncmp(*pattern, *string, length) != 0 && **string != '\0')
+			(*string)++;
+	}
+	return (match_suffix(*pattern, *string, length));
+}
+
+bool	matches_pattern(char *pattern, char *string)
+{
+	if (pattern[0] != '.' && string[0] == '.')
+		return (false);
+	return (match_prefix(&pattern, &string));
 }

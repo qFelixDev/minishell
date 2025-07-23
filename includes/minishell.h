@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 18:20:22 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:45:22 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,9 @@ bool			dup_and_close(int descriptor, int target_fd);
 bool			apply_redirects(char **redirects, int type);
 size_t			ms_get_pattern(t_ms_token *token, char *pattern);
 size_t			ms_enumerate_matches(char *pattern, char *path, char **matches);
+int				ms_read_delims(t_ms_token *token, t_ms_token *last);
+bool			matches_pattern(char *pattern, char *string);
+size_t			get_word_length(char *word);
 
 //*************************************************************/
 // Signals 
