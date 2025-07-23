@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:29:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:09:07 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:50:23 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_getenv(char *name)
 
 char	**ms_gen_env(void)
 {
-	t_list	*current;
+	t_list	*cu;
 	char	**env;
 	int		i;
 	char	*tmp;
@@ -38,21 +38,21 @@ char	**ms_gen_env(void)
 	env = gc_malloc(sizeof(char *) * (ft_lstsize(ms_minishell_get()->env) + 1));
 	if (!env)
 		exit(127);
-	current = ms_minishell_get()->env;
+	cu = ms_minishell_get()->env;
 	i = -1;
-	while (current)
+	while (cu)
 	{
-		if (!((t_dict_env *)current->content)->value)
+		if (!((t_dict_env *)cu->content)->value)
 		{
-			current = current->next;
+			cu = cu->next;
 			continue ;
 		}
-		tmp = gc_add(ft_strjoin(((t_dict_env *)current->content)->key, "="));
+		tmp = gc_add(ft_strjoin(((t_dict_env *)cu->content)->key, "="));
 		if (!tmp)
 			exit(127);
-		env[++i] = gc_add(ft_strjoin(tmp, ((t_dict_env *)current->content)->value));
+		env[++i] = gc_add(ft_strjoin(tmp, ((t_dict_env *)cu->content)->value));
 		gc_free_ptr(tmp);
-		current = current->next;
+		cu = cu->next;
 	}
 	return (env[i] = NULL, env);
 }
