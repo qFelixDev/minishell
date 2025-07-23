@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_wildcards.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 16:35:04 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:39:30 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,12 @@ size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 	get_pattern(token, pattern);
 	is_absolute = (pattern[0] == '/');
 	match_count = enumerate_matches(
-		pattern + is_absolute, gc_add(ft_strdup(&"/"[!is_absolute])), NULL);
+			pattern + is_absolute, gc_add(ft_strdup(&"/"[!is_absolute])), NULL);
 	if (paths == NULL)
 		return (gc_free_ptr(pattern), match_count + (match_count == 0));
 	match_count = enumerate_matches(
-		pattern + is_absolute, gc_add(ft_strdup(&"/"[!is_absolute])), paths);
+			pattern + is_absolute,
+			gc_add(ft_strdup(&"/"[!is_absolute])), paths);
 	if (match_count != 0)
 		return (gc_free_ptr(pattern), match_count);
 	pattern_index = -1;
