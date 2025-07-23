@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 16:04:07 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:04:51 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	get_user_prompt_value(char **value, int tty)
 	dup2(stdout_copy, STDOUT_FILENO);
 	close(stdout_copy);
 	gc_free_ptr(prompt);
-
 	if (*value == NULL)
 	{
 		clear_history();
