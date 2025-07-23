@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 18:11:43 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:20:36 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ bool	matches_pattern(char *pattern, char *string)
 	return (ft_strncmp(pattern, string, length) == 0);
 }
 
-size_t	enumerate_matches(char *pattern, char *path, char **matches);
-
 size_t	add_match(char *pattern, char *path, char *name, char **matches)
 {
 	struct stat		status;
@@ -78,12 +76,12 @@ size_t	add_match(char *pattern, char *path, char *name, char **matches)
 			pattern++;
 		while (*pattern == '/')
 			pattern++;
-		return (enumerate_matches(pattern, new_path, matches));
+		return (ms_enumerate_matches(pattern, new_path, matches));
 	}
 	return (ft_strchr(pattern, '/') == NULL);
 }
 
-size_t	enumerate_matches(char *pattern, char *path, char **matches)
+size_t	ms_enumerate_matches(char *pattern, char *path, char **matches)
 {
 	DIR				*directory;
 	struct dirent	*entry;
@@ -109,7 +107,7 @@ size_t	enumerate_matches(char *pattern, char *path, char **matches)
 	return (match_count);
 }
 
-size_t	get_pattern(t_ms_token *token, char *pattern)
+size_t	ms_get_pattern(t_ms_token *token, char *pattern)
 {
 	const uint32_t	concatenation = token -> concatenation;
 	size_t			length;

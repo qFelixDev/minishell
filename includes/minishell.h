@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:45:38 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:20:22 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,8 @@ int				get_open_flags(int type);
 bool			open_redirect_fd(char *file, int type, int *fd_out);
 bool			dup_and_close(int descriptor, int target_fd);
 bool			apply_redirects(char **redirects, int type);
+size_t			ms_get_pattern(t_ms_token *token, char *pattern);
+size_t			ms_enumerate_matches(char *pattern, char *path, char **matches);
 
 //*************************************************************/
 // Signals 
