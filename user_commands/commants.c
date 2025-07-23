@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commants.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 12:56:20 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:04:07 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,33 +89,6 @@ char	*create_prompt(void)
 	return (prompt);
 }
 
-//int	get_user_prompt_value(char **value, int tty)
-//{
-//	char	*prompt;
-//	int		stdout_copy;
-//	int		tty_in;
-//
-//	prompt = create_prompt();
-//	write(tty, prompt, ft_strlen(prompt));
-//	stdout_copy = dup(STDOUT_FILENO);
-//	tty_in = open("/dev/tty", O_WRONLY);
-//	if (tty_in == -1)
-//		return (perror("open /dev/tty"), gc_free_ptr(prompt), 0);
-//	dup2(tty_in, STDOUT_FILENO);
-//	close(tty_in);
-//	*value = readline(NULL);
-//	dup2(stdout_copy, STDOUT_FILENO);
-//	close(stdout_copy);
-//	gc_free_ptr(prompt);
-//	if (*value == NULL)
-//	{
-//		clear_history();
-//		gc_free_ptr(*value);
-//		ms_exit(0);
-//	}
-//	return (add_history(*value), 1);
-//}
-
 int	get_user_prompt_value(char **value, int tty)
 {
 	char	*prompt;
@@ -130,9 +103,7 @@ int	get_user_prompt_value(char **value, int tty)
 		return (perror("open /dev/tty"), gc_free_ptr(prompt), 0);
 	dup2(tty_in, STDOUT_FILENO);
 	close(tty_in);
-	//write(STDOUT_FILENO, prompt, ft_strlen(prompt));
 	*value = readline(prompt);
-	//*value = get_next_line(0);
 	dup2(stdout_copy, STDOUT_FILENO);
 	close(stdout_copy);
 	gc_free_ptr(prompt);

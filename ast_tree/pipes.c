@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 10:32:23 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:51:55 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,6 @@
 
 int	exe_manager(t_ms_command *command);
 
-//static void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
-//{
-//	for (size_t j = 0; j < n_cmds - 1; j++)
-//	{
-//		if (j != i - 1)
-//			close(pipes[j][0]);
-//		if (j != i)
-//			close(pipes[j][1]);
-//	}
-//}
 static void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
 {
 	size_t	j;
@@ -37,7 +27,7 @@ static void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
 			close(pipes[j][0]);
 		if (j != i)
 			close(pipes[j][1]);
-		j++;		
+		j++;
 	}
 }
 
@@ -77,9 +67,7 @@ void	child_process(t_ms_sequence *seq, int pipes[1024][2], size_t i)
 		dup2(pipes[i - 1][0], STDIN_FILENO);
 	if (i < seq->object_count - 1)
 		dup2(pipes[i][1], STDOUT_FILENO);
-
 	close_unused_pipes(pipes, seq->object_count, i);
-
 	if (seq->is_sequence[i / 8] & (1u << (i % 8)))
 		exit(ms_execute_sequence(seq->objects[i]));
 	else
@@ -107,16 +95,4 @@ int	fork_children(t_ms_sequence *sequence, int pipes[1024][2])
 		i++;
 	}
 	return (0);
-}
-
-void	wait_for_children(t_ms_sequence *seq, int *status)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < seq->object_count)
-	{
-		wait(status);
-		i++;
-	}
 }

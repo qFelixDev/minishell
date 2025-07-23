@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 12:27:33 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 15:59:23 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,132 +48,31 @@ int	buildin_exe(t_ms_command *command, int index_buildin)
 	return (127);
 }
 
-//int	exe_manager(t_ms_command *command)
-//{
-//	char				*build_ins[7];
-//	int					i;
-//	int					result;
-//
-//	if (command == NULL)
-//		return (1);
-//	generatebuildins(build_ins);
-//	i = 0;
-//	while (i < 7)
-//	{
-//		if (ft_strncmp(command->argv[0], build_ins[i],
-//				ft_strlen(command -> argv[0])) == 0)
-//		{
-//			result = buildin_exe(command, i);
-//			if (result != 127)
-//				return (result);
-//		}
-//		++i;
-//	}
-//	return (ms_execution_command(command));
-//}
-
-
-
-//int	exe_manager(t_ms_command *command)
-//{
-//	char	*build_ins[7];
-//	int		i;
-//	int		result;
-//
-//	if (command->argv[0] == NULL)
-//		return (1);
-//	generatebuildins(build_ins);
-//	i = 0;
-//	while (i < 7)
-//	{
-//		if (ft_strncmp(command->argv[0], build_ins[i],
-//				ft_strlen(command->argv[0])) == 0)
-//		{
-//			result = buildin_exe(command, i);
-//			if (result != 127)
-//				return (result);
-//		}
-//		++i;
-//	}
-//	return (ms_execution_command(command));
-//}
-
-//int	exe_manager(t_ms_command *command)
-//{
-//	char	*build_ins[7];
-//	int		i;
-//	int		result;
-//	int		stdin_backup;
-//	int		stdout_backup;
-//
-//	if (command->argv[0] == NULL)
-//		return (1);
-//
-//	stdin_backup = dup(STDIN_FILENO);
-//	stdout_backup = dup(STDOUT_FILENO);
-//	ms_redirect_io(command);  // setzt Redirections per dup2()
-//
-//	generatebuildins(build_ins);
-//	i = 0;
-//	while (i < 7)
-//	{
-//		if (ft_strncmp(command->argv[0], build_ins[i],
-//				ft_strlen(command->argv[0])) == 0)
-//		{
-//			result = buildin_exe(command, i);
-//
-//			// Restore original IO
-//			dup2(stdin_backup, STDIN_FILENO);
-//			dup2(stdout_backup, STDOUT_FILENO);
-//			close(stdin_backup);
-//			close(stdout_backup);
-//
-//			if (result != 127)
-//				return (result);
-//		}
-//		++i;
-//	}
-//
-//	// Restore IO auch vor externem Kommando – sicherheitshalber
-//	dup2(stdin_backup, STDIN_FILENO);
-//	dup2(stdout_backup, STDOUT_FILENO);
-//	close(stdin_backup);
-//	close(stdout_backup);
-//
-//	return (ms_execution_command(command));
-//}
-
-
 int	ms_execute_sequence(t_ms_sequence *sequence)
 {
-	size_t			object_index;
+	size_t			obj_idx;
 	int				exit_code;
 	t_ms_command	*command;
 	const bool		expectation = (sequence -> operator == MS_TOKEN_AND);
 
 	if (sequence -> operator == MS_TOKEN_PIPE)
 		return (pipe_monitor(sequence));
-	object_index = 0;
-	while (object_index < sequence -> object_count)
+	obj_idx = 0;
+	while (obj_idx < sequence -> object_count)
 	{
-		if (sequence -> is_sequence[object_index / 8]
-			& (1u << (object_index % 8)))
-			exit_code = ms_execute_sequence(sequence->objects[object_index]);
+		if (sequence -> is_sequence[obj_idx / 8]
+			& (1u << (obj_idx % 8)))
+			exit_code = ms_execute_sequence(sequence->objects[obj_idx]);
 		else
 		{
-			command = ms_get_command(sequence -> objects[object_index]);
-			if (command == NULL)
-				exit_code = 1;
-			else
-			{
-				command -> delim_descriptor = sequence -> delim_descriptors[object_index];
-				exit_code = exe_manager(command);
-				ms_free_command(command);
-			}
+			command = ms_get_command(sequence -> objects[obj_idx]);
+			command->delim_descriptor = sequence->delim_descriptors[obj_idx];
+			exit_code = exe_manager(command);
+			ms_free_command(command);
 		}
 		if (!exit_code != expectation)
 			return (ms_minishell_get()->exit_status = exit_code);
-		object_index++;
+		obj_idx++;
 	}
-	return (ms_minishell_get()->exit_status = exit_code,exit_code);
+	return (ms_minishell_get()->exit_status = exit_code, exit_code);
 }

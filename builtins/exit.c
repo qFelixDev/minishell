@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:02:16 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 13:41:47 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 15:56:06 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ms_exit_builtin(t_ms_command *command)
 		ms_exit(255);
 	}
 	if (command -> argv[1] == NULL)
-		ms_exit(ms_minishell_get() -> exit_status);
+		ms_exit(ms_minishell_get()->exit_status);
 	ms_exit(atoi64(command -> argv[1]));
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:38:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 23:18:38 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 15:51:27 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,16 @@ int	pipe_monitor(t_ms_sequence *sequence)
 	wait_for_children(sequence, &status);
 	ms_minishell_get()->exit_status = WEXITSTATUS(status);
 	return (WEXITSTATUS(status));
+}
+
+void	wait_for_children(t_ms_sequence *seq, int *status)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < seq->object_count)
+	{
+		wait(status);
+		i++;
+	}
 }

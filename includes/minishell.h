@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 11:29:54 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:03:12 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@
 # define ERROR_FOUND_COMMAND "zsh: command not found."
 # define ERROR_PWD "pwd : too many arguments"
 # define ERROR_EXPORT "inconsistant type for assignement"
-
 
 //*************************************************************/
 // ENUM
@@ -169,23 +168,14 @@ typedef struct s_ms_command
 ///////////////TOKENS
 ////////////////////////////////////////////////////////////////
 
-#if 0
-typedef struct s_ms_token
-{
-	struct s_ms_token	*next;
-	int8_t				index;
-	char				*content;
-	bool				concatenate_content;
-}	t_ms_token;
-#else
 typedef struct s_ms_token
 {
 	struct s_ms_token	*next;
 	int8_t				index;
 	char				*content;
 	uint32_t			concatenation;
+	int					fd;
 }	t_ms_token;
-#endif
 
 ///////////////Escape Date 
 ////////////////////////////////////////////////////////////////
@@ -223,6 +213,8 @@ void			redirect_input_from_heredoc(const char *filename);
 void			convert_pointer_to_string(char *str, void *ptr);
 bool			redirection_heredoc(const char *delimiter,
 					t_ms_sequence *sequence);
+int				populate_heredoc_and_return_fd(t_ms_token *token);
+void			ms_prepare_heredocs(t_ms_sequence *sequence);
 
 //*************************************************************/
 // Pipes
@@ -271,8 +263,6 @@ int				get_open_flags(int type);
 bool			open_redirect_fd(char *file, int type, int *fd_out);
 bool			dup_and_close(int descriptor, int target_fd);
 bool			apply_redirects(char **redirects, int type);
-
-
 
 //*************************************************************/
 // Signals 
