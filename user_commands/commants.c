@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commants.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/20 15:00:53 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:56:20 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,9 @@ int	get_user_prompt_value(char **value, int tty)
 		return (perror("open /dev/tty"), gc_free_ptr(prompt), 0);
 	dup2(tty_in, STDOUT_FILENO);
 	close(tty_in);
+	//write(STDOUT_FILENO, prompt, ft_strlen(prompt));
 	*value = readline(prompt);
+	//*value = get_next_line(0);
 	dup2(stdout_copy, STDOUT_FILENO);
 	close(stdout_copy);
 	gc_free_ptr(prompt);

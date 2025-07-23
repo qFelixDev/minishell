@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 10:36:36 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:27:33 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,14 @@ int	ms_execute_sequence(t_ms_sequence *sequence)
 		else
 		{
 			command = ms_get_command(sequence -> objects[object_index]);
-			command -> delim_descriptor = sequence -> delim_descriptors[object_index];
-			exit_code = exe_manager(command);
-			ms_free_command(command);
+			if (command == NULL)
+				exit_code = 1;
+			else
+			{
+				command -> delim_descriptor = sequence -> delim_descriptors[object_index];
+				exit_code = exe_manager(command);
+				ms_free_command(command);
+			}
 		}
 		if (!exit_code != expectation)
 			return (ms_minishell_get()->exit_status = exit_code);

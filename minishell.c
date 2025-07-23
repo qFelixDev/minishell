@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 12:32:22 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:58:47 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	minishell_non_interactive(void)
 			gc_free_ptr(line);
 			continue ;
 		}
-		line[ft_strlen(line) - 1] = '\0';
 		handle_shell_input(line);
 		line = get_next_line(STDIN_FILENO);
 	}
