@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:46:19 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 19:34:59 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	close_unused_pipes(int pipes[1024][2], size_t n_cmds, size_t i)
 	while (j < n_cmds - 1)
 	{
 		if (j != i -1)
-			close(pipes[j][0]);
+			gc_close_fd(pipes[j][0]);
 		if (j != i)
-			close(pipes[j][1]);
+			gc_close_fd(pipes[j][1]);
 		j++;
 	}
 }
@@ -38,8 +38,9 @@ int	init_pipes(t_ms_sequence *sequence, int pipes[1024][2])
 	i = 0;
 	while (i < sequence->object_count - 1)
 	{
-		if (pipe(pipes[i]) == -1)
-			return (perror("pipe"), 1);
+		pipe(pipes[i]);
+		gc_add_fd(pipes[i][0]);
+		gc_add_fd(pipes[i][1]);
 		i++;
 	}
 	return (0);

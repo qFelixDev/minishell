@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:19:58 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:42:53 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 19:05:47 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ bool	handle_intermediate_redirects(char **redirects, size_t *last_index)
 		(*last_index)++;
 	while (i < *last_index)
 	{
-		descriptor = open(redirects[i++], O_CREAT | O_WRONLY, 0644);
+		descriptor = gc_add_fd(open(redirects[i++], O_CREAT | O_WRONLY, 0644));
 		if (descriptor == -1)
 			return (perror("open (dummy redirect)"), false);
-		close(descriptor);
+		gc_close_fd(descriptor);
 	}
 	return (true);
 }
@@ -56,7 +56,7 @@ bool	open_redirect_fd(char *file, int type, int *fd_out)
 	flags = get_open_flags(type);
 	if (flags == -1)
 		return (false);
-	*fd_out = open(file, flags, 0644);
+	*fd_out = gc_add_fd(open(file, flags, 0644));
 	if (*fd_out == -1)
 		return (perror("open (redirect)"), false);
 	return (true);
@@ -65,7 +65,7 @@ bool	open_redirect_fd(char *file, int type, int *fd_out)
 bool	dup_and_close(int descriptor, int target_fd)
 {
 	if (dup2(descriptor, target_fd) == -1)
-		return (perror("dup2 (redirect)"), close(descriptor), false);
+		return (perror("dup2 (redirect)"), gc_close_fd(descriptor), false);
 	close(descriptor);
 	return (true);
 }

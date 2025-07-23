@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:38:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:45:54 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 19:06:03 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	close_all_pipes(t_ms_sequence *seq, int pipes[1024][2])
 	i = 0;
 	while (i < seq->object_count - 1)
 	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
+		gc_close_fd(pipes[i][0]);
+		gc_close_fd(pipes[i][1]);
 		i++;
 	}
 }

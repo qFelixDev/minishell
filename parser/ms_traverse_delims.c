@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_traverse_delims.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:12:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 16:12:14 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 19:07:50 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ms_read_delims(t_ms_token *token, t_ms_token *last)
 
 	if (last_delim == NULL)
 		return (-1);
-	write_fd = open("ms_delim_file.tmp", O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	write_fd = gc_add_fd(open("ms_delim_file.tmp", O_CREAT | O_TRUNC | O_WRONLY, 0644));
 	if (write_fd == -1)
 		return (-1);
 	while (token != last)
@@ -104,7 +104,7 @@ int	ms_read_delims(t_ms_token *token, t_ms_token *last)
 		}
 		token = token->next;
 	}
-	close(write_fd);
+	gc_close_fd(write_fd);
 	read_fd = gc_add_fd(open("ms_delim_file.tmp", O_RDONLY));
 	if (read_fd == -1)
 		return (-1);
