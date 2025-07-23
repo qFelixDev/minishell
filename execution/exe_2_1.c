@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:19:58 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 19:05:47 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 20:19:56 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ bool	dup_and_close(int descriptor, int target_fd)
 {
 	if (dup2(descriptor, target_fd) == -1)
 		return (perror("dup2 (redirect)"), gc_close_fd(descriptor), false);
-	close(descriptor);
+	gc_close_fd(descriptor);
 	return (true);
 }

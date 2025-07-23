@@ -6,7 +6,7 @@
 #    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/23 19:38:43 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/23 19:50:48 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) qInterceptor.o -fsanitize=address,undefined -lreadline -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -fsanitize=address,undefined -lreadline -o $@
 	@echo "$(GREEN)✅ Executable $@ created successfully!$(RESET)"
 
 # Objektdateien-Regel

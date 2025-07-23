@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:20:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:44:50 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 20:20:00 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	restore_std_fds(int stdin_backup, int stdout_backup)
 {
 	dup2(stdin_backup, STDIN_FILENO);
 	dup2(stdout_backup, STDOUT_FILENO);
-	close(stdin_backup);
-	close(stdout_backup);
+	gc_close_fd(stdin_backup);
+	gc_close_fd(stdout_backup);
 }
 
 int	try_execute_builtin(t_ms_command *command, char **build_ins,
