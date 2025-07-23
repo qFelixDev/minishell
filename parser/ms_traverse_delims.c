@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:12:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 15:37:08 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 15:46:44 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,10 @@ void	populate_delim(int descriptor, t_ms_token *token)
 	char		*line;
 	char		*delimiter = get_delim_string(token);
 
+	printf("\033[1;35m[%s]\033[0;0m\n", delimiter);
 	while (true)
 	{
-		line = readline(NULL);
+		line = readline("\033[1;35m-> \033[0;0m");
 		if (line == NULL || ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
