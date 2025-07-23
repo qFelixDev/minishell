@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:20 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 11:18:05 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:26:31 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ms_unset(t_ms_command *command)
 	{
 		if (!is_valid_identifier(command -> argv[i]))
 		{
-			fprintf(stderr, "Invalid identifier\n");
+			ft_putendl_fd("Invalid identifier", stderr);
 			result = 1;
 			i++;
 			continue ;
