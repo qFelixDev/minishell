@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
+#    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/23 18:20:39 by reriebsc         ###   ########.fr        #
+#    Updated: 2025/07/23 18:23:37 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS := main.c\
 		parser/ms_expand_wildcards_2.c\
 		parser/ms_parse.c\
 		parser/ms_resolve_strings.c\
+		parser/ms_should_ignore.c\
 		parser/ms_tokenize.c\
 		parser/ms_traverse_delims.c\
 		parser/sequence.c\

@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:35:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 18:19:54 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:23:16 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 t_ms_token		*ms_tokenize(char *string);
+bool			ms_should_ignore(t_ms_token *token);
 t_ms_token		*ms_check_syntax(t_ms_token *token);
 void			ms_expand_precedence(t_ms_token *token, int8_t operator);
 void			ms_resolve_strings(t_ms_token *token);
+t_ms_sequence	*ms_allocate_sequence(t_ms_token *token);
 t_ms_sequence	*ms_create_sequence(t_ms_token *token);
 void			ms_traverse_delims(t_ms_sequence *sequence);
 
@@ -27,6 +29,8 @@ t_ms_sequence	*ms_parse(char *string)
 
 	if (first == NULL)
 		return (ft_putendl_fd("Missing quote", 2), NULL);
+	if (ms_should_ignore(first))
+		return (ms_allocate_sequence(NULL));
 	token = ms_check_syntax(first);
 	if (token != NULL)
 	{
