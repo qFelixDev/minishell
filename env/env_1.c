@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:52:36 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/19 17:19:03 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:10:42 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int	ms_add_env_node(const char *key, const char *value)
 	t_dict_env	*env_node;
 	t_list		*new_node;
 
-	env_node = malloc(sizeof(t_dict_env));
-	new_node = ft_lstnew(env_node);
-	env_node->key = ft_strdup(key);
+	env_node = gc_malloc(sizeof(t_dict_env));
+	new_node = gc_add_list_node(ft_lstnew(env_node));
+	env_node->key = gc_add(ft_strdup(key));
 	if (value)
-		env_node->value = ft_strdup(value);
+		env_node->value = gc_add(ft_strdup(value));
 	else
 		env_node->value = NULL;
 	ft_lstadd_back(&ms_minishell_get()->env, new_node);

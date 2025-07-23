@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 14:05:45 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 00:03:35 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:10:04 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ bool	ms_set_env_value(const char *key, const char *value)
 	}
 	if (node)
 	{
-		free(node->value);
-		node->value = ft_strdup(value);
+		gc_free_ptr(node->value);
+		node->value = gc_add(ft_strdup(value));
 		return (true);
 	}
 	return (ms_add_env_node(key, value));
@@ -64,8 +64,8 @@ void	ms_open_shells(void)
 	}
 	numb_shells = ft_atoi(node->value);
 	numb_shells += 1;
-	str = ft_itoa(numb_shells);
-	free(node->value);
+	str = gc_add(ft_itoa(numb_shells));
+	gc_free_ptr(node->value);
 	node->value = str;
 }
 
