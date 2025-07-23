@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:35:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 18:23:16 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 18:38:11 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,5 @@ t_ms_sequence	*ms_parse(char *string)
 	ms_resolve_strings(first);
 	sequence = ms_create_sequence(first -> next);
 	ms_free_tokens(first, true);
-	ms_traverse_delims(sequence);
-	return (sequence);
+	return (ms_traverse_delims(sequence), sequence);
 }

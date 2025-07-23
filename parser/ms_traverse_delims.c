@@ -6,39 +6,47 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:12:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 19:07:50 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 19:36:58 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+static char	*get_next_append(t_ms_token *token)
+{
+	char	*tmp;
+
+	if (token->index == MS_TOKEN_WILDCARD)
+		return (ft_strdup("*"));
+	else if (token->index == MS_TOKEN_VARIABLE)
+	{
+		tmp = ft_strjoin("$", token->content);
+		return (tmp);
+	}
+	else
+		return (ft_strdup(token->content));
+}
+
 char	*get_delim_string(t_ms_token *token)
 {
-	char		*delimiter = NULL;
+	char		*delimiter;
 	char		*append;
 	char		*tmp;
 	uint32_t	concatenation;
 
-	concatenation = token -> concatenation;
-	while (token != NULL && token->index >= MS_TOKEN_WILDCARD
-		&& token -> concatenation == concatenation)
+	delimiter = NULL;
+	concatenation = token->concatenation;
+	while (token && token->index >= MS_TOKEN_WILDCARD
+		&& token->concatenation == concatenation)
 	{
-		if (token->index == MS_TOKEN_WILDCARD)
-			append = ft_strdup("*");
-		else if (token->index == MS_TOKEN_VARIABLE)
-		{
-			tmp = ft_strjoin("$", token->content);
-			append = tmp;
-		}
-		else
-			append = ft_strdup(token->content);
+		append = get_next_append(token);
 		tmp = delimiter;
 		if (delimiter == NULL)
 			delimiter = "";
 		delimiter = ft_strjoin(delimiter, append);
 		free(tmp);
 		free(append);
-		token = token -> next;
+		token = token->next;
 	}
 	return (delimiter);
 }
@@ -109,20 +117,4 @@ int	ms_read_delims(t_ms_token *token, t_ms_token *last)
 	if (read_fd == -1)
 		return (-1);
 	return (read_fd);
-}
-
-void	ms_traverse_delims(t_ms_sequence *sequence)
-{
-	size_t	obj_idx;
-
-	obj_idx = 0;
-	while (obj_idx < sequence -> object_count)
-	{
-		if (sequence -> is_sequence[obj_idx / 8] & (1u << (obj_idx % 8)))
-			ms_traverse_delims(sequence -> objects[obj_idx]);
-		else
-			sequence -> delim_descriptors[obj_idx] = ms_read_delims(
-					sequence -> objects[obj_idx], NULL);
-		obj_idx++;
-	}
 }

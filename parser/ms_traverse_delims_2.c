@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_should_ignore.c                                 :+:      :+:    :+:   */
+/*   ms_traverse_delims_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/23 18:03:41 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 18:37:01 by reriebsc         ###   ########.fr       */
+/*   Created: 2025/07/23 18:34:26 by reriebsc          #+#    #+#             */
+/*   Updated: 2025/07/23 18:51:18 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-bool	ms_should_ignore(t_ms_token *token)
+void	ms_traverse_delims(t_ms_sequence *sequence)
 {
-	char	*value;
+	size_t	obj_idx;
 
-	token = token -> next;
-	while (token -> index != MS_TOKEN_CLOSE)
+	obj_idx = 0;
+	while (obj_idx < sequence -> object_count)
 	{
-		if (token -> index != MS_TOKEN_VARIABLE)
-			return (false);
-		value = ft_getenv(token -> content);
-		if (value != NULL)
-		{
-			while (ms_isspace(*value))
-				value++;
-			if (*value != '\0')
-				return (false);
-		}
-		token = token -> next;
+		if (sequence -> is_sequence[obj_idx / 8] & (1u << (obj_idx % 8)))
+			ms_traverse_delims(sequence -> objects[obj_idx]);
+		else
+			sequence -> delim_descriptors[obj_idx] = ms_read_delims(
+					sequence -> objects[obj_idx], NULL);
+		obj_idx++;
 	}
-	return (true);
 }

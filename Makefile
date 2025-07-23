@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
+#    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2025/07/23 18:40:48 by ghodges          ###   ########.fr        #
+=======
+#    Updated: 2025/07/23 18:36:04 by reriebsc         ###   ########.fr        #
+>>>>>>> 25af65b0084e6176ff61ebf2dbc25b5ca2b7cd88
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +56,7 @@ SRCS := main.c\
 		parser/ms_should_ignore.c\
 		parser/ms_tokenize.c\
 		parser/ms_traverse_delims.c\
+		parser/ms_traverse_delims_2.c\
 		parser/sequence.c\
 		parser/token.c\
 		gc_collector/gc_part1.c\
