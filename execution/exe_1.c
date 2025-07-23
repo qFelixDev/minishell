@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 23:18:20 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 10:36:36 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,5 @@ int	ms_execute_sequence(t_ms_sequence *sequence)
 			return (ms_minishell_get()->exit_status = exit_code);
 		object_index++;
 	}
-	ms_minishell_get()->exit_status = exit_code;
-	return (exit_code);
+	return (ms_minishell_get()->exit_status = exit_code,exit_code);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 00:03:14 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 11:29:54 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 # define ERROR_FOUND_COMMAND "zsh: command not found."
 # define ERROR_PWD "pwd : too many arguments"
 # define ERROR_EXPORT "inconsistant type for assignement"
+
 
 //*************************************************************/
 // ENUM
@@ -255,6 +256,23 @@ int				exe_manager(t_ms_command *command);
 void			generatebuildins(char *buildins[7]);
 int				buildin_exe(t_ms_command *command, int index_buildin);
 int				ms_execution_command(t_ms_command *command);
+char			*ft_find_path(char *cmd);
+char			*ft_find_exec_path(char **cmd_s, char **env);
+void			handle_child_process(t_ms_command *command, char **env_cpy);
+int				wait_for_process(pid_t pid);
+bool			backup_std_fds(int *stdin_backup, int *stdout_backup);
+int				try_execute_builtin(t_ms_command *command, char **build_ins,
+					int stdin_backup, int stdout_backup);
+void			restore_std_fds(int stdin_backup, int stdout_backup);
+bool			handle_intermediate_redirects(char **redirects,
+					size_t *last_index);
+int				get_target_fd(int type);
+int				get_open_flags(int type);
+bool			open_redirect_fd(char *file, int type, int *fd_out);
+bool			dup_and_close(int descriptor, int target_fd);
+bool			apply_redirects(char **redirects, int type);
+
+
 
 //*************************************************************/
 // Signals 

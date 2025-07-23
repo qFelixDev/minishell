@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 12:55:30 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 15:23:28 by ghodges          ###   ########.fr       */
+/*   Created: 2025/07/20 14:59:55 by ghodges           #+#    #+#             */
+/*   Updated: 2025/07/22 16:19:31 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ t_ms_token	*ms_check_syntax(t_ms_token *token)
 	int				bracket_level;
 
 	bracket_level = 0;
-	while (token != NULL)
+	next_token = token;
+	while (next_token != NULL)
 	{
 		next_token = token -> next;
 		if (next_token != NULL && !(token_branches[token -> index]
@@ -47,9 +48,10 @@ t_ms_token	*ms_check_syntax(t_ms_token *token)
 			return (token);
 		bracket_level += (token -> index == MS_TOKEN_OPEN);
 		bracket_level -= (token -> index == MS_TOKEN_CLOSE);
-		token = next_token;
+		if (next_token != NULL)
+			token = next_token;
 	}
-	//if (bracket_level != 0)
-	//	return (token);
+	if (bracket_level != 0)
+		return (token);
 	return (NULL);
 }

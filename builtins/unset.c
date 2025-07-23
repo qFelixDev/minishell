@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:20 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/22 23:04:04 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 11:18:05 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ int	remove_variable_from_env(const char *key)
 	}
 	return (false);
 }
-
-/*bool	is_valid_identifier(char *identifier)
-{
-	while (*identifier != '\0')
-		if (!ft_isalnum(*(identifier++)))
-			return (false);
-	return (true);
-}*/
 
 int	ms_unset(t_ms_command *command)
 {

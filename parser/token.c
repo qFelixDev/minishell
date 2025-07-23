@@ -5,14 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 13:04:46 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 00:09:44 by ghodges          ###   ########.fr       */
+/*   Created: 2025/07/22 11:01:51 by ghodges           #+#    #+#             */
+/*   Updated: 2025/07/22 18:58:28 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "../includes/minishell.h"
+
+t_ms_token	*ms_insert_token(t_ms_token *token, int8_t index)
+{
+	t_ms_token *const	new_token = gc_add(ft_calloc(1, sizeof(t_ms_token)));
+
+	new_token -> index = index;
+	if (token == NULL)
+	{
+		if (index >= MS_TOKEN_WILDCARD)
+			new_token -> concatenation = UINT32_MAX;
+		return (new_token);
+	}
+	new_token -> next = token -> next;
+	token -> next = new_token;
+	if (index >= MS_TOKEN_WILDCARD)
+		new_token -> concatenation = token -> concatenation;
+	return (new_token);
+}
 
 size_t	ms_count_index(t_ms_token *token, int8_t index)
 {
@@ -22,55 +38,15 @@ size_t	ms_count_index(t_ms_token *token, int8_t index)
 	if (token == NULL)
 		return (0);
 	bracket_level = 0;
-	count = (token -> index == index);
-	token = token -> next;
-	while (bracket_level >= 0 && token != NULL)
+	count = 0;
+	while (token != NULL && bracket_level >= 0)
 	{
 		count += (bracket_level == 0 && token -> index == index);
 		bracket_level += (token -> index == MS_TOKEN_OPEN);
-		bracket_level -= (token -> index == MS_TOKEN_CLOSE);
+		bracket_level += (token -> index == MS_TOKEN_CLOSE);
 		token = token -> next;
 	}
 	return (count);
-}
-
-const char	*ms_get_identity(int8_t index)
-{
-	static char	*token_identities[MS_TOKEN_MAX] = {"&&", "||", "|", "(",
-		")", "<<", ">>", "<", ">", "*", "$STR", "\"STR\"", "\'STR\'", "~STR~"};
-
-	if (index == MS_TOKEN_NONE)
-		index = MS_TOKEN_AND;
-	return (token_identities[index]);
-}
-
-void	ms_print_tokens(t_ms_token *token)
-{
-	while (token != NULL)
-	{
-		printf("%s ", ms_get_identity(token -> index));
-		if(token -> index >= MS_TOKEN_VARIABLE)
-			printf("%p ", token -> content);
-		token = token -> next;
-	}
-	printf("\n");
-}
-
-void	ms_free_tokens(t_ms_token *token, bool detach_only)
-{
-	t_ms_token	*temp;
-
-	while (token != NULL)
-	{
-		temp = token;
-		token = token -> next;
-		if (detach_only && token != NULL && token -> index < MS_TOKEN_DELIM)
-			temp -> next = NULL;
-		if (!detach_only && temp -> index >= MS_TOKEN_VARIABLE)
-			free(temp -> content);
-		if (!detach_only || temp -> index < MS_TOKEN_DELIM)
-			free(temp);
-	}
 }
 
 int8_t	ms_next_operator(t_ms_token *token)
@@ -87,4 +63,21 @@ int8_t	ms_next_operator(t_ms_token *token)
 		token = token -> next;
 	}
 	return (MS_TOKEN_NONE);
+}
+
+void	ms_free_tokens(t_ms_token *token, bool detach_only)
+{
+	t_ms_token	*temp;
+
+	while (token != NULL)
+	{
+		temp = token;
+		token = token -> next;
+		if (detach_only && token != NULL && token -> index < MS_TOKEN_DELIM)
+			temp -> next = NULL;
+		if (!detach_only && temp -> index >= MS_TOKEN_VARIABLE)
+			gc_free_ptr(temp -> content);
+		if (!detach_only || temp -> index < MS_TOKEN_DELIM)
+			gc_free_ptr(temp);
+	}
 }

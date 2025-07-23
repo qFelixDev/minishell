@@ -5,12 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 13:13:11 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/21 19:28:21 by ghodges          ###   ########.fr       */
+/*   Created: 2025/07/16 15:54:07 by ghodges           #+#    #+#             */
+/*   Updated: 2025/07/23 00:18:45 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft_extend/libft.h"
 #include "../includes/minishell.h"
 
 char	*populate_token_content(
@@ -23,44 +22,39 @@ char	*populate_token_content(
 		while (!ms_isspace(string[length])
 			&& ft_strncmp(string + length, "&&", 2) != 0
 			&& ft_strchr("|()<>*$\"'", string[length]) == NULL
-			&& (token -> index != MS_TOKEN_VARIABLE || string[length] != '/'))
+			&& (token -> index != MS_TOKEN_VARIABLE
+				|| string[length] == '_' || ft_isalnum(string[length])
+				|| string[length] == '$' || string[length] == '?'))
 			length++;
 	else
 		while (string[length] != terminator && string[length] != '\0')
 			length++;
-	if (terminator == '\0' || terminator == '$' || string[length] != '\0')
-		token -> content = malloc(length + 1);
-	if (token -> content == NULL)
+	if (terminator != '\0' && terminator != '$' && string[length] == '\0')
 		return (NULL);
+	token -> content = gc_malloc(length + 1);
 	ft_strlcpy(token -> content, string, length + 1);
-	string += ft_strlen(token -> content);
-	return (string);
+	return (string + ft_strlen(token -> content));
 }
 
 char	*populate_token(t_ms_token *token, char *string)
 {
-	const char *const	token_strings[MS_TOKEN_MAX] = {"&&", "||", "|",
-		"(", ")", "<<", ">>", "<", ">", "*", "$", "\"", "'", ""};
+	const char *const	token_strings[MS_TOKEN_MAX] = {"&&", "||", "|", "(",
+		")", "<<", ">>", "<", ">", "*", "$", "\"", "'", ""};
 
-	token -> next = NULL;
 	token -> index = MS_TOKEN_NONE;
 	while (++token -> index < MS_TOKEN_SHADOW_STRING)
 		if (ft_strncmp(string, token_strings[token -> index],
 				ft_strlen(token_strings[token -> index])) == 0)
 			break ;
 	string += ft_strlen(token_strings[token -> index]);
-	token -> concatenate_content
-		= (!ms_isspace(*string) && token -> index >= MS_TOKEN_WILDCARD);
 	if (token -> index < MS_TOKEN_VARIABLE)
 		return (string);
-	token -> content = NULL;
 	string = populate_token_content(token, string,
-			*token_strings[token->index]);
+			*token_strings[token -> index]);
 	if (string == NULL)
 		return (NULL);
 	if (token -> index != MS_TOKEN_VARIABLE)
 		string += ft_strlen(token_strings[token -> index]);
-	token -> concatenate_content = !ms_isspace(*string);
 	if (token -> index == MS_TOKEN_SHADOW_STRING)
 		token -> index = MS_TOKEN_STRING;
 	return (string);
@@ -70,25 +64,26 @@ t_ms_token	*ms_tokenize(char *string)
 {
 	t_ms_token *const	first = ms_insert_token(NULL, MS_TOKEN_OPEN);
 	t_ms_token			*token;
+	uint32_t			concatenation;
 
-	if (first == NULL)
-		return (NULL);
 	token = first;
+	concatenation = 1;
 	while (ms_isspace(*string))
 		string++;
 	while (*string != '\0')
 	{
-		token -> next = malloc(sizeof(t_ms_token));
+		token -> next = gc_add(ft_calloc(1, sizeof(t_ms_token)));
 		token = token -> next;
-		if (token == NULL)
-			return (ms_free_tokens(first, false), NULL);
 		string = populate_token(token, string);
 		if (string == NULL)
 			return (ms_free_tokens(first, false), NULL);
+		token -> concatenation = concatenation
+			* (token -> index >= MS_TOKEN_WILDCARD);
+		if (ms_isspace(*string))
+			concatenation++;
 		while (ms_isspace(*string))
 			string++;
 	}
-	if (ms_insert_token(token, MS_TOKEN_CLOSE) == NULL)
-		return (ms_free_tokens(first, false), NULL);
+	ms_insert_token(token, MS_TOKEN_CLOSE);
 	return (first);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
+#    By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/22 18:16:30 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/23 12:03:32 by reriebsc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,40 +35,30 @@ OBJ_DIR := obj
 ##                   Quellen
 ##*************************************************************/
 
-#parser/token2.c\
-		parser/token.c\
-		parser/ms_tokenize.c\
-		parser/ms_read_delim.c\
-		parser/ms_resolve_strings.c\
-		parser/ms_parse.c\
-		parser/ms_get_command.c\
-		parser/ms_expand_wildcards.c\
-		parser/ms_expand_precedence.c\
-		parser/ms_create_sequence.c\
-		parser/ms_check_syntax.\
-
 SRCS := main.c\
 		minishell.c\
 		utils/utils_v1.c\
 		user_commands/commants.c\
 		signals/signals_v1.c\
-		new_parser/command.c\
-		new_parser/debug.c\
-		new_parser/ms_allocate_command.c\
-		new_parser/ms_check_syntax.c\
-		new_parser/ms_expand_precedence.c\
-		new_parser/ms_expand_wildcards.c\
-		new_parser/ms_parse.c\
-		new_parser/ms_resolve_strings.c\
-		new_parser/ms_tokenize.c\
-		new_parser/ms_traverse_delims.c\
-		new_parser/sequence.c\
-		new_parser/token.c\
+		parser/command.c\
+		parser/debug.c\
+		parser/ms_allocate_command.c\
+		parser/ms_check_syntax.c\
+		parser/ms_expand_precedence.c\
+		parser/ms_expand_wildcards.c\
+		parser/ms_parse.c\
+		parser/ms_resolve_strings.c\
+		parser/ms_tokenize.c\
+		parser/ms_traverse_delims.c\
+		parser/sequence.c\
+		parser/token.c\
 		gc_collector/gc_part1.c\
 		gc_collector/gc_part2.c\
 		gc_collector/gc_part3.c\
 		execution/exe_1.c\
 		execution/exe_2.c\
+		execution/exe_2_1.c\
+		execution/exe_2_2.c\
 		execution/exe_v3.c\
 		error/errorhandling.c\
 		env/env_1.c\

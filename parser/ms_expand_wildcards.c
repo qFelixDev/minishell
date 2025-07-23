@@ -5,20 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 20:27:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/22 01:09:36 by ghodges          ###   ########.fr       */
+/*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
+/*   Updated: 2025/07/22 19:10:03 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
-#include <dirent.h>
-#include<stdio.h>
-#include <sys/stat.h>
-#include "../libft_extend/libft.h"
-#include <stdbool.h>
 #include "../includes/minishell.h"
-#include<assert.h>
+#include <stddef.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
 size_t	get_word_length(char *word)
 {
@@ -61,31 +56,14 @@ bool	matches_pattern(char *pattern, char *string)
 	return (ft_strncmp(pattern, string, length) == 0);
 }
 
-//int main() {
-//	printf("%d\n", matches_pattern("_parser", "_compile_parser.sh"));
-//}
-
-void print_pattern(char *pattern) {
-	while(*pattern != '\0') {
-		if(*pattern == '\1')
-			printf("[*]");
-		else
-			putchar(*pattern);
-		pattern++;
-	}
-	printf("\n");
-}
-
 size_t	enumerate_matches(char *pattern, char *path, char **matches);
 
 size_t	add_match(char *pattern, char *path, char *name, char **matches)
 {
 	struct stat		status;
 	const size_t	new_length = ft_strlen(path) + ft_strlen(name) + 1;
-	char *const		new_path = ft_calloc(1, new_length + 1);
+	char *const		new_path = gc_add(ft_calloc(new_length + 1, sizeof(char)));
 
-	if (new_path == NULL)
-		return (0);
 	ft_strlcat(new_path, path, new_length);
 	ft_strlcat(new_path, name, new_length);
 	if (lstat(new_path, &status) == -1)
@@ -129,16 +107,19 @@ size_t	enumerate_matches(char *pattern, char *path, char **matches)
 		entry = readdir(directory);
 	}
 	closedir(directory);
-	free(path);
+	gc_free_ptr(path);
 	return (match_count);
 }
 
+#include<assert.h>
+
 size_t	get_pattern(t_ms_token *token, char *pattern)
 {
-	size_t	length;
+	const uint32_t	concatenation = token -> concatenation;
+	size_t			length;
 
 	length = 0;
-	while (token != NULL && token -> index >= MS_TOKEN_WILDCARD)
+	while (token != NULL && token -> concatenation == concatenation)
 	{
 		if (token -> index == MS_TOKEN_STRING && pattern != NULL)
 			ft_strlcpy(pattern + length, token -> content,
@@ -148,8 +129,6 @@ size_t	get_pattern(t_ms_token *token, char *pattern)
 		if (token -> index == MS_TOKEN_STRING)
 			length += ft_strlen(token -> content);
 		length += (token -> index == MS_TOKEN_WILDCARD);
-		if (!token -> concatenate_content)
-			break ;
 		token = token -> next;
 	}
 	return (length);
@@ -158,23 +137,20 @@ size_t	get_pattern(t_ms_token *token, char *pattern)
 size_t	ms_expand_wildcards(t_ms_token *token, char **paths)
 {
 	size_t		match_count;
-	bool		is_absolute;
 	int			pattern_index;
-	char *const	pattern = ft_calloc(1, get_pattern(token, NULL) + 1);
+	bool		is_absolute;
+	char *const	pattern = gc_add(ft_calloc(1, get_pattern(token, NULL) + 1));
 
-	assert(token -> index >= MS_TOKEN_WILDCARD);
-	if (pattern == NULL)
-		return (0);
 	get_pattern(token, pattern);
 	is_absolute = (pattern[0] == '/');
 	match_count = enumerate_matches(
-		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), NULL);
+		pattern + is_absolute, gc_add(ft_strdup(&"/"[!is_absolute])), NULL);
 	if (paths == NULL)
-		return (free(pattern), match_count + (match_count == 0));
+		return (gc_free_ptr(pattern), match_count + (match_count == 0));
 	match_count = enumerate_matches(
-		pattern + is_absolute, ft_strdup(&"/"[!is_absolute]), paths);
+		pattern + is_absolute, gc_add(ft_strdup(&"/"[!is_absolute])), paths);
 	if (match_count != 0)
-		return (free(pattern), match_count);
+		return (gc_free_ptr(pattern), match_count);
 	pattern_index = -1;
 	while (pattern[++pattern_index] != '\0')
 		if (pattern[pattern_index] == '\1')
