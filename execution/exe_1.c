@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:39:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:50:42 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:55:11 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ms_execute_sequence(t_ms_sequence *sequence)
 {
 	size_t			obj_idx;
 	int				exit_code;
-	t_ms_command	*command;
+	t_ms_command	*com;
 	const bool		expectation = (sequence -> operator == MS_TOKEN_AND);
 
 	if (sequence -> operator == MS_TOKEN_PIPE)
@@ -65,9 +65,9 @@ int	ms_execute_sequence(t_ms_sequence *sequence)
 			exit_code = ms_execute_sequence(sequence->objects[obj_idx]);
 		else
 		{
-			command = ms_get_command(sequence -> objects[obj_idx]);
-			exit_code = exe_manager(command, sequence -> delim_descriptors[obj_idx]);
-			ms_free_command(command);
+			com = ms_get_command(sequence -> objects[obj_idx]);
+			exit_code = exe_manager(com, sequence->delim_descriptors[obj_idx]);
+			ms_free_command(com);
 		}
 		if (!exit_code != expectation)
 			return (ms_minishell_get()->exit_status = exit_code);
