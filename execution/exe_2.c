@@ -6,14 +6,14 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:07:12 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:47:40 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <sys/wait.h>
 
-static char	*ft_find_path(char *cmd)
+char	*ft_find_path(char *cmd)
 {
 	int		i;
 	char	**path_all;
@@ -40,7 +40,7 @@ static char	*ft_find_path(char *cmd)
 	return (ft_free_cluster(path_all), NULL);
 }
 
-static char	*ft_find_exec_path(char **cmd_s, char **env)
+char	*ft_find_exec_path(char **cmd_s, char **env)
 {
 	char	*path;
 
