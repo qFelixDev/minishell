@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:17:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 11:35:00 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:28:40 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include <stdlib.h>
 
-int	ms_exit(int state)
+void	ms_exit(int state)
 {
 	gc_list_clear(&ms_minishell_get()->env, free_env_entry);
 	rl_clear_history();

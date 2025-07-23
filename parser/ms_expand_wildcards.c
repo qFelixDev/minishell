@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:26:12 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 16:04:28 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:16:06 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,13 @@ size_t	enumerate_matches(char *pattern, char *path, char **matches)
 	{
 		if (matches_pattern(pattern, entry -> d_name))
 			match_count += add_match(pattern, path, entry -> d_name, matches
-				+ (matches != NULL) * match_count);
+					+ (matches != NULL) * match_count);
 		entry = readdir(directory);
 	}
 	closedir(directory);
 	gc_free_ptr(path);
 	return (match_count);
 }
-
-#include<assert.h>
 
 size_t	get_pattern(t_ms_token *token, char *pattern)
 {

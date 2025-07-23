@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 16:03:12 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:30:27 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ char			*create_prompt(void);
 //*************************************************************/
 // Shell
 //*************************************************************/
-int				ms_exit(int state);
+void			ms_exit(int state);
 void			non_interactive_arg(char **args, int argc);
 void			interactive(void);
 void			minishell_non_interactive(void);

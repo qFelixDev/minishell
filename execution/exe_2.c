@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 13:18:58 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 16:28:05 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,15 @@ char	*ft_find_exec_path(char **cmd_s, char **env)
 
 void	handle_child_process(t_ms_command *command, char **env_cpy)
 {
-	char	*path;
+	char		*path;
+	struct stat	status;
 
 	if (!apply_redirects(command->redirects[1], 1))
 		ms_exit(1);
 	if (command->delim_descriptor != -1)
 	{
 		if (dup2(command->delim_descriptor, STDIN_FILENO) == -1)
-		{
-			perror("minishell: heredoc dup2");
-			ms_exit(1);
-		}
+			return (perror("minishell: heredoc dup2"), ms_exit(1), (void));
 		gc_close_fd(command->delim_descriptor);
 		unlink("minishell_delim_file.tmp");
 	}
@@ -81,10 +79,11 @@ void	handle_child_process(t_ms_command *command, char **env_cpy)
 	if (command -> argv[0] == NULL)
 		ms_exit(0);
 	path = ft_find_exec_path(command->argv, env_cpy);
+	if (lstat(path, &status) != -1 && !S_ISREG(status.st_mode))
+		return (ft_putendl_fd("Invalid file mode", 2), ms_exit(126), (void));
 	command_signals();
 	execve(path, command->argv, env_cpy);
-	perror("minishell: command not found");
-	ms_exit(127);
+	return (perror("minishell: command not found"), ms_exit(127), (void));
 }
 
 int	wait_for_process(pid_t pid)
