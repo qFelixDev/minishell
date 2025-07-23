@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:02:16 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 16:25:58 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:34:17 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int	ms_exit_builtin(t_ms_command *command)
 	while (command -> argv[argc] != NULL)
 		argc++;
 	if (argc > 2)
-		return (ft_putendl_fd("Too many arguments", stderr), 1);
+		return (ft_putendl_fd("Too many arguments", 2), 1);
 	if (command -> argv[1] != NULL && !is_numeric(command -> argv[1]))
 	{
-		ft_putendl_fd("Numeric argument required", stderr);
+		ft_putendl_fd("Numeric argument required", 2);
 		ms_exit(255);
 	}
 	if (command -> argv[1] == NULL)

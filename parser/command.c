@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:54:37 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 16:28:00 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:33:06 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_ms_command	*ms_get_command(t_ms_token *first)
 		if (token -> index >= MS_TOKEN_APPEND
 			&& token -> index <= MS_TOKEN_OUTPUT
 			&& ms_expand_wildcards(token -> next, NULL) != 1)
-			return (ft_putendl_fd("Ambiguous redirect", stderr), NULL);
+			return (ft_putendl_fd("Ambiguous redirect", 2), NULL);
 		if (token -> index == MS_TOKEN_DELIM)
 			ruin_delimiter(token -> next);
 		if (token -> index == MS_TOKEN_VARIABLE)

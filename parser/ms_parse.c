@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:35:05 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 16:29:44 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:31:41 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ t_ms_sequence	*ms_parse(char *string)
 	t_ms_token *const	first = ms_tokenize(string);
 
 	if (first == NULL)
-		return (ft_putendl_fd("Missing quote", stderr), NULL);
+		return (ft_putendl_fd("Missing quote", 2), NULL);
 	token = ms_check_syntax(first);
 	if (token != NULL)
 	{
 		if (token -> next == NULL)
-			return (ft_putendl_fd("Missing bracket", stderr), NULL);
+			return (ft_putendl_fd("Missing bracket", 2), NULL);
 		else
 			return (fprintf(stderr, "Unexpected %s after %s\n",
 					ms_get_identity(token -> next -> index),

@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 15:56:25 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:32:23 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ int	ms_export(char **argv)
 	while (argv[++argument_index] != NULL)
 	{
 		if (is_argument_invalid(argv[argument_index]))
-			return (fprintf(stderr, "Invalid Usage\n"), 2);
+			return (ft_putendl_fd("Invalid Usage", 2), 2);
 		operator = get_closest_operator(argv[argument_index]);
 		if (!is_key_valid(argv[argument_index], operator))
 		{
-			fprintf(stderr, "Invalid Key\n");
+			ft_putendl_fd("Invalid Key", 2);
 			result = 1;
 			continue ;
 		}
