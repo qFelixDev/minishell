@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 16:44:43 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:07:11 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,5 +371,6 @@ void			gc_list_clear(t_list **list, void (*del)(void *));
 void			gc_close_fd(int fd);
 int				gc_add_fd(int fd);
 void			gc_close_fds(void);
+void			*gc_add_list_node(t_list *list);
 
 #endif

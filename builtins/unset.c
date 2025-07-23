@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:20 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 16:32:31 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:01:00 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ int	remove_variable_from_env(const char *key)
 	return (false);
 }
 
+static bool	is_argument_invalid(char *argument)
+{
+	if (*argument != '-')
+		return (false);
+	while (*argument == '-')
+		argument++;
+	return (*argument != '\0');
+}
+
 int	ms_unset(t_ms_command *command)
 {
 	size_t	i;
@@ -49,6 +58,8 @@ int	ms_unset(t_ms_command *command)
 	result = 0;
 	while (command->argv[i])
 	{
+		if (is_argument_invalid(command -> argv[i]))
+			return (ft_putendl_fd("Invalid Usage", 2), 2);
 		if (!is_valid_identifier(command -> argv[i]))
 		{
 			ft_putendl_fd("Invalid identifier", 2);

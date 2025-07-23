@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:02:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 16:32:23 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:01:07 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	is_key_valid(char *key, char *terminator)
 	return (true);
 }
 
-bool	is_argument_invalid(char *argument)
+static bool	is_argument_invalid(char *argument)
 {
 	if (*argument != '-')
 		return (false);
