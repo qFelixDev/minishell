@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/24 11:09:38 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/24 14:19:44 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int	get_user_prompt_value(char **value, int tty)
 		return (perror("open /dev/tty"), gc_free_ptr(prompt), 0);
 	dup2(tty_in, STDOUT_FILENO);
 	gc_close_fd(tty_in);
-	rl_on_new_line();
 	*value = readline(prompt);
 	dup2(stdout_copy, STDOUT_FILENO);
 	gc_close_fd(stdout_copy);

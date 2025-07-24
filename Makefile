@@ -6,7 +6,7 @@
 #    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/24 13:57:34 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/24 14:30:24 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,6 @@ SRCS := main.c\
 		execution/exe_2_1.c\
 		execution/exe_2_2.c\
 		execution/exe_v3.c\
-		error/errorhandling.c\
 		env/env_1.c\
 		env/env_2.c\
 		env/env_3.c\
