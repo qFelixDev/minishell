@@ -6,7 +6,7 @@
 /*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:00:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/20 15:17:43 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:33:01 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 
 void	sighandler(int sig)
 {
-	char	*prompt;
-
 	(void)sig;
-	prompt = create_prompt();
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	gc_free_ptr(prompt);
 }
+
 
 static void	signal_exit(int sig)
 {
