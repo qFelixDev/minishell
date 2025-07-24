@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 15:33:23 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 00:28:37 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/24 13:12:17 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ms_cd(char *path)
 {
-	char	cwd[PATH_MAX];
+	char		cwd[PATH_MAX];
 
 	if (path == NULL)
 	{
@@ -25,6 +25,8 @@ int	ms_cd(char *path)
 	if (ft_strcmp(path, "-") == 0)
 	{
 		path = ft_getenv("OLDPWD");
+		if (path == NULL)
+			return (ft_putendl_fd("OLDPWD not set", 2), 1);
 		printf("%s\n", path);
 	}
 	if (ft_strcmp(path, "--") == 0)

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 12:09:09 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 19:34:59 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/24 13:53:43 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	child_process(t_ms_sequence *seq, int pipes[1024][2], size_t i)
 		dup2(pipes[i][1], STDOUT_FILENO);
 	close_unused_pipes(pipes, seq->object_count, i);
 	if (seq->is_sequence[i / 8] & (1u << (i % 8)))
-		exit(ms_execute_sequence(seq->objects[i]));
+		ms_exit(ms_execute_sequence(seq->objects[i]));
 	else
 	{
 		cmd = ms_get_command(seq->objects[i]);

@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:12:54 by ghodges           #+#    #+#             */
-/*   Updated: 2025/07/23 19:36:58 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/24 11:33:33 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void	populate_delim(int descriptor, t_ms_token *token)
 	char		*delimiter;
 
 	delimiter = get_delim_string(token);
-	printf("\033[1;35m[%s]\033[0;0m\n", delimiter);
+	printf(PURPLE "[%s]" RESET "\n", delimiter);
 	while (true)
 	{
-		line = readline("\033[1;35m-> \033[0;0m");
+		line = readline(PURPLE "-> " RESET);
 		if (line == NULL || ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
@@ -94,11 +94,11 @@ int	ms_read_delims(t_ms_token *token, t_ms_token *last)
 {
 	t_ms_token *const	last_delim = get_last_delim(token);
 	int					write_fd;
-	int					read_fd;
 
 	if (last_delim == NULL)
 		return (-1);
-	write_fd = gc_add_fd(open("ms_delim_file.tmp", O_CREAT | O_TRUNC | O_WRONLY, 0644));
+	write_fd = gc_add_fd(open(".ms_delim_file.tmp",
+				O_CREAT | O_TRUNC | O_WRONLY, 0644));
 	if (write_fd == -1)
 		return (-1);
 	while (token != last)
@@ -113,8 +113,5 @@ int	ms_read_delims(t_ms_token *token, t_ms_token *last)
 		token = token->next;
 	}
 	gc_close_fd(write_fd);
-	read_fd = gc_add_fd(open("ms_delim_file.tmp", O_RDONLY));
-	if (read_fd == -1)
-		return (-1);
-	return (read_fd);
+	return (gc_add_fd(open(".ms_delim_file.tmp", O_RDONLY)));
 }

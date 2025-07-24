@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 18:45:22 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:22:40 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <sys/stat.h>
 
 //*************************************************************/
-// ERROt Message Makros
+// ERROR Message Macros
 //*************************************************************/
 
 # ifndef DEBUG
@@ -37,11 +37,12 @@
 
 # define MAX_VAR_LEN 131072
 
-# define RED "\033[1;31m"
-# define GREEN "\033[1;32m"
-# define YELLOW "\033[1;33m"
-# define BLUE "\033[1;34m"
-# define RESET "\033[0m"
+# define RED "\1\033[1;31m\2"
+# define GREEN "\1\033[1;32m\2"
+# define YELLOW "\1\033[1;33m\2"
+# define BLUE "\1\033[1;34m\2"
+# define PURPLE "\1\033[1;35m\2"
+# define RESET "\1\033[0m\2"
 
 # define MAX_PATH 1024
 
@@ -139,7 +140,7 @@ typedef struct s_minishell
 	int				heredoc_failed;
 }				t_minishell;
 
-///////////////ENVIROMENT DICTIONARY
+///////////////ENVIRONMENT DICTIONARY
 ////////////////////////////////////////////////////////////////
 typedef struct s_dict_env
 {

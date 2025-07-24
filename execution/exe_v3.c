@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_v3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:05:36 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/20 15:12:42 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:35:55 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int	ms_execution_command(t_ms_command *command)
 	waitpid(pid, &status, 0);
 	main_signals();
 	ft_free_cluster(env_cpy);
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	else
-		return (1);
+	return (1);
 }

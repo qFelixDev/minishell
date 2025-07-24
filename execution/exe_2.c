@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:30:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 17:47:40 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:39:44 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ char	*ft_find_path(char *cmd)
 
 	if (ft_strchr(cmd, '/') != NULL)
 		return (ft_strdup(cmd));
-	i = 0;
-	path_all = ft_split(ft_getenv("PATH"), ':');
-	while (path_all[i])
+	exe_path = ft_getenv("PATH");
+	if (exe_path == NULL)
+		exe_path = "/bin";
+	path_all = ft_split(exe_path, ':');
+	i = -1;
+	while (path_all[++i])
 	{
 		sub_path = ft_strjoin(path_all[i], "/");
 		exe_path = ft_strjoin(sub_path, cmd);
@@ -35,7 +38,6 @@ char	*ft_find_path(char *cmd)
 			return (exe_path);
 		}
 		free(exe_path);
-		i++;
 	}
 	return (ft_free_cluster(path_all), NULL);
 }
@@ -63,15 +65,15 @@ void	handle_child_process(t_ms_command *command, char **env_cpy)
 	char		*path;
 	struct stat	status;
 
-	if (!apply_redirects(command->redirects[1], 1))
-		ms_exit(1);
 	if (command->delim_descriptor != -1)
 	{
 		if (dup2(command->delim_descriptor, STDIN_FILENO) == -1)
 			return (perror("minishell: heredoc dup2"), ms_exit(1));
 		gc_close_fd(command->delim_descriptor);
-		unlink("minishell_delim_file.tmp");
 	}
+	unlink(".ms_delim_file.tmp");
+	if (!apply_redirects(command->redirects[1], 1))
+		ms_exit(1);
 	else if (!apply_redirects(command->redirects[2], 2))
 		ms_exit(1);
 	if (!apply_redirects(command->redirects[3], 3))

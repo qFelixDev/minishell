@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:59:39 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 18:29:53 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/24 10:47:10 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ void	interactive(void)
 	user_prompt = NULL;
 	main_signals();
 	while (get_user_prompt_value(&user_prompt, tty))
-	{
-		gc_add(user_prompt);
 		handle_shell_input(user_prompt);
-	}
 	gc_close_fd(tty);
 }
 

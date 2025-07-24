@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 11:20:00 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 20:20:00 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/24 11:30:56 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int	exe_manager(t_ms_command *command, int delim_descriptor)
 	if (command == NULL)
 		return (1);
 	command -> delim_descriptor = delim_descriptor;
-	if (command->argv[0] == NULL)
-		return (1);
 	if (!backup_std_fds(&stdin_backup, &stdout_backup))
 		return (perror("dup"), 1);
 	if (!apply_redirects(command->redirects[1], 1)

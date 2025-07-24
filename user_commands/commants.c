@@ -6,7 +6,7 @@
 /*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:04:02 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/23 20:19:23 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/24 11:09:38 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	ft_nb_len(int nb)
 	return (len);
 }
 
+// The extra 2 length are for the readline indicators
 static size_t	get_prompt_length(const char *user, int exit_code)
 {
 	size_t	len;
@@ -39,7 +40,7 @@ static size_t	get_prompt_length(const char *user, int exit_code)
 	len = 0;
 	len += ft_strlen(GREEN);
 	len += ft_strlen(user);
-	len += ft_strlen("\033[0m \033[1;34m→\033[0m \033[1;33mMinishell\033[0m");
+	len += ft_strlen(RESET " " BLUE "→ " YELLOW "Minishell" RESET);
 	len += ft_strlen(GREEN) + 1;
 	len += ft_nb_len(exit_code) + 1;
 	len += ft_strlen(RESET);
@@ -50,16 +51,11 @@ static size_t	get_prompt_length(const char *user, int exit_code)
 static void	append_exit(char *prompt, int exit_code, size_t len)
 {
 	char	*nb_str;
-	char	*exit_color;
 
-	if (exit_code == 0)
-		exit_color = "\033[1;32m";
-	else
-		exit_color = "\033[1;31m";
 	if (exit_code != 0)
 	{
 		ft_strlcat(prompt, " ", len);
-		ft_strlcat(prompt, exit_color, len);
+		ft_strlcat(prompt, RED, len);
 		nb_str = gc_add(ft_itoa(exit_code));
 		ft_strlcat(prompt, nb_str, len);
 		ft_strlcat(prompt, " ", len);
@@ -81,8 +77,7 @@ char	*create_prompt(void)
 	prompt = gc_add(ft_calloc(len + 1, sizeof(char)));
 	ft_strlcat(prompt, GREEN, len);
 	ft_strlcat(prompt, user, len);
-	ft_strlcat(prompt, "\033[0m \033[1;34m→\033[0m \033[1;33mMinishell\033[0m",
-		len);
+	ft_strlcat(prompt, RESET " " BLUE "→ " YELLOW "Minishell" RESET, len);
 	append_exit(prompt, exit_code, len);
 	ft_strlcat(prompt, RESET, len);
 	ft_strlcat(prompt, "$ ", len);
@@ -103,6 +98,7 @@ int	get_user_prompt_value(char **value, int tty)
 		return (perror("open /dev/tty"), gc_free_ptr(prompt), 0);
 	dup2(tty_in, STDOUT_FILENO);
 	gc_close_fd(tty_in);
+	rl_on_new_line();
 	*value = readline(prompt);
 	dup2(stdout_copy, STDOUT_FILENO);
 	gc_close_fd(stdout_copy);
@@ -110,8 +106,9 @@ int	get_user_prompt_value(char **value, int tty)
 	if (*value == NULL)
 	{
 		clear_history();
-		gc_free_ptr(*value);
+		free(*value);
 		ms_exit(0);
 	}
+	gc_add(*value);
 	return (add_history(*value), 1);
 }
