@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
+/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:28:53 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/24 11:22:40 by ghodges          ###   ########.fr       */
+/*   Updated: 2025/07/24 14:49:37 by reriebsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,8 @@
 
 # define MAX_PATH 1024
 
-# define ERROR_GET_LINE "ERROR WITH GETTING THE LINE"
-# define ERROR_SPLIT "ERROR WITH SPLIT FUNCTION"
-# define ERROR_INITIALISE "ERROR WITH INITIALISING COMMAND"
-# define ERROR_NODE "ERROR CREATING THE NODE"
 # define ERROR_MALLOC "ERROR ALLOCATION MEMORY"
-# define ERROR_FIND_ENV "ERROR FINDING PATH ENV"
-# define ERROR_EXECVE "ERROR EXECVE FAILED (COMMAND NOT FOUND)"
-# define ERROR_HEREDOC "ERROR OPENING TEMPORARY HEREDOC"
-# define ERROR_HEREDOC_SIGNAL "EXITING HEREDOC"
-# define ERROR_TOO_ARGUMENT "ERROR TOO MUCH ARGUMENT"
-# define ERROR_DIGIT_ARGUMENT "ERROR ARGUMENT IS NOT DIGIT"
-# define ERROR_SET_ARGUMENT "ERROR : COMMAND SHOULD BE ./minishell 'commande'"
-# define ERROR_PATH "ERROR WITH GETTING PATH"
 # define ERROR_FORK "ERROR FORK FAILED"
-# define ERROR_OPEN_FILE "ERROR OPEN FILE"
-
-// real command
-# define ERROR_FOUND_COMMAND "zsh: command not found."
-# define ERROR_PWD "pwd : too many arguments"
-# define ERROR_EXPORT "inconsistant type for assignement"
 
 //*************************************************************/
 // ENUM
@@ -135,9 +117,6 @@ typedef struct s_minishell
 	t_list			*env;
 	int				exit_status;
 	int				ready_exit;
-	bool			or_sequenze;
-	bool			finish_or;
-	int				heredoc_failed;
 }				t_minishell;
 
 ///////////////ENVIRONMENT DICTIONARY
@@ -193,41 +172,8 @@ typedef struct s_escape_data
 }						t_escape_data;
 
 //*************************************************************/
-// Redirections
-//*************************************************************/
-
-size_t			*get_char_count(void);
-char			*strlst_to_str(t_list *result_chars);
-bool			add_str_to_result(const char *str, size_t *i,
-					t_list **result_chars, size_t len);
-char			*filter_and_get_redirects(t_ms_command *input,
-					t_list **redirects, int *exit_code);
-bool			traverse_heredocs(t_ms_sequence *sequence);
-bool			parse_redirect(t_list **redirects, const char *str,
-					t_token_type redirect_type, size_t *i);
-bool			is_escaped(const char *str, size_t i);
-bool			skip_quotes(const char *str, size_t *i);
-char			**split_quotes(char const *str);
-size_t			count_words(char const *str);
-char			*ft_unescape_string(char *str);
-bool			process_heredoc(t_list *redirects, t_ms_sequence *sequence);
-void			redirect_input_from_heredoc(const char *filename);
-void			convert_pointer_to_string(char *str, void *ptr);
-bool			redirection_heredoc(const char *delimiter,
-					t_ms_sequence *sequence);
-int				populate_heredoc_and_return_fd(t_ms_token *token);
-void			ms_prepare_heredocs(t_ms_sequence *sequence);
-
-//*************************************************************/
 // Pipes
 //*************************************************************/
-void			pipe_left_process(t_ms_sequence *sequence,
-					t_pipe_data *pipe_data);
-void			pipe_right_process(t_ms_sequence *sequence,
-					t_pipe_data *pipe_data);
-void			pipe_fork_error(t_pipe_data *pipe_data);
-void			close_pipe_and_wait(t_pipe_data *pipe_data);
-int				ms_execute_pipeline(t_ms_sequence *sequence);
 int				pipe_monitor(t_ms_sequence *sequence);
 
 //*************************************************************/
