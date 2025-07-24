@@ -6,7 +6,7 @@
 #    By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/04 18:04:05 by reriebsc          #+#    #+#              #
-#    Updated: 2025/07/24 11:10:21 by ghodges          ###   ########.fr        #
+#    Updated: 2025/07/24 13:57:34 by ghodges          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME := minishell
 ##                   Compiler 
 ##*************************************************************/
 CC := cc
-CFLAGS := -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS := -Wall -Werror -Wextra -g
 
 
 ##                   Pfade
