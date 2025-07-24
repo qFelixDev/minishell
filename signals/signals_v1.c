@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_v1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reriebsc <reriebsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghodges <ghodges@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:00:14 by reriebsc          #+#    #+#             */
-/*   Updated: 2025/07/24 14:33:01 by reriebsc         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:10:38 by ghodges          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	sighandler(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-
 
 static void	signal_exit(int sig)
 {
